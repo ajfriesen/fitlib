@@ -9,28 +9,30 @@ class EntryProvider with ChangeNotifier {
   String _entry;
   String _entryId;
   var uuid = Uuid();
+  String _imageUrl;
 
   //Getters
   DateTime get date => _date;
   String get entry => _entry;
   Stream<List<Entry>> get entries => firestoreService.getEntries();
+  String get imageUrl => _imageUrl;
 
   //Setters
-  set changeDate(DateTime date){
+  set changeDate(DateTime date) {
     _date = date;
     notifyListeners();
   }
 
-  set changeEntry(String entry){
+  set changeEntry(String entry) {
     _entry = entry;
     notifyListeners();
   }
 
   //Functions
-  loadAll(Entry entry){
-    if (entry != null){
+  loadAll(Entry entry) {
+    if (entry != null) {
       _date = DateTime.parse(entry.date);
-      _entry =entry.entry;
+      _entry = entry.entry;
       _entryId = entry.entryId;
     } else {
       _date = DateTime.now();
@@ -39,21 +41,22 @@ class EntryProvider with ChangeNotifier {
     }
   }
 
-  saveEntry(){
-    if (_entryId == null){
+  saveEntry() {
+    if (_entryId == null) {
       //Add
-      var newEntry = Entry(date: _date.toIso8601String(), entry: _entry, entryId: uuid.v1());
+      var newEntry = Entry(
+          date: _date.toIso8601String(), entry: _entry, entryId: uuid.v1());
       print(newEntry.entry);
       firestoreService.setEntry(newEntry);
     } else {
       //Edit
-      var updatedEntry = Entry(date: _date.toIso8601String(), entry: _entry, entryId: _entryId);
+      var updatedEntry = Entry(
+          date: _date.toIso8601String(), entry: _entry, entryId: _entryId);
       firestoreService.setEntry(updatedEntry);
     }
   }
 
-  removeEntry(String entryId){
+  removeEntry(String entryId) {
     firestoreService.removeEntry(entryId);
   }
-
 }
