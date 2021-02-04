@@ -6,22 +6,53 @@ class MyList extends StatelessWidget {
     return ListView(
       padding: const EdgeInsets.all(8),
       children: <Widget>[
-        Container(
-          height: 50,
-          color: Colors.amber[600],
-          child: const Center(child: Text('Entry A')),
-        ),
-        Container(
-          height: 50,
-          color: Colors.amber[500],
-          child: const Center(child: Text('Entry B')),
-        ),
-        Container(
-          height: 50,
-          color: Colors.amber[100],
-          child: const Center(child: Text('Entry C')),
-        ),
+        MyCard(),
+        MyCard(),
+        MyCard(),
+        MyCard(),
+        MyCard(),
+        MyCard(),
+        MyCard(),
+        MyCard(),
+        MyCard(),
       ],
+    );
+  }
+}
+
+class MyCard extends StatelessWidget {
+  MyCard({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Card(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            ListTile(
+              leading: Image.asset('images/push-ups.jpg'),
+              title: Text('Push up'),
+              // subtitle: Text('Music by Julie Gable. Lyrics by Sidney Stein.'),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                TextButton(
+                  child: const Text('Add to Favorite'),
+                  onPressed: () {/* ... */},
+                ),
+                const SizedBox(width: 8),
+                TextButton(
+                  child: const Text('Add to workout'),
+                  onPressed: () {/* ... */},
+                ),
+                const SizedBox(width: 8),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
