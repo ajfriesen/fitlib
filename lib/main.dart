@@ -1,62 +1,82 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/test.dart';
-import 'package:flutter_app/data.dart';
+
+import 'screens/home.dart';
+import 'screens/workouts.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+  static const String _title = 'Flutter Code Sample';
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Material App',
-      home: Center(
-        child: Scaffold(
-          appBar: AppBar(
-            // leading: Icon(Icons.menu),
-            title: Text('My App'),
-            centerTitle: true,
+      title: _title,
+      home: MyStatefulWidget(),
+    );
+  }
+}
+
+class MyStatefulWidget extends StatefulWidget {
+  MyStatefulWidget({Key key}) : super(key: key);
+
+  @override
+  _MyStatefulWidgetState createState() => _MyStatefulWidgetState();
+}
+
+class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+  int _selectedIndex = 0;
+  static List<Widget> _widgetOptions = <Widget>[
+    Home(),
+    Workouts(),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Flutter Sport'),
+      ),
+      body: Center(
+        child: _widgetOptions.elementAt(_selectedIndex),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.fitness_center),
+            label: 'Exercise',
           ),
-          body: Column(
-            children: [
-              Center(
-                child: Container(
-                  child: Text('Hello World'),
-                ),
-              ),
-              MyStatelessWidget(),
-              // MyList(),
-              Expanded(
-                child: MyList(),
-              ),
-            ],
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.favorite),
+          //   label: 'Favorites',
+          // ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.person),
+          //   label: 'My Stuff',
+          // ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.history),
+          //   label: 'Tracker',
+          // ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.list),
+            label: 'Workouts',
           ),
-          drawer: Drawer(
-            child: ListView(
-              children: const <Widget>[
-                DrawerHeader(
-                  child: Text("Drawer Title"),
-                ),
-                ListTile(
-                  leading: Icon(Icons.settings),
-                  title: Text("Settings"),
-                ),
-                ListTile(
-                  leading: Icon(Icons.info),
-                  title: Text("About"),
-                ),
-              ],
-            ),
-          ),
-          bottomNavigationBar: buildBottomNavigationBar(),
-          floatingActionButton: FloatingActionButton(
-            child: Icon(Icons.add),
-            onPressed: () {
-              MyStatelessWidget();
-              // why does this not work?
-            },
-          ),
-        ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.amber[800],
+        onTap: _onItemTapped,
+      ),
+      drawer: Drawer(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: const Icon(Icons.add),
       ),
     );
   }

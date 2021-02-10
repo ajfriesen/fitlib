@@ -8,13 +8,6 @@ class MyList extends StatelessWidget {
       children: <Widget>[
         MyCard(),
         MyCard(),
-        MyCard(),
-        MyCard(),
-        MyCard(),
-        MyCard(),
-        MyCard(),
-        MyCard(),
-        MyCard(),
       ],
     );
   }
@@ -27,30 +20,14 @@ class MyCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Card(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            ListTile(
-              leading: Image.asset('images/push-ups.jpg'),
-              title: Text('Push up'),
-              // subtitle: Text('Music by Julie Gable. Lyrics by Sidney Stein.'),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                TextButton(
-                  child: const Text('Add to Favorite'),
-                  onPressed: () {/* ... */},
-                ),
-                const SizedBox(width: 8),
-                TextButton(
-                  child: const Text('Add to workout'),
-                  onPressed: () {/* ... */},
-                ),
-                const SizedBox(width: 8),
-              ],
-            ),
-          ],
+        child: ListTile(
+          onTap: () {},
+          leading: Padding(
+            padding: const EdgeInsets.all(3.0),
+            child: Image.asset('images/push-ups.jpg'),
+          ),
+          title: Text('Push up'),
+          trailing: Icon(Icons.more_vert),
         ),
       ),
     );

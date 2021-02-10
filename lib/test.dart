@@ -42,22 +42,23 @@ BottomNavigationBar buildBottomNavigationBar() {
         icon: Icon(Icons.fitness_center),
         label: 'Exersice',
       ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.favorite),
-        label: 'Favorites',
-      ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.person),
-        label: 'My Stuff',
-      ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.history),
-        label: 'History',
-      ),
+      // BottomNavigationBarItem(
+      //   icon: Icon(Icons.favorite),
+      //   label: 'Favorites',
+      // ),
+      // BottomNavigationBarItem(
+      //   icon: Icon(Icons.person),
+      //   label: 'My Stuff',
+      // ),
+      // BottomNavigationBarItem(
+      //   icon: Icon(Icons.history),
+      //   label: 'Tracker',
+      // ),
       BottomNavigationBarItem(
         icon: Icon(Icons.list),
         label: 'Workouts',
       ),
     ],
+    currentIndex: 0,
   );
 }
