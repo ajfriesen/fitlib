@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_signin_button/button_builder.dart';
+
 import 'screens/home.dart';
 import 'screens/workouts.dart';
 
@@ -28,7 +31,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   int _selectedIndex = 0;
   static List<Widget> _widgetOptions = <Widget>[
     Home(),
-    Workouts(),
   ];
 
   void _onItemTapped(int index) {
