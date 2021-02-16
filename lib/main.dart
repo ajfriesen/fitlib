@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_signin_button/button_builder.dart';
 
 import 'screens/home.dart';
@@ -28,6 +29,17 @@ class MyStatefulWidget extends StatefulWidget {
 }
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+  @override
+  void initState() {
+    initializeFlutterFire();
+    //TODO: Add test for broken init
+    super.initState();
+  }
+
+  void initializeFlutterFire() async {
+    await Firebase.initializeApp();
+  }
+
   int _selectedIndex = 0;
   static List<Widget> _widgetOptions = <Widget>[
     Home(),
