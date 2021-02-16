@@ -47,4 +47,8 @@ https://resocoder.com/2020/03/09/flutter-firebase-ddd-course-1-domain-driven-des
 - firebase
 - DTO (Data Transfer Objects)
   - convert data between entities and value objects from the domain layer and the plain data of the outside world
-   
+
+
+# Notes:
+
+- do not use async in init state
