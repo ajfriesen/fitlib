@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/models.dart';
-import 'package:flutter_app/exercsise_card.dart';
+import 'file:///C:/Users/andre/AndroidStudioProjects/flutter_app/lib/models/models.dart';
+import 'package:flutter_app/components/exercsise_card.dart';
 
 class MyList extends StatelessWidget {
   List<Exercise> exerciseList;
