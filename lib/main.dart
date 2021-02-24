@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_signin_button/button_builder.dart';
 
 import 'screens/home.dart';
-import 'screens/workouts.dart';
 
 void main() => runApp(MyApp());
 

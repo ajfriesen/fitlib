@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/data.dart';
-import 'package:flutter_app/models.dart';
+import 'file:///C:/Users/andre/AndroidStudioProjects/flutter_app/lib/components/exercise_list.dart';
+import 'file:///C:/Users/andre/AndroidStudioProjects/flutter_app/lib/models/models.dart';
+import 'package:flutter_app/services/exercise_service.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -8,6 +9,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  bool firstRender = true;
+
   List<Exercise> exerciseList = [];
 
   @override
@@ -21,6 +24,15 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    if (firstRender) {
+      firstRender = false;
+      ExerciseService.getGlobalExerciseList().then((List) {
+        setState(() {
+          firstRender = false;
+        });
+      });
+    }
+
     //return MyList();
     return MyList(exerciseList);
   }
