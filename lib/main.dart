@@ -5,7 +5,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'screens/home.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  // 2 - Moved Firebase initialization to here
+  // WidgetsFlutterBinding.ensureInitialized() is used to interact with the
+  // Flutter engine. Firebase initialization needs to call native (Android) code
+  // so this line of code ensures a communication channel to native.
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   static const String _title = 'Flutter Code Sample';
@@ -29,13 +37,8 @@ class MyStatefulWidget extends StatefulWidget {
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   @override
   void initState() {
-    initializeFlutterFire();
-    //TODO: Add test for broken init
+    // 1 - Moved Firebase initialization from here.
     super.initState();
-  }
-
-  void initializeFlutterFire() async {
-    await Firebase.initializeApp();
   }
 
   int _selectedIndex = 0;
