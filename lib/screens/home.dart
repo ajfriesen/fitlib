@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'file:///C:/Users/andre/AndroidStudioProjects/flutter_app/lib/components/exercise_list.dart';
-import 'file:///C:/Users/andre/AndroidStudioProjects/flutter_app/lib/models/models.dart';
+import 'package:flutter_app/components/exercise_list.dart';
+import 'package:flutter_app/models/models.dart';
 import 'package:flutter_app/services/exercise_service.dart';
 
 class Home extends StatefulWidget {
