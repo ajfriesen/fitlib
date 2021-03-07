@@ -1,6 +1,6 @@
 class Exercise {
-  String name;
-  String imageUrl;
+  String? name;
+  String? imageUrl;
 
   Exercise(reName, reImageUrl) {
     name = reName;
