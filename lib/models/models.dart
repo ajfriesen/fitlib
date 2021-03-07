@@ -2,9 +2,9 @@ class Exercise {
   String name;
   String imageUrl;
 
-  Exercise(re_name, re_imageUrl) {
-    name = re_name;
-    imageUrl = re_imageUrl;
+  Exercise(reName, reImageUrl) {
+    name = reName;
+    imageUrl = reImageUrl;
   }
 
   //const Exercise({
