@@ -3,11 +3,10 @@ import 'package:flutter_app/models/models.dart';
 
 class ExerciseCard extends StatelessWidget {
   const ExerciseCard({
-    Key key,
-    @required this.onTap,
-    @required this.exercise,
-  })  : assert(exercise != null),
-        super(key: key);
+    Key? key,
+    required this.onTap,
+    required this.exercise,
+  }) : super(key: key);
 
   final VoidCallback onTap;
   final Exercise exercise;
@@ -19,9 +18,9 @@ class ExerciseCard extends StatelessWidget {
         onTap: () {},
         leading: Padding(
           padding: const EdgeInsets.all(3.0),
-          child: Image.asset(exercise.imageUrl),
+          child: Image.asset(exercise.imageUrl!),
         ),
-        title: Text(exercise.name),
+        title: Text(exercise.name!),
         trailing: Icon(Icons.more_vert),
       ),
     );

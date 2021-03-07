@@ -9,7 +9,7 @@ class MyList extends StatefulWidget {
 }
 
 class _MyListState extends State<MyList> {
-  Stream<List<Exercise>> _exerciseStream;
+  Stream<List<Exercise>>? _exerciseStream;
 
   @override
   void initState() {
@@ -28,10 +28,10 @@ class _MyListState extends State<MyList> {
             case ConnectionState.waiting: return Text('Waiting');
             default:
               return ListView(
-                children: snapshot.data.map((Exercise exercise){
+                children: snapshot.data!.map((Exercise exercise){
                   return ListTile(
-                    title: Text(exercise.name),
-                    subtitle: Text(exercise.imageUrl),
+                    title: Text(exercise.name!),
+                    subtitle: Text(exercise.imageUrl!),
                   );
                 }).toList(),
               );

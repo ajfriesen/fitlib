@@ -2,7 +2,7 @@ import 'package:flutter_app/models/models.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Repository {
-  Repository(this._firestore) : assert(_firestore != null);
+  Repository(this._firestore);
 
   final FirebaseFirestore _firestore;
 
@@ -10,7 +10,7 @@ class Repository {
     return _firestore.collection('exercise').snapshots().map((snapshot) {
       return snapshot.docs
           .map((document) {
-            return Exercise(document.data()['name'], document.data()['imageUrl']);
+            return Exercise(document.data()!['name'], document.data()!['imageUrl']);
           })
           .toList();
     });
