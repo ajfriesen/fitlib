@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/models.dart';
-import 'package:flutter_app/services/repository.dart';
+import 'package:flutter_app/services/database.dart';
 import 'package:provider/provider.dart';
 
 import 'exercise_card.dart';
@@ -16,7 +16,7 @@ class _MyListState extends State<MyList> {
   @override
   void initState() {
     super.initState();
-    _exerciseStream = context.read<Repository>().getExercise();
+    _exerciseStream = context.read<Database>().getExercise();
   }
 
   @override

@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/models.dart';
 import 'package:flutter_app/screens/detail.dart';
-import 'package:flutter_app/services/repository.dart';
+import 'package:flutter_app/services/database.dart';
 
 class ExerciseCard extends StatefulWidget {
   @override
@@ -21,7 +21,7 @@ class _ExerciseCardState extends State<ExerciseCard> {
 
   @override
   void initState() {
-    Repository firebaseRepositoy = Repository(FirebaseFirestore.instance);
+    Database firebaseRepositoy = Database(FirebaseFirestore.instance);
 
     firebaseRepositoy.getDownloadUrl(widget.exercise.imageName!).then((value) {
       setState(() {

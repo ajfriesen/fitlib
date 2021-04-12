@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/services/authentication.dart';
-import 'package:flutter_app/services/repository.dart';
+import 'package:flutter_app/services/database.dart';
 import 'package:provider/provider.dart';
 
 import 'screens/home.dart';
@@ -25,8 +25,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
-          Provider<Repository>(
-            create: (_) => Repository(FirebaseFirestore.instance),
+          Provider<Database>(
+            create: (_) => Database(FirebaseFirestore.instance),
           ),
           Provider<Login>(
             create: (_) => Login(FirebaseAuth.instance),
