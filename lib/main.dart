@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/services/authentication.dart';
 import 'package:flutter_app/services/database.dart';
+import 'package:flutter_app/services/route_generator.dart';
 import 'package:provider/provider.dart';
 
 import 'screens/home.dart';
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
         child: MaterialApp(
           title: _title,
           home: MyStatefulWidget(),
+          onGenerateRoute: RouterGenerator.generateRoute,
         ));
   }
 }
@@ -114,7 +116,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       ),
       drawer: Drawer(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).pushNamed('/addExercise');
+        },
         child: const Icon(Icons.add),
       ),
     );
