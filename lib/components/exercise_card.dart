@@ -16,7 +16,7 @@ class ExerciseCard extends StatefulWidget {
 class _ExerciseCardState extends State<ExerciseCard> {
   // String imageurl = await firebaseRepositoy.getDownloadUrl(exercise.imageName!)
 
-  String imageurl = "images/push-ups.jpg";
+  String imageurl = "images/placeholder.png";
   bool fetched = false;
 
   @override
