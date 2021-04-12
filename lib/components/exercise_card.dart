@@ -27,6 +27,7 @@ class _ExerciseCardState extends State<ExerciseCard> {
       setState(() {
         imageurl = value;
         fetched = true;
+        if (fetched == true) widget.exercise.imageUrl = imageurl;
       });
     });
 
@@ -38,7 +39,9 @@ class _ExerciseCardState extends State<ExerciseCard> {
     return Card(
       child: ListTile(
         title: Text(widget.exercise.name!),
-        leading: fetched ? Image.network(imageurl) : Image.asset(imageurl),
+        leading: fetched
+            ? Image.network(widget.exercise.imageUrl!)
+            : Image.asset(imageurl),
         subtitle: Text(widget.exercise.imageName!),
         trailing: Icon(Icons.more_vert),
         onTap: () => Navigator.push(
