@@ -1,10 +1,10 @@
 class Exercise {
   String? name;
-  String? imageUrl;
+  String? imageName;
 
-  Exercise(reName, reImageUrl) {
+  Exercise(reName, reImageName) {
     name = reName;
-    imageUrl = reImageUrl;
+    imageName = reImageName;
   }
 
   //const Exercise({

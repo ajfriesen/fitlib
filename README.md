@@ -52,3 +52,12 @@ https://resocoder.com/2020/03/09/flutter-firebase-ddd-course-1-domain-driven-des
 # Notes:
 
 - do not use async in init state
+
+
+# Homework
+
+- Rearange login
+- research logins
+- detail screen (not fetching again!)
+- rename repository
+- 

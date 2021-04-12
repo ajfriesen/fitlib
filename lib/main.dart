@@ -1,9 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/services/authentication.dart';
 import 'package:flutter_app/services/repository.dart';
 import 'package:provider/provider.dart';
-
-import 'package:firebase_core/firebase_core.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'screens/home.dart';
 
@@ -22,12 +23,22 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Provider<Repository>(
-    create: (_) => Repository(FirebaseFirestore.instance),
-    child: MaterialApp(
-      title: _title,
-      home: MyStatefulWidget(),
-    ));
+    return MultiProvider(
+        providers: [
+          Provider<Repository>(
+            create: (_) => Repository(FirebaseFirestore.instance),
+          ),
+          Provider<Login>(
+            create: (_) => Login(FirebaseAuth.instance),
+          ),
+          // StreamProvider(
+          //   create: (context) => context.read<Login>(),
+          // ),
+        ],
+        child: MaterialApp(
+          title: _title,
+          home: MyStatefulWidget(),
+        ));
   }
 }
 
@@ -42,6 +53,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   @override
   void initState() {
     // 1 - Moved Firebase initialization from here.
+
+    Login firebaseAuth = Login(FirebaseAuth.instance);
+    firebaseAuth.anonymousLogin();
     super.initState();
   }
 
@@ -61,6 +75,12 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Flutter Sport'),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.login),
+            onPressed: () {},
+          )
+        ],
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
