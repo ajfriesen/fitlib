@@ -18,7 +18,7 @@ class ExerciseCard extends StatelessWidget {
         onTap: () {},
         leading: Padding(
           padding: const EdgeInsets.all(3.0),
-          child: Image.asset(exercise.imageUrl!),
+          child: Image.asset(exercise.imageName!),
         ),
         title: Text(exercise.name!),
         trailing: Icon(Icons.more_vert),

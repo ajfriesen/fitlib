@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/models.dart';
-import 'package:flutter_app/screens/detail.dart';
 import 'package:flutter_app/services/repository.dart';
 import 'package:provider/provider.dart';
+
+import 'exercise_card.dart';
 
 class MyList extends StatefulWidget {
   @override
@@ -31,19 +32,12 @@ class _MyListState extends State<MyList> {
             default:
               return ListView(
                 children: snapshot.data!.map((Exercise exercise) {
-                  return Card(
-                    child: ListTile(
-                      title: Text(exercise.name!),
-                      leading: Image.network(exercise.imageUrl.toString()),
-                      subtitle: Text(exercise.imageUrl!),
-                      trailing: Icon(Icons.more_vert),
-                      onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => Detail(exercise: exercise)),
-                      ),
-                    ),
-                  );
+                  // Repository firebaseRepositoy =
+                  //     Repository(FirebaseFirestore.instance);
+                  //
+                  // String imageurl = await firebaseRepositoy.getDownloadUrl(exercise.imageName!)
+
+                  return ExerciseCard(exercise);
                 }).toList(),
               );
           }
