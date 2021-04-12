@@ -2,8 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter_app/models/models.dart';
 
-class Repository {
-  Repository(this._firestore);
+class Database {
+  Database(this._firestore);
 
   final FirebaseFirestore _firestore;
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/models.dart';
-import 'package:flutter_app/services/repository.dart';
+import 'package:flutter_app/services/database.dart';
 import 'package:provider/provider.dart';
 
 class Detail extends StatefulWidget {
@@ -25,7 +25,7 @@ class _DetailState extends State<Detail> {
       return;
     }
 
-    context.read<Repository>().getDownloadUrl(imageName).then((value) {
+    context.read<Database>().getDownloadUrl(imageName).then((value) {
       setState(() {
         _downloadUrl = value;
       });
