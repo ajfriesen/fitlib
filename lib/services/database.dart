@@ -6,6 +6,7 @@ class Database {
   Database(this._firestore);
 
   final FirebaseFirestore _firestore;
+  String placeholder = "images/placeholder.png";
 
   Stream<List<Exercise>> getExercise() {
     return _firestore.collection('exercise').snapshots().map((snapshot) {
@@ -23,7 +24,7 @@ class Database {
           .getDownloadURL();
       return imageUrl;
     } on Exception catch (e) {
-      return Future.value("");
+      return Future.value(placeholder);
     }
   }
 }
