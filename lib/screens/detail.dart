@@ -12,15 +12,21 @@ class Detail extends StatefulWidget {
 }
 
 class _DetailState extends State<Detail> {
+  static const String placeholderImage = 'images/placeholder.png';
+
   @override
   Widget build(BuildContext context) {
+    String imageurl = widget.exercise.imageUrl ?? placeholderImage;
+
     return Scaffold(
         appBar: AppBar(
           title: Text(widget.exercise.name!),
         ),
         body: Padding(
           padding: EdgeInsets.all(16.0),
-          child: Image.network(widget.exercise.imageUrl!, fit: BoxFit.fitWidth),
+          child: imageurl == placeholderImage || imageurl.isEmpty
+              ? Image.asset(placeholderImage, fit: BoxFit.fitWidth)
+              : Image.network(imageurl, fit: BoxFit.fitWidth),
         ));
   }
 }
