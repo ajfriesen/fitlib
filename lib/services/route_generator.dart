@@ -6,7 +6,7 @@ class RouterGenerator {
     final args = settings.arguments;
 
     switch (settings.name) {
-      case '/addExercise':
+      case '/Exercise/add':
         return MaterialPageRoute(builder: (_) => AddExercise());
       default:
         return _errorRoute();
