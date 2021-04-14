@@ -117,7 +117,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       drawer: Drawer(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).pushNamed('/addExercise');
+          Navigator.of(context).pushNamed('/Exercise/add');
         },
         child: const Icon(Icons.add),
       ),
