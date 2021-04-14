@@ -16,6 +16,7 @@ class ExerciseCard extends StatefulWidget {
 class _ExerciseCardState extends State<ExerciseCard> {
   // String imageurl = await firebaseRepositoy.getDownloadUrl(exercise.imageName!)
 
+  static const String placeholder = "images/placeholder.png";
   String imageurl = "images/placeholder.png";
   bool fetched = false;
 
@@ -39,7 +40,7 @@ class _ExerciseCardState extends State<ExerciseCard> {
     return Card(
       child: ListTile(
         title: Text(widget.exercise.name!),
-        leading: fetched
+        leading: fetched && imageurl != placeholder
             ? Image.network(widget.exercise.imageUrl!)
             : Image.asset(imageurl),
         subtitle: Text(widget.exercise.imageName!),
