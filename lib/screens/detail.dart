@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/exercise.dart';
-import 'package:flutter_app/services/camera.dart';
+import 'package:flutter_app/services/media_file_service.dart';
 
 class Detail extends StatefulWidget {
   //Object to handle view
@@ -33,7 +33,7 @@ class _DetailState extends State<Detail> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          media.getMedia();
+          chooseImagePicker(context);
         },
         child: const Icon(Icons.add_photo_alternate),
         tooltip: 'Pick Image',
