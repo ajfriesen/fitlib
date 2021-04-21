@@ -33,7 +33,7 @@ dependencies:
   firebase_storage: ^8.0.1
   provider: ^5.0.0
   image_picker: ^0.7.4
- # flutter_signin_button: ^1.1.0
+  shared_preferences: ^2.0.5
 
 dev_dependencies:
   flutter_test:
