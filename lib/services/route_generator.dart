@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/models/exercise.dart';
 import 'package:flutter_app/screens/add_exercise.dart';
 import 'package:flutter_app/screens/detail.dart';
 
@@ -12,19 +13,19 @@ class RouterGenerator {
         return MaterialPageRoute(builder: (_) => AddExercise());
       case '/ExerciseDetailView':
         //Validate if of type Exercise
-        // if (args is Exercise) {
-        return MaterialPageRoute(builder: (_) {
-          return Detail(
-            exercise: args,
-          );
-        });
-      // }
-      // print(args);
-      // return _errorRoute();
+        if (args is Exercise) {
+          return MaterialPageRoute(builder: (_) {
+            return Detail(
+              exercise: args,
+            );
+          });
+        }
+        break;
 
       default:
         return _errorRoute();
     }
+    return _errorRoute();
   }
 
   static Route<dynamic> _errorRoute() {
