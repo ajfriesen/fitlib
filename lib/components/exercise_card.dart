@@ -48,11 +48,6 @@ class _ExerciseCardState extends State<ExerciseCard> {
           Navigator.of(context)
               .pushNamed('ExerciseDetailView', arguments: widget.exercise);
         },
-        // onTap: () => Navigator.push(
-        //   context,
-        //   MaterialPageRoute(
-        //       builder: (context) => Detail(exercise: widget.exercise)),
-        // ),
       ),
     );
   }
