@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/models/models.dart';
+import 'package:flutter_app/models/exercise.dart';
 import 'package:flutter_app/screens/detail.dart';
 import 'package:flutter_app/services/database.dart';
 
