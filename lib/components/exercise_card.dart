@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/exercise.dart';
-import 'package:flutter_app/screens/detail.dart';
 import 'package:flutter_app/services/database.dart';
 
 class ExerciseCard extends StatefulWidget {
@@ -45,11 +44,15 @@ class _ExerciseCardState extends State<ExerciseCard> {
             : Image.asset(imageurl),
         subtitle: Text(widget.exercise.imageName!),
         trailing: Icon(Icons.more_vert),
-        onTap: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => Detail(exercise: widget.exercise)),
-        ),
+        onTap: () {
+          Navigator.of(context)
+              .pushNamed('ExerciseDetailView', arguments: widget.exercise);
+        },
+        // onTap: () => Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //       builder: (context) => Detail(exercise: widget.exercise)),
+        // ),
       ),
     );
   }
