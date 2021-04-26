@@ -46,7 +46,7 @@ class _ExerciseCardState extends State<ExerciseCard> {
         trailing: Icon(Icons.more_vert),
         onTap: () {
           Navigator.of(context)
-              .pushNamed('ExerciseDetailView', arguments: widget.exercise);
+              .pushNamed('/ExerciseDetailView', arguments: widget.exercise);
         },
       ),
     );
