@@ -12,20 +12,18 @@ class RouterGenerator {
       case '/Exercise/add':
         return MaterialPageRoute(builder: (_) => AddExercise());
       case '/ExerciseDetailView':
-        //Validate if of type Exercise
+        // check if args is actually of type Exercise and pass args to Detail()
         if (args is Exercise) {
-          return MaterialPageRoute(builder: (_) {
-            return Detail(
+          return MaterialPageRoute(
+            builder: (_) => Detail(
               exercise: args,
-            );
-          });
+            ),
+          );
         }
-        break;
-
+        return _errorRoute();
       default:
         return _errorRoute();
     }
-    return _errorRoute();
   }
 
   static Route<dynamic> _errorRoute() {
