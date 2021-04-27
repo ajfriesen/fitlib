@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/exercise.dart';
 import 'package:flutter_app/services/media_file_service.dart';
+import 'package:flutter_app/services/shared_preferences_service.dart';
+import 'package:image_picker/image_picker.dart';
 
 class Detail extends StatefulWidget {
   //Object to handle view
@@ -15,7 +17,8 @@ class Detail extends StatefulWidget {
 class _DetailState extends State<Detail> {
   static const String placeholderImage = 'images/placeholder.png';
 
-  final media = Media();
+  final Media mediaService = Media();
+  final PreferencesService preferencesServiceService = PreferencesService();
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +35,17 @@ class _DetailState extends State<Detail> {
             : Image.network(imageurl, fit: BoxFit.fitWidth),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          chooseImagePicker(context);
+        onPressed: () async {
+          PickedFile? pickedImage =
+              await mediaService.chooseImagePicker(context);
+          print(pickedImage);
+
+          // #TODO:get userId from provider
+
+          if (pickedImage != null) {
+            preferencesServiceService
+                .saveImageMetadata(pickedImage /*, userId*/);
+          }
         },
         child: const Icon(Icons.add_photo_alternate),
         tooltip: 'Pick Image',

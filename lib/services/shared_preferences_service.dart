@@ -1,3 +1,4 @@
+import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PreferencesService {
@@ -14,5 +15,14 @@ class PreferencesService {
     settings = await SharedPreferences.getInstance();
   }
 
-  getFile() {}
+  saveImageMetadata(PickedFile storedImage /*, String key*/) {
+    //#TODO: settings.setString(key, value);
+  }
+
+  PickedFile? getFile(String key) {
+    //
+    settings.getString(key);
+    // #TODO:find a way to return the picked image
+    // return image
+  }
 }
