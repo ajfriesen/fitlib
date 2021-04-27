@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/exercise.dart';
 import 'package:flutter_app/services/database.dart';
+import 'package:flutter_app/services/route_generator.dart';
 
 class ExerciseCard extends StatefulWidget {
   @override
@@ -45,8 +46,9 @@ class _ExerciseCardState extends State<ExerciseCard> {
         subtitle: Text(widget.exercise.imageName!),
         trailing: Icon(Icons.more_vert),
         onTap: () {
-          Navigator.of(context)
-              .pushNamed('/ExerciseDetailView', arguments: widget.exercise);
+          Navigator.of(context).pushNamed(
+              RouterGenerator.exerciseDetailViewRoute,
+              arguments: widget.exercise);
         },
       ),
     );

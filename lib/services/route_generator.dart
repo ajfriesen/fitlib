@@ -4,14 +4,17 @@ import 'package:flutter_app/screens/add_exercise.dart';
 import 'package:flutter_app/screens/detail.dart';
 
 class RouterGenerator {
+  static const String exerciseAddRoute = '/Exercise/add';
+  static const String exerciseDetailViewRoute = '/ExerciseDetailView';
+
   static Route<dynamic> generateRoute(RouteSettings settings) {
     // Getting arguments passed in while calling Navigator.pushNamed
     final args = settings.arguments;
 
     switch (settings.name) {
-      case '/Exercise/add':
+      case exerciseAddRoute:
         return MaterialPageRoute(builder: (_) => AddExercise());
-      case '/ExerciseDetailView':
+      case exerciseDetailViewRoute:
         // check if args is actually of type Exercise and pass args to Detail()
         if (args is Exercise) {
           return MaterialPageRoute(
