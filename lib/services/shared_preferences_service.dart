@@ -1,4 +1,3 @@
-import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PreferencesService {
