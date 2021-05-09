@@ -20,4 +20,8 @@ class Login {
       return e.message;
     }
   }
+
+  User? getUser() {
+    return FirebaseAuth.instance.currentUser;
+  }
 }
