@@ -15,8 +15,8 @@ class PreferencesService {
     settings = await SharedPreferences.getInstance();
   }
 
-  saveImageMetadata(PickedFile storedImage /*, String key*/) {
-    //#TODO: settings.setString(key, value);
+  saveImageMetadata(String storedImage, String key) {
+    settings?.setString(key, storedImage);
   }
 
   PickedFile? getFile(String key) {
