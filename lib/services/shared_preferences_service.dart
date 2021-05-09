@@ -3,7 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class PreferencesService {
   // needs to be late because of async
-  late SharedPreferences settings;
+  SharedPreferences? settings;
 
   // constructor
   PreferencesService() {
