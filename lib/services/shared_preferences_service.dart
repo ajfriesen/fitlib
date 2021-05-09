@@ -19,10 +19,7 @@ class PreferencesService {
     settings?.setString(key, storedImage);
   }
 
-  PickedFile? getFile(String key) {
-    //
-    settings.getString(key);
-    // #TODO:find a way to return the picked image
-    // return image
+  String? getFile(String key) {
+    return settings?.getString(key);
   }
 }
