@@ -6,10 +6,10 @@ class Login {
 
   Login(this._firebaseAuth);
 
-  Stream<User?>? user;
+  Stream<User?>? userState;
 
   Stream<User>? get authStateChanges {
-    user = _firebaseAuth.authStateChanges();
+    userState = _firebaseAuth.authStateChanges();
   }
 
   Future<String?> anonymousLogin() async {
