@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/exercise.dart';
@@ -23,18 +25,19 @@ class _DetailState extends State<Detail> {
   final Media mediaService = Media();
   final PreferencesService preferencesServiceService = PreferencesService();
 
+  String? imagePath;
+
   @override
   void initState() {
     loginProvider = context.read<Login>();
     super.initState();
+    imagePath =
+        preferencesServiceService.getFile(loginProvider.getUser()?.uid ?? '');
   }
 
   @override
   Widget build(BuildContext context) {
     String imageurl = widget.exercise.imageUrl ?? placeholderImage;
-
-    String? imagePath =
-        preferencesServiceService.getFile(loginProvider.getUser()?.uid ?? '');
 
     return Scaffold(
       appBar: AppBar(
@@ -53,7 +56,9 @@ class _DetailState extends State<Detail> {
                 'My saved Images',
                 style: TextStyle(fontSize: 30),
               ),
-              Text(imagePath ?? 'No images yet')
+              imagePath != null && imagePath != ''
+                  ? Image.file(File(imagePath!))
+                  : Text('No images yet')
             ],
           ),
         ),
@@ -75,9 +80,15 @@ class _DetailState extends State<Detail> {
           // #TODO:get userId from provider
 
           if (pickedImage != null) {
-            preferencesServiceService.saveImageMetadata(
-                pickedImage.path, loggedInUser.uid);
-            setState(() {});
+            bool successfulSave = await preferencesServiceService
+                .saveImageMetadata(pickedImage.path, loggedInUser.uid);
+            if (successfulSave) {
+              setState(() {
+                imagePath = pickedImage.path;
+              });
+            }
+            //TODO: get a toast widget
+
           }
         },
         child: const Icon(Icons.add_photo_alternate),
