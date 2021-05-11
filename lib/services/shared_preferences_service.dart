@@ -12,10 +12,14 @@ class PreferencesService {
   // we need a function because a constructor can not be async
   _createSettings() async {
     settings = await SharedPreferences.getInstance();
+    print(settings);
   }
 
-  saveImageMetadata(String storedImage, String key) {
-    settings?.setString(key, storedImage);
+  Future<bool> saveImageMetadata(String storedImage, String key) {
+    if (settings != null) {
+      return settings!.setString(key, storedImage);
+    }
+    return Future.value(false);
   }
 
   String? getFile(String key) {
