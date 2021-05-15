@@ -25,7 +25,7 @@ class _DetailState extends State<Detail> {
   final Media mediaService = Media();
   final PreferencesService preferencesServiceService = PreferencesService();
 
-  String? imagePath;
+  late Future<String?> imagePath;
 
   @override
   void initState() {
@@ -57,7 +57,7 @@ class _DetailState extends State<Detail> {
                 style: TextStyle(fontSize: 30),
               ),
               imagePath != null && imagePath != ''
-                  ? Image.file(File(imagePath!))
+                  ? Image.file(File(imagePath.toString()))
                   : Text('No images yet')
             ],
           ),

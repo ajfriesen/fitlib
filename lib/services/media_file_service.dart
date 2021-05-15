@@ -19,7 +19,7 @@ class Media {
     }
   }
 
-  getGalleryImage() async {
+  Future getGalleryImage() async {
     final pickedFile = await _picker.getImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       return Future.value(pickedFile);
