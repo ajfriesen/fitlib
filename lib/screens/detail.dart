@@ -24,15 +24,17 @@ class _DetailState extends State<Detail> {
   static const String placeholderImage = 'images/placeholder.png';
   final Media mediaService = Media();
   final PreferencesService preferencesServiceService = PreferencesService();
-
-  late Future<String?> imagePath;
+  String? imagePath = '';
 
   @override
   void initState() {
     loginProvider = context.read<Login>();
     super.initState();
-    imagePath =
-        preferencesServiceService.getFile(loginProvider.getUser()?.uid ?? '');
+    preferencesServiceService.getFile(loginProvider.getUser()?.uid ?? '').then((value) {
+      setState(() {
+        imagePath = value;
+      });
+    });
   }
 
   @override
@@ -74,7 +76,7 @@ class _DetailState extends State<Detail> {
           print('User ID is: ${loggedInUser.uid}');
 
           PickedFile? pickedImage =
-              await mediaService.chooseImagePicker(context);
+          await mediaService.chooseImagePicker(context);
           print(pickedImage);
 
           // #TODO:get userId from provider
@@ -88,7 +90,6 @@ class _DetailState extends State<Detail> {
               });
             }
             //TODO: get a toast widget
-
           }
         },
         child: const Icon(Icons.add_photo_alternate),
