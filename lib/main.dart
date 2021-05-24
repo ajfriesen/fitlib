@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/screens/workout_list.dart';
 import 'package:flutter_app/services/authentication.dart';
 import 'package:flutter_app/services/database.dart';
 import 'package:flutter_app/services/route_generator.dart';
@@ -64,6 +65,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   int _selectedIndex = 0;
   static List<Widget> _widgetOptions = <Widget>[
     Home(),
+    WorkoutList(),
   ];
 
   void _onItemTapped(int index) {
@@ -93,18 +95,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             icon: Icon(Icons.fitness_center),
             label: 'Exercise',
           ),
-          // BottomNavigationBarItem(
-          //   icon: Icon(Icons.favorite),
-          //   label: 'Favorites',
-          // ),
-          // BottomNavigationBarItem(
-          //   icon: Icon(Icons.person),
-          //   label: 'My Stuff',
-          // ),
-          // BottomNavigationBarItem(
-          //   icon: Icon(Icons.history),
-          //   label: 'Tracker',
-          // ),
           BottomNavigationBarItem(
             icon: Icon(Icons.list),
             label: 'Workouts',
