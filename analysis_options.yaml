@@ -1,10 +1,10 @@
-include: package:lint/analysis_options.yaml
+#include: package:lint/analysis_options.yaml
 
-linter:
-  rules:
-    - parameter_assignments
+#linter:
+#  rules:
+#    - parameter_assignments
 
-analyzer:
+#analyzer:
 #  plugins:
 #    - dart_code_metrics
 #  dart_code_metrics:
@@ -12,8 +12,8 @@ analyzer:
 #      - long-method
 #      - long-parameter-list
 
-  errors:
-    missing_required_param: error
-    parameter_assignments: error
-    missing_return: error
+#  errors:
+#    missing_required_param: error
+#    parameter_assignments: error
+#    missing_return: error
 
