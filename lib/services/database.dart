@@ -11,8 +11,8 @@ class Database {
   Stream<List<Exercise>> getExercise() {
     return _firestore.collection('exercise').snapshots().map((snapshot) {
       return snapshot.docs.map((document) {
-        return Exercise(document.data()!['name'], document.data()!['imageName'],
-            document.data()!['imageUrl']);
+        return Exercise(document.data()['name'], document.data()['imageName'],
+            document.data()['imageUrl']);
       }).toList();
     });
   }
