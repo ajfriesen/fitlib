@@ -25,11 +25,80 @@ class PreferencesService {
 // edit the list
 // save the list
 
-  Future<bool> save(String key, String value) async {
+  /// save will receive a key(userId), imagePath and exerciseName
+  /// put these in an instance of ExerciseData _exerciseData
+  /// encode the _exerciseData object into _exerciseDataAsJson
+  /// and save the key(userId), value (_exerciseDataAsJson) to a SharedPreferencesObject
+  Future<bool> save({required String userId, required String imagePath, required String exerciseName}) async {
+    //get the list first
     final SharedPreferences settings = await SharedPreferences.getInstance();
-    ExerciseData _exercizeData = ExerciseData(userId: key, imageData: value);
-    String _exercizeDataAsJson = json.encode(_exercizeData);
-    return settings.setString(key, _exercizeDataAsJson);
+
+      ImageData _imageData = ImageData(exerciseName: exerciseName, imagePath: imagePath);
+      String? currentValueAsString = settings.getString(userId);
+
+
+      if (currentValueAsString != null) {
+        // dynamic _exerciseMapString = jsonDecode(currentValueAsString);
+        // ExerciseData _exerciseData = ExerciseData.fromJson(_exerciseMapString);
+        Map<String, dynamic> _exerciseDataAsMap = json.decode(currentValueAsString) as Map<String, dynamic>;
+        ExerciseData _exerciseData = ExerciseData.fromJson(_exerciseDataAsMap);
+
+        if (_exerciseData.imageData == null) {
+          _exerciseData.imageData = <ImageData>[];
+        }
+
+        ImageData imageDataAlreadyExist = _exerciseData.imageData!.firstWhere((element) {
+          //check for already existing exercise
+          if (element.exerciseName != exerciseName) {
+            return false;
+          }
+          return true;
+        },
+        orElse: () => ImageData()
+        );
+
+
+
+        if (imageDataAlreadyExist.imagePath != null) {
+          _exerciseData.imageData!.removeWhere((element) {
+            if (element.exerciseName == exerciseName) {
+              return true;
+            }
+            return false;
+          });
+        }
+
+
+
+
+        _exerciseData.imageData!.add(_imageData);
+        String _exerciseDataAsJson = json.encode(_exerciseData);
+        print(_exerciseDataAsJson);
+        return settings.setString(userId, _exerciseDataAsJson);
+
+      }
+
+      else {
+        List<ImageData> _listOfExercise = List.empty(growable: true);
+        _listOfExercise.add(_imageData);
+        ExerciseData _exerciseData = ExerciseData(userId: userId, imageData: _listOfExercise);
+
+        String _exerciseDataAsJson = json.encode(_exerciseData);
+        print(_exerciseDataAsJson);
+        return settings.setString(userId, _exerciseDataAsJson);
+      }
+
+    // ImageData _imageData = ImageData(exerciseName: exerciseName, imagePath: imagePath);
+
+
+
+
+    // String _exerciseDataAsJson = json.encode(_exerciseData);
+    // print(_exerciseDataAsJson);
+    // return settings.setString(userId, _exerciseDataAsJson);
+
+
+
   }
 
   /// read will receive a key (userId) and return object of type ExerciseData
@@ -37,12 +106,12 @@ class PreferencesService {
   /// ```
   /// {“name”:“Alfonso”,“age”:“21”,“location”:“Portugal”}
   /// ```
-  Future<ExerciseData?> read(String key) async {
+  Future<ExerciseData?> read({required String userId}) async {
     final SharedPreferences settings = await SharedPreferences.getInstance();
-    final String? _value = settings.getString(key);
-    if ( _value != null) {
-      final Map<String, dynamic> _valueAsMap = jsonDecode(_value) as Map<String, dynamic>;
-      return ExerciseData.fromJson(_valueAsMap);
+    final String? _rawJsonString = settings.getString(userId);
+    if ( _rawJsonString != null) {
+      // final Map<String, dynamic> _valueAsMap = jsonDecode(_rawJsonString) as Map<String, dynamic>;
+      return ExerciseData.fromJson(jsonDecode(_rawJsonString));
     }
   }
 

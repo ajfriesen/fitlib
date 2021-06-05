@@ -1,38 +1,39 @@
-import 'package:json_annotation/json_annotation.dart';
-
-part 'exercise_image_list.g.dart';
+// import 'package:json_annotation/json_annotation.dart';
+import 'dart:convert';
+// part 'exercise_image_list.g.dart';
 
 /// ExerciseData for saving metaData in sharedPreferences
-@JsonSerializable(explicitToJson: true)
+// @JsonSerializable(explicitToJson: true)
 class ExerciseData {
   String? userId;
   List<ImageData>? imageData;
 
   ExerciseData({this.userId, this.imageData});
 
-  factory ExerciseData.fromJson(Map<String, dynamic> data) => _$ExerciseDataFromJson(data);
+  // factory ExerciseData.fromJson(Map<String, dynamic> data) => _$ExerciseDataFromJson(data);
+  //
+  // Map<String, dynamic> toJson() => _$ExerciseDataToJson(this);
 
-  Map<String, dynamic> toJson() => _$ExerciseDataToJson(this);
 
+  // {“userId”:“Alfonso”,“imageData”:“somePath;”}
+  // Encode object to Json string
+  Map<String, dynamic> toJson() => {
+    'userId': userId,
+    'imageData': imageData
+  };
 
-  /// {“userId”:“Alfonso”,“imageData”:“somePath;”}
-  /// Encode object to Json string
-  // Map<String, dynamic> toJson() => {
-  //   'userId': userId,
-  //   'imageData': imageData
-  // };
+  // Named constructor
+  // Decode from Json string to Object
+  ExerciseData.fromJson(Map<String, dynamic> json) {
+      userId = json['userId'] as String?;
 
-  /// Named constructor
-  /// Decode from Json string to Object
-  // ExerciseData.fromJson(Map<String, dynamic> json) {
-  //     userId = json['userId'] as String?;
-  //     imageData = json['imageData'].json['imageData'].map<ImageData>((e){
-  //       return ImageData.fromJson(e);
-  //     }).toList();
-  // }
+      imageData = json['imageData'].map<ImageData>((e){
+        return ImageData.fromJson(e);
+      }).toList();
+  }
 }
 
-@JsonSerializable()
+// @JsonSerializable()
 class ImageData {
   String? exerciseName;
   //TODO: This needs to be a list
@@ -40,19 +41,19 @@ class ImageData {
 
   ImageData({this.exerciseName, this.imagePath});
 
-  factory ImageData.fromJson(Map<String, dynamic> data) => _$ImageDataFromJson(data);
+  // factory ImageData.fromJson(Map<String, dynamic> data) => _$ImageDataFromJson(data);
+  //
+  // Map<String, dynamic> toJson() => _$ImageDataToJson(this);
 
-  Map<String, dynamic> toJson() => _$ImageDataToJson(this);
+  Map<String, dynamic> toJson() => {
+    'exerciseName': exerciseName,
+    'imagePath': imagePath
+  };
 
-  // Map<String, dynamic> toJson() => {
-  //   'exerciseName': exerciseName,
-  //   'imagePath': imagePath
-  // };
-
-  // ImageData.fromJson(Map<String, dynamic> json) {
-  //   exerciseName = json['exerciseName'];
-  //   imagePath = json['imagePath'];
-  // }
+  ImageData.fromJson(Map<String, dynamic> json) {
+    exerciseName = json['exerciseName'];
+    imagePath = json['imagePath'];
+  }
 }
 
 
