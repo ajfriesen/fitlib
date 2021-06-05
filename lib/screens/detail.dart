@@ -30,7 +30,8 @@ class _DetailState extends State<Detail> {
   String? imagePath;
   String? userId;
   ExerciseData testData = ExerciseData();
-  ExerciseData testDataRead = ExerciseData();
+  List<ImageData> localImageDataList = List.empty();
+
 
 
 
@@ -47,12 +48,28 @@ class _DetailState extends State<Detail> {
     //   });
     // });
 
-    preferencesServiceService.read(userId!).then((value) {
+    preferencesServiceService.read(userId: userId!).then((value) {
       setState(() {
         //TODO: elvis operator value?.imageData
+        ImageData foundImageData  = ImageData(imagePath: '');
         if (value?.imageData != null ) {
-          imagePath = value!.imageData;
+          List<ImageData>? localImageData = value!.imageData;
+
+          foundImageData = localImageData!.firstWhere((element) {
+            if (element.exerciseName != widget.exercise.name) {
+              return false;
+            }
+            return true;
+
+          },
+              orElse: () => foundImageData
+              // orElse: () => ImageData(imagePath: '')
+          );
+
         }
+
+        imagePath = foundImageData.imagePath;
+
 
       });
     });
@@ -98,31 +115,24 @@ class _DetailState extends State<Detail> {
             //TODO: Add Modal alert
             return;
           }
-          print('User ID is: ${loggedInUser.uid}');
 
           PickedFile? pickedImage =
               await mediaService.chooseImagePicker(context);
-          print(pickedImage);
 
           if (pickedImage != null) {
-            testData.userId = userId;
-            testData.imageData = pickedImage.path;
-
             bool successfulSave = false;
 
-            if (testData.imageData != null) {
+            if (userId != null) {
               successfulSave = await preferencesServiceService.save(
-                  testData.userId!, testData.imageData!
+                userId: userId!,
+                imagePath: pickedImage.path,
+                exerciseName: widget.exercise.name!
               );
             }
 
-
-
-
             if (successfulSave) {
               setState(() {
-                imagePath = testData.imageData;
-                print('testdata: ${preferencesServiceService.read(userId!)}');
+                imagePath = pickedImage.path;
               });
             }
             //TODO: get a toast widget
