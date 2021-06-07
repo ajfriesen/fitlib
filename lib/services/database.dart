@@ -27,4 +27,14 @@ class Database {
       return Future.value(placeholder);
     }
   }
+
+  /// Add entry
+  ///
+  Future<void> addExercise({String? name}) {
+    CollectionReference exercise = _firestore.collection('exercise');
+
+    return exercise.add({
+      'name': name,
+    }).then((value) => print("Added exxxxx"));
+  }
 }
