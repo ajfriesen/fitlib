@@ -4,28 +4,7 @@ import 'package:flutter_app/models/exercise_image_list.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PreferencesService {
-  // needs to be late because of async
-  // SharedPreferences? settings;
 
-  // constructor
-  // PreferencesService() {
-  //   _createSettings();
-  // }
-
-  // we need a function because a constructor can not be async
-  // _createSettings() async {
-  //   settings = await SharedPreferences.getInstance();
-  //   print(settings);
-  // }
-
-// Revievw key, exercize name, imagePath
-// Editing exercizse in the erxercize list of the key (user)
-// Instanciate singelton of shared preferences
-// get the list
-// edit the list
-// save the list
-
-  
 
   /// save will receive a key(userId), imagePath and exerciseName
   /// put these in an instance of ExerciseData _exerciseData
@@ -34,74 +13,66 @@ class PreferencesService {
   Future<bool> save({required String userId, required String imagePath, required String exerciseName}) async {
     //get the list first
     final SharedPreferences settings = await SharedPreferences.getInstance();
+    String? currentValueAsString = settings.getString(userId);
 
-      CustomExerciseData _imageData = CustomExerciseData(exerciseName: exerciseName, imagePath: imagePath);
-      String? currentValueAsString = settings.getString(userId);
+    CustomExerciseData exerciseData = CustomExerciseData(exerciseName: exerciseName, imagePath: imagePath);
 
-
-      if (currentValueAsString != null) {
-        // dynamic _exerciseMapString = jsonDecode(currentValueAsString);
-        // ExerciseData _userData = ExerciseData.fromJson(_exerciseMapString);
-        Map<String, dynamic> _exerciseDataAsMap = json.decode(currentValueAsString) as Map<String, dynamic>;
-        UserData _userData = UserData.fromJson(_exerciseDataAsMap);
-
-        if (_userData.customExercises == null) {
-          _userData.customExercises = <CustomExerciseData>[];
-        }
-
-        CustomExerciseData imageDataAlreadyExist = _userData.customExercises!.firstWhere((element) {
-          //check for already existing exercise
-          if (element.exerciseName != exerciseName) {
-            return false;
-          }
-          return true;
-        },
-        orElse: () => CustomExerciseData()
-        );
-
-
-
-        if (imageDataAlreadyExist.imagePath != null) {
-          _userData.customExercises!.removeWhere((element) {
-            if (element.exerciseName == exerciseName) {
-              return true;
-            }
-            return false;
-          });
-        }
-
-
-
-
-        _userData.customExercises!.add(_imageData);
-        String _exerciseDataAsJson = json.encode(_userData);
-        return settings.setString(userId, _exerciseDataAsJson);
-
-      }
-
-      else {
-        List<CustomExerciseData> _listOfExercise = List.empty(growable: true);
-        _listOfExercise.add(_imageData);
-        UserData _exerciseData = UserData(userId: userId, customExercises: _listOfExercise);
-
-        String _exerciseDataAsJson = json.encode(_exerciseData);
-        return settings.setString(userId, _exerciseDataAsJson);
-      }
-
-    // ImageData _imageData = ImageData(exerciseName: exerciseName, imagePath: imagePath);
-
-
-
-
-    // String _exerciseDataAsJson = json.encode(_userData);
-    // print(_exerciseDataAsJson);
-    // return settings.setString(userId, _exerciseDataAsJson);
-
-
-
+    if (currentValueAsString != null) {
+      UserData _userData = _buildUserData(currentValueAsString);
+      _deleteIfExists(_userData, exerciseName);
+      return _addExercise(_userData, exerciseData);
+    }
+    else {
+      UserData userData = UserData(userId: userId, customExercises: List.empty(growable: true));
+      return _addExercise(userData, exerciseData);
+    }
   }
-  
-  
+
+  void _deleteIfExists (UserData _userData, String exerciseName) {
+    CustomExerciseData imageDataAlreadyExist = _userData.customExercises!.firstWhere((element) {
+      //check for already existing exercise
+      if (element.exerciseName != exerciseName) {
+        return false;
+      }
+      return true;
+    },
+        ///If nothing is found just return an empty object otherwise it will crash
+        orElse: () => CustomExerciseData()
+    );
+
+    if (imageDataAlreadyExist.imagePath != null) {
+      _userData.customExercises!.removeWhere((element) {
+        if (element.exerciseName == exerciseName) {
+          return true;
+        }
+        return false;
+      });
+    }
+  }
+
+  UserData _buildUserData(String userDataJson) {
+    Map<String, dynamic> _exerciseDataAsMap = json.decode(userDataJson) as Map<String, dynamic>;
+    UserData _userData = UserData.fromJson(_exerciseDataAsMap);
+
+    if (_userData.customExercises == null) {
+      _userData.customExercises = <CustomExerciseData>[];
+    }
+    return _userData;
+  }
+
+
+  Future<bool> _addExercise (UserData userData, CustomExerciseData exerciseData) async {
+    final SharedPreferences settings = await SharedPreferences.getInstance();
+
+    userData.customExercises!.add(exerciseData);
+    String _exerciseDataAsJson = json.encode(userData);
+
+    /// Condition ? first 1. result : 2. result
+    return userData.userId != null ? settings.setString(userData.userId!, _exerciseDataAsJson) : Future.value(false);
+  }
+
+
+
 
   /// read will receive a key (userId) and return object of type ExerciseData
   /// Example json:
