@@ -25,6 +25,8 @@ class PreferencesService {
 // edit the list
 // save the list
 
+  
+
   /// save will receive a key(userId), imagePath and exerciseName
   /// put these in an instance of ExerciseData _exerciseData
   /// encode the _exerciseData object into _exerciseDataAsJson
@@ -33,34 +35,34 @@ class PreferencesService {
     //get the list first
     final SharedPreferences settings = await SharedPreferences.getInstance();
 
-      ImageData _imageData = ImageData(exerciseName: exerciseName, imagePath: imagePath);
+      CustomExerciseData _imageData = CustomExerciseData(exerciseName: exerciseName, imagePath: imagePath);
       String? currentValueAsString = settings.getString(userId);
 
 
       if (currentValueAsString != null) {
         // dynamic _exerciseMapString = jsonDecode(currentValueAsString);
-        // ExerciseData _exerciseData = ExerciseData.fromJson(_exerciseMapString);
+        // ExerciseData _userData = ExerciseData.fromJson(_exerciseMapString);
         Map<String, dynamic> _exerciseDataAsMap = json.decode(currentValueAsString) as Map<String, dynamic>;
-        ExerciseData _exerciseData = ExerciseData.fromJson(_exerciseDataAsMap);
+        UserData _userData = UserData.fromJson(_exerciseDataAsMap);
 
-        if (_exerciseData.imageData == null) {
-          _exerciseData.imageData = <ImageData>[];
+        if (_userData.customExercises == null) {
+          _userData.customExercises = <CustomExerciseData>[];
         }
 
-        ImageData imageDataAlreadyExist = _exerciseData.imageData!.firstWhere((element) {
+        CustomExerciseData imageDataAlreadyExist = _userData.customExercises!.firstWhere((element) {
           //check for already existing exercise
           if (element.exerciseName != exerciseName) {
             return false;
           }
           return true;
         },
-        orElse: () => ImageData()
+        orElse: () => CustomExerciseData()
         );
 
 
 
         if (imageDataAlreadyExist.imagePath != null) {
-          _exerciseData.imageData!.removeWhere((element) {
+          _userData.customExercises!.removeWhere((element) {
             if (element.exerciseName == exerciseName) {
               return true;
             }
@@ -71,20 +73,18 @@ class PreferencesService {
 
 
 
-        _exerciseData.imageData!.add(_imageData);
-        String _exerciseDataAsJson = json.encode(_exerciseData);
-        print(_exerciseDataAsJson);
+        _userData.customExercises!.add(_imageData);
+        String _exerciseDataAsJson = json.encode(_userData);
         return settings.setString(userId, _exerciseDataAsJson);
 
       }
 
       else {
-        List<ImageData> _listOfExercise = List.empty(growable: true);
+        List<CustomExerciseData> _listOfExercise = List.empty(growable: true);
         _listOfExercise.add(_imageData);
-        ExerciseData _exerciseData = ExerciseData(userId: userId, imageData: _listOfExercise);
+        UserData _exerciseData = UserData(userId: userId, customExercises: _listOfExercise);
 
         String _exerciseDataAsJson = json.encode(_exerciseData);
-        print(_exerciseDataAsJson);
         return settings.setString(userId, _exerciseDataAsJson);
       }
 
@@ -93,25 +93,27 @@ class PreferencesService {
 
 
 
-    // String _exerciseDataAsJson = json.encode(_exerciseData);
+    // String _exerciseDataAsJson = json.encode(_userData);
     // print(_exerciseDataAsJson);
     // return settings.setString(userId, _exerciseDataAsJson);
 
 
 
   }
+  
+  
 
   /// read will receive a key (userId) and return object of type ExerciseData
   /// Example json:
   /// ```
   /// {“name”:“Alfonso”,“age”:“21”,“location”:“Portugal”}
   /// ```
-  Future<ExerciseData?> read({required String userId}) async {
+  Future<UserData?> read({required String userId}) async {
     final SharedPreferences settings = await SharedPreferences.getInstance();
     final String? _rawJsonString = settings.getString(userId);
     if ( _rawJsonString != null) {
       // final Map<String, dynamic> _valueAsMap = jsonDecode(_rawJsonString) as Map<String, dynamic>;
-      return ExerciseData.fromJson(jsonDecode(_rawJsonString));
+      return UserData.fromJson(jsonDecode(_rawJsonString));
     }
   }
 

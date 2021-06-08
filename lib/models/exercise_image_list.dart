@@ -4,11 +4,11 @@ import 'dart:convert';
 
 /// ExerciseData for saving metaData in sharedPreferences
 // @JsonSerializable(explicitToJson: true)
-class ExerciseData {
+class UserData {
   String? userId;
-  List<ImageData>? imageData;
+  List<CustomExerciseData>? customExercises;
 
-  ExerciseData({this.userId, this.imageData});
+  UserData({this.userId, this.customExercises});
 
   // factory ExerciseData.fromJson(Map<String, dynamic> data) => _$ExerciseDataFromJson(data);
   //
@@ -19,27 +19,27 @@ class ExerciseData {
   // Encode object to Json string
   Map<String, dynamic> toJson() => {
     'userId': userId,
-    'imageData': imageData
+    'imageData': customExercises
   };
 
   // Named constructor
   // Decode from Json string to Object
-  ExerciseData.fromJson(Map<String, dynamic> json) {
+  UserData.fromJson(Map<String, dynamic> json) {
       userId = json['userId'] as String?;
 
-      imageData = json['imageData'].map<ImageData>((e){
-        return ImageData.fromJson(e);
+      customExercises = json['imageData'].map<CustomExerciseData>((e){
+        return CustomExerciseData.fromJson(e);
       }).toList();
   }
 }
 
 // @JsonSerializable()
-class ImageData {
+class CustomExerciseData {
   String? exerciseName;
   //TODO: This needs to be a list
   String? imagePath;
 
-  ImageData({this.exerciseName, this.imagePath});
+  CustomExerciseData({this.exerciseName, this.imagePath});
 
   // factory ImageData.fromJson(Map<String, dynamic> data) => _$ImageDataFromJson(data);
   //
@@ -50,7 +50,7 @@ class ImageData {
     'imagePath': imagePath
   };
 
-  ImageData.fromJson(Map<String, dynamic> json) {
+  CustomExerciseData.fromJson(Map<String, dynamic> json) {
     exerciseName = json['exerciseName'];
     imagePath = json['imagePath'];
   }
