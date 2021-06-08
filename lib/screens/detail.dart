@@ -29,8 +29,8 @@ class _DetailState extends State<Detail> {
   final PreferencesService preferencesServiceService = PreferencesService();
   String? imagePath;
   String? userId;
-  ExerciseData testData = ExerciseData();
-  List<ImageData> localImageDataList = List.empty();
+  UserData testData = UserData();
+  List<CustomExerciseData> localImageDataList = List.empty();
 
 
 
@@ -51,9 +51,9 @@ class _DetailState extends State<Detail> {
     preferencesServiceService.read(userId: userId!).then((value) {
       setState(() {
         //TODO: elvis operator value?.imageData
-        ImageData foundImageData  = ImageData(imagePath: '');
-        if (value?.imageData != null ) {
-          List<ImageData>? localImageData = value!.imageData;
+        CustomExerciseData foundImageData  = CustomExerciseData(imagePath: '');
+        if (value?.customExercises != null ) {
+          List<CustomExerciseData>? localImageData = value!.customExercises;
 
           foundImageData = localImageData!.firstWhere((element) {
             if (element.exerciseName != widget.exercise.name) {
