@@ -30,11 +30,13 @@ class Database {
 
   /// Add entry
   ///
-  Future<void> addExercise({String? name}) {
+  Future<void> addExercise({String? name, String? imageName, String? imageUrl}) {
     CollectionReference exercise = _firestore.collection('exercise');
 
     return exercise.add({
       'name': name,
-    }).then((value) => print("Added exxxxx"));
+      'imageName': imageName,
+      'imageUrl': imageUrl
+    }).then((value) {});
   }
 }
