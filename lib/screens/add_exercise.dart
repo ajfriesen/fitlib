@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/exercise.dart';
-import 'package:flutter_app/screens/detail.dart';
 import 'package:flutter_app/services/database.dart';
+import 'package:flutter_app/services/media_file_service.dart';
+import 'package:image_picker/image_picker.dart';
 
 class AddExercise extends StatefulWidget {
   @override
@@ -13,6 +15,10 @@ class AddExercise extends StatefulWidget {
 
 class _AddExerciseState extends State<AddExercise> {
   final _formKey = GlobalKey<FormState>();
+  final Database database = Database(FirebaseFirestore.instance,FirebaseStorage.instance);
+  final Exercise exercise = Exercise.empty();
+  final Media media = Media();
+  PickedFile pickedFile = PickedFile("");
 
   @override
   Widget build(BuildContext context) {
@@ -34,14 +40,8 @@ class _AddExerciseState extends State<AddExercise> {
                     labelText: 'Name of Exercise',
                   ),
                   onSaved: (String? value) {
-                    // This optional block of code can be used to run
-                    // code when the user saves the form.
-                    Database database = Database(FirebaseFirestore.instance);
+                    exercise.name = value;
 
-                    database.addExercise(
-                        name: value,
-                        imageName: "something",
-                        imageUrl: "push-ups.jpg");
                   },
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
@@ -49,7 +49,35 @@ class _AddExerciseState extends State<AddExercise> {
                     }
                     return null;
                   },
-                )
+                ),
+                TextFormField(
+                  autofocus: true,
+                  decoration: const InputDecoration(
+                    icon: Icon(Icons.fitness_center),
+                    hintText: 'Exercise Description',
+                    labelText: 'Exercise Description',
+                  ),
+                  onSaved: (String? value) {
+                    exercise.description = value;
+                  },
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return 'please enter some text';
+                    }
+                    return null;
+                  },
+                ),
+                IconButton(
+                    onPressed: (){
+
+                      media.chooseImagePicker(context).then((value) {
+                        if (value != null || value != "") {
+                          pickedFile = value!;
+                        }
+                      });
+                      },
+                    icon: const Icon(Icons.add_a_photo)
+                    )
               ],
             ),
           )
@@ -59,7 +87,17 @@ class _AddExerciseState extends State<AddExercise> {
         onPressed: () {
           if (_formKey.currentState!.validate()) {
             _formKey.currentState!.save();
+            database.addExercise(
+                name: exercise.name,
+                description: exercise.description,
+                imageName: pickedFile.path,
+                imageUrl: "push-ups.jpg");
+            if (pickedFile != "" || pickedFile != null) {
+              database.uploadFile(pickedFile, exercise.name!);
+            }
+            Navigator.of(context).pop();
           }
+
         },
         child: const Icon(Icons.save),
       ),
