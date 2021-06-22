@@ -32,3 +32,20 @@ Nutzer / Rollen:
 - Registrierte User
     - Haben eine Liste an workouts
     -
+
+
+{
+    "userId": "12345",
+    "ExerciseData": [
+        "ExerciseName": "Burpee"
+    ]
+    "exerciseName":"Some Exercise","imagePath":"/some/path"
+}
+
+# Reources:
+
+- [Dart/Flutter – Convert/Parse JSON string, array into Object, List](https://bezkoder.com/dart-flutter-parse-json-string-array-to-object-list/)
+
+
+### Add auto gernerated json thingy
+https://www.youtube.com/watch?v=8fFoLs9qVQA

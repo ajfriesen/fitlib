@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/screens/workout_list.dart';
 import 'package:flutter_app/services/authentication.dart';
@@ -28,7 +29,9 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
         providers: [
           Provider<Database>(
-            create: (_) => Database(FirebaseFirestore.instance),
+            create: (_) {
+              return Database(FirebaseFirestore.instance,FirebaseStorage.instance);
+            },
           ),
           Provider<Login>(
             create: (_) => Login(FirebaseAuth.instance),
