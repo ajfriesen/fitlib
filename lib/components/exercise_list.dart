@@ -16,7 +16,7 @@ class _MyListState extends State<MyList> {
   @override
   void initState() {
     super.initState();
-    _exerciseStream = context.read<Database>().getExercise();
+    _exerciseStream = context.read<Database>().getExercises();
   }
 
   @override
@@ -32,11 +32,6 @@ class _MyListState extends State<MyList> {
             default:
               return ListView(
                 children: snapshot.data!.map((Exercise exercise) {
-                  // Repository firebaseRepositoy =
-                  //     Repository(FirebaseFirestore.instance);
-                  //
-                  // String imageurl = await firebaseRepositoy.getDownloadUrl(exercise.imageName!)
-
                   return ExerciseCard(exercise);
                 }).toList(),
               );

@@ -1,10 +1,13 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/components/custom_image.dart';
 import 'package:flutter_app/models/exercise.dart';
 import 'package:flutter_app/services/authentication.dart';
+import 'package:flutter_app/services/database.dart';
 import 'package:flutter_app/services/media_file_service.dart';
 import 'package:flutter_app/services/shared_preferences_service.dart';
 import 'package:image_picker/image_picker.dart';
@@ -27,6 +30,9 @@ class _DetailState extends State<Detail> {
   static const String placeholderImage = 'images/placeholder.png';
   final Media mediaService = Media();
   final PreferencesService preferencesServiceService = PreferencesService();
+  final Database database = Database(FirebaseFirestore.instance,FirebaseStorage.instance);
+
+
   String? imagePath;
   String? userId;
   UserData testData = UserData();
@@ -94,6 +100,11 @@ class _DetailState extends State<Detail> {
                 imageurl == placeholderImage || imageurl.isEmpty
                     ? Image.asset(placeholderImage, fit: BoxFit.fitWidth)
                     : Image.network(imageurl, fit: BoxFit.fitWidth),
+                SizedBox(height: 40),
+                Text("Description", style: TextStyle(fontSize: 30),),
+                widget.exercise.description != null || widget.exercise.description != ""
+                    ? Text(widget.exercise.description!)
+                    : Text("Empty description"),
                 SizedBox(height: 40),
                 Text(
                   'My saved Images',

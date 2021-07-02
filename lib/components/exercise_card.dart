@@ -24,7 +24,7 @@ class _ExerciseCardState extends State<ExerciseCard> {
   void initState() {
     Database firebaseRepositoy = Database(FirebaseFirestore.instance,FirebaseStorage.instance);
 
-    firebaseRepositoy.getDownloadUrl(widget.exercise.imageName!).then((value) {
+    firebaseRepositoy.getImageUrl(imageName: widget.exercise.imageName!).then((value) {
       setState(() {
         imageurl = value;
         fetched = true;
@@ -44,7 +44,7 @@ class _ExerciseCardState extends State<ExerciseCard> {
         leading: fetched && imageurl != placeholder
             ? Image.network(imageurl)
             : Image.asset(imageurl),
-        subtitle: Text(widget.exercise.imageName!),
+        subtitle: widget.exercise.description != null ? Text(widget.exercise.description!) :Text(""),
         trailing: IconButton(
             icon: const Icon(Icons.more_vert),
             onPressed: (){

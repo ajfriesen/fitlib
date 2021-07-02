@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_app/models/exercise.dart';
+import 'package:flutter_app/services/route_generator.dart';
 import 'package:image_picker/image_picker.dart';
 
 class Database {
@@ -12,7 +13,7 @@ class Database {
   final FirebaseStorage _storage;
   String placeholder = "images/placeholder.png";
 
-  Stream<List<Exercise>> getExercise() {
+  Stream<List<Exercise>> getExercises() {
     return _firestore.collection('exercise').snapshots().map((snapshot) {
       return snapshot.docs.map((document) {
         return Exercise(
@@ -25,7 +26,16 @@ class Database {
     });
   }
 
-  Future<String> getDownloadUrl(String imageName) async {
+  // TODO: Try implementing a get exercise from single document id
+  Future<Exercise> getExercise({required String documentReference}) async{
+    Exercise exercise = Exercise.empty();
+
+    // TODO: Try implementing a get exercise from single document id
+    return exercise;
+
+  }
+
+  Future<String> getImageUrl({required String imageName}) async {
     try {
       String imageUrl = await _storage.ref(imageName).getDownloadURL();
       return imageUrl;
@@ -36,7 +46,7 @@ class Database {
 
   /// Add entry
   /// TODO:Add exercise instead of strings
-  Future<void> addExercise(
+  Future<String> addExercise(
       {String? name,
       String? imageName,
       String? imageUrl,
@@ -46,20 +56,26 @@ class Database {
     // Generate an empty document to create the document Id
     DocumentReference<Object?> randomDoc = await exercise.doc();
 
-    return exercise.doc(randomDoc.id).set({
+    exercise.doc(randomDoc.id).set({
       'id': randomDoc.id,
       'name': name,
       'imageName': imageName,
       'imageUrl': imageUrl,
       'description': description,
     }).then((value) => print('Added exercise'));
+
+    return randomDoc.id;
+
   }
 
-  Future<void> uploadFile(PickedFile pickedFile, String fileName) async {
-    File file = File(pickedFile.path);
+  Future<void> uploadFile({required PickedFile file, required exercise}) async {
+    File filePath = File(file.path);
+
+    final String exerciseId = exercise.id;
+    final String exerciseName = exercise.name;
 
     try {
-      await _storage.ref(fileName).putFile(file);
+      await _storage.ref('exercise/$exerciseId/$exerciseName').putFile(filePath);
     } on FirebaseException catch (e) {
       print(e);
     }

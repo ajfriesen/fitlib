@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/models/exercise.dart';
 import 'package:flutter_app/services/database.dart';
 import 'package:flutter_app/services/media_file_service.dart';
+import 'package:flutter_app/services/route_generator.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddExercise extends StatefulWidget {
@@ -84,18 +85,23 @@ class _AddExerciseState extends State<AddExercise> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
+        onPressed: () async {
           if (_formKey.currentState!.validate()) {
             _formKey.currentState!.save();
-            database.addExercise(
+
+            if (pickedFile != "" || pickedFile != null) {
+              database.uploadFile(file: pickedFile,exercise: exercise);
+            }
+
+            String exerciseDocumentId = await database.addExercise(
                 name: exercise.name,
                 description: exercise.description,
                 imageName: pickedFile.path,
                 imageUrl: "push-ups.jpg");
-            if (pickedFile != "" || pickedFile != null) {
-              database.uploadFile(pickedFile, exercise.name!);
-            }
+            
+            database.getImageUrl(imageName: pickedFile.path);
             Navigator.of(context).pop();
+
           }
 
         },

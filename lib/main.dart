@@ -81,7 +81,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Flutter Sport'),
+        title: const Text('FitLib'),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.login),
