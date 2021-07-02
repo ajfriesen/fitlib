@@ -8,5 +8,4 @@ class Exercise {
   Exercise(this.id, this.name, this.imageName, this.imageUrl, this.description);
 
   Exercise.empty();
-
 }
