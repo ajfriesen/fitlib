@@ -17,11 +17,11 @@ class Database {
     return _firestore.collection('exercise').snapshots().map((snapshot) {
       return snapshot.docs.map((document) {
         return Exercise(
-            document.data()['id'],
-            document.data()['name'],
-            document.data()['imageName'],
-            document.data()['imageUrl'],
-            document.data()['description']);
+            id: document.data()['id'],
+            name: document.data()['name'],
+            imageName: document.data()['imageName'],
+            imageUrl: document.data()['imageUrl'],
+            description: document.data()['description']);
       }).toList();
     });
   }
