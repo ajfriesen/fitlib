@@ -50,10 +50,12 @@ class Database {
       {String? name,
       String? imageName,
       String? imageUrl,
-      String? description}) async {
+      String? description,
+      PickedFile? uploadImage
+      }) async {
     CollectionReference exercise = _firestore.collection('exercise');
 
-    // Generate an empty document to create the document Id
+    /// Generate an empty document to create the document Id
     DocumentReference<Object?> randomDoc = await exercise.doc();
 
     exercise.doc(randomDoc.id).set({
@@ -64,15 +66,19 @@ class Database {
       'description': description,
     }).then((value) => print('Added exercise'));
 
+    //TODO:
+    /// Only upload image if image is not null or empty string
+    if ( uploadImage != null || uploadImage != ""){
+      uploadFile(file: uploadImage!, exerciseId: randomDoc.id, exerciseName: name);
+    }
+
+
     return randomDoc.id;
 
   }
 
-  Future<void> uploadFile({required PickedFile file, required exercise}) async {
+  Future<void> uploadFile({required PickedFile file, required exerciseId, required exerciseName}) async {
     File filePath = File(file.path);
-
-    final String exerciseId = exercise.id;
-    final String exerciseName = exercise.name;
 
     try {
       await _storage.ref('exercise/$exerciseId/$exerciseName').putFile(filePath);

@@ -89,15 +89,13 @@ class _AddExerciseState extends State<AddExercise> {
           if (_formKey.currentState!.validate()) {
             _formKey.currentState!.save();
 
-            if (pickedFile != "" || pickedFile != null) {
-              database.uploadFile(file: pickedFile,exercise: exercise);
-            }
-
             String exerciseDocumentId = await database.addExercise(
                 name: exercise.name,
                 description: exercise.description,
                 imageName: pickedFile.path,
-                imageUrl: "push-ups.jpg");
+                imageUrl: "",
+                uploadImage: pickedFile
+                );
             
             database.getImageUrl(imageName: pickedFile.path);
             Navigator.of(context).pop();
