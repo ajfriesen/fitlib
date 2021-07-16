@@ -1,63 +1,36 @@
-# flutter_app
+# fitlib
 
-A new Flutter application.
+An smartphone app for people having a hard time remembering exercises from physiotherapy.
 
-## Getting Started
+## Motivation
 
-This project is a starting point for a Flutter application.
+I had shoulder surgery in mid of March 2021.
+I am also a passionate swimmer and want to get my strength, mobility and coordination back as fast as possible.
+For that I need to follow advice by my physiotherapist which will give me a number of exercises depending on my current level of progression.
+I had a hart time remembering all those exercises.
+I also know that the physio session alone will not get me back on track and need to do them myself.
+Here we are.
 
-A few resources to get you started if this is your first Flutter project:
+## What this app will do for you
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+Helping you to remember exercises.
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+With this app you can create an exercises quickly on the fly and refer to it later.
 
-# sources
+The exercises can have a photo.
+A description will help you what to do.
+Do and don`ts fields will help you to remember things you need to consider when doing the movement.
 
-https://resocoder.com/2020/03/09/flutter-firebase-ddd-course-1-domain-driven-design-principles/
+You can let your physiotherapist take a video from you doing the exercise.
+This video or image is private and not synced to the cloud (stays on your pone).
 
-# Presentation
+## For physiotherapist
 
-- widgets only
-- state
-- dumb
+Take a picture or short video with the clients phone.
+That way the client will have the possibility to refer to the exercise later.
+You do not have to create a drawing or take a video from yourself.
 
-# Application
+## The team
 
-- Features
-- Subfeatures
-- No UI
-- No business logic
-- user input is validated (by calling things in the domain layer)
-
-# Domain
-
-- business logic
-- does not depend on anything else
-- everything depends on domain
-- ideally should not care if you use rest api calls or firestore
-
-# Infrastructure
-
-- API
-- Databases
-- firebase
-- DTO (Data Transfer Objects)
-  - convert data between entities and value objects from the domain layer and the plain data of the outside world
-
-
-# Notes:
-
-- do not use async in init state
-
-
-# Homework
-
-- Rearange login
-- research logins
-- detail screen (not fetching again!)
-- rename repository
-- 
+We have a team of experts which will check exercises for public proposal.
+If this process is done the exercises will be publicly available for other users.
