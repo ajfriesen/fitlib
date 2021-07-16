@@ -26,13 +26,17 @@ class Database {
     });
   }
 
-  // TODO: Try implementing a get exercise from single document id
-  Future<Exercise> getExercise({required String documentReference}) async{
+  /// Get exercise by documentId/exerciseId and return exercise
+  Future<Exercise> getExercise({required String exerciseId}) async {
     Exercise exercise = Exercise.empty();
 
-    // TODO: Try implementing a get exercise from single document id
+    DocumentReference<Map<String, dynamic>> documentReference = await _firestore.collection('exercise').doc(exerciseId);
+    DocumentSnapshot<Map<String, dynamic>> documentSnapshot = await documentReference.get();
+    if (documentSnapshot.exists ) {
+      Map<String, dynamic>? documentSnapshotMap = documentSnapshot.data();
+      exercise = Exercise.fromJson(documentSnapshotMap!);
+    }
     return exercise;
-
   }
 
   Future<String> getImageUrl({required String imageName}) async {
