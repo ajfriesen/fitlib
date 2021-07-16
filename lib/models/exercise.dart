@@ -14,7 +14,7 @@ class Exercise {
 
   Exercise.empty();
 
-  Exercise.fromJson(Map<String, Object?> json)
+  Exercise.fromJson(Map<String, dynamic> json)
       : this(
             id: json['id']! as String,
             name: json['name']! as String,
@@ -22,7 +22,7 @@ class Exercise {
             imageUrl: json['imageUrl']! as String,
             description: json['description']! as String);
 
-  Map<String, Object?> toJson() {
+  Map<String, dynamic> toJson() {
     return {
       'id': id,
       'name': name,
