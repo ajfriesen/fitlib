@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_app/models/exercise.dart';
-import 'package:flutter_app/services/route_generator.dart';
 import 'package:image_picker/image_picker.dart';
 
 class Database {
@@ -11,7 +10,6 @@ class Database {
 
   final FirebaseFirestore _firestore;
   final FirebaseStorage _storage;
-  String placeholder = "images/placeholder.png";
 
   Stream<List<Exercise>> getExercises() {
     return _firestore.collection('exercise').snapshots().map((snapshot) {
@@ -44,6 +42,7 @@ class Database {
       String imageUrl = await _storage.ref('exercise/$exerciseId/preview').getDownloadURL();
       return imageUrl;
     } on Exception catch (e) {
+      print(e);
       return Future.value("");
     }
   }
@@ -71,7 +70,6 @@ class Database {
     exerciseCollection.doc(randomDoc.id).set(exercise.toJson()).then((value) => print('Added exercise'));
 
     return randomDoc.id;
-
   }
 
   Future<String> uploadFile({required PickedFile file, required exerciseId}) async {
