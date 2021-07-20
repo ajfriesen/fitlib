@@ -89,11 +89,9 @@ class _AddExerciseState extends State<AddExercise> {
           if (_formKey.currentState!.validate()) {
             _formKey.currentState!.save();
 
+            exercise.imageName = pickedFile.path;
             String exerciseDocumentId = await database.addExercise(
-                name: exercise.name,
-                description: exercise.description,
-                imageName: pickedFile.path,
-                imageUrl: "",
+                exercise: exercise,
                 uploadImage: pickedFile
                 );
             
