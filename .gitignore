@@ -123,3 +123,4 @@ app.*.symbols
 */google-services.json
 
 notes.md
+/android/app/google-services.json
