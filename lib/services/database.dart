@@ -17,22 +17,26 @@ class Database {
     return _firestore.collection('exercise').snapshots().map((snapshot) {
       return snapshot.docs.map((document) {
         return Exercise(
-            document.data()['id'],
-            document.data()['name'],
-            document.data()['imageName'],
-            document.data()['imageUrl'],
-            document.data()['description']);
+            id: document.data()['id'],
+            name: document.data()['name'],
+            imageName: document.data()['imageName'],
+            imageUrl: document.data()['imageUrl'],
+            description: document.data()['description']);
       }).toList();
     });
   }
 
-  // TODO: Try implementing a get exercise from single document id
-  Future<Exercise> getExercise({required String documentReference}) async{
+  /// Get exercise by documentId/exerciseId and return exercise
+  Future<Exercise> getExercise({required String exerciseId}) async {
     Exercise exercise = Exercise.empty();
 
-    // TODO: Try implementing a get exercise from single document id
+    DocumentReference<Map<String, dynamic>> documentReference = await _firestore.collection('exercise').doc(exerciseId);
+    DocumentSnapshot<Map<String, dynamic>> documentSnapshot = await documentReference.get();
+    if (documentSnapshot.exists ) {
+      Map<String, dynamic>? documentSnapshotMap = documentSnapshot.data();
+      exercise = Exercise.fromJson(documentSnapshotMap!);
+    }
     return exercise;
-
   }
 
   Future<String> getImageUrl({required String imageName}) async {
@@ -50,10 +54,12 @@ class Database {
       {String? name,
       String? imageName,
       String? imageUrl,
-      String? description}) async {
+      String? description,
+      PickedFile? uploadImage
+      }) async {
     CollectionReference exercise = _firestore.collection('exercise');
 
-    // Generate an empty document to create the document Id
+    /// Generate an empty document to create the document Id
     DocumentReference<Object?> randomDoc = await exercise.doc();
 
     exercise.doc(randomDoc.id).set({
@@ -64,15 +70,19 @@ class Database {
       'description': description,
     }).then((value) => print('Added exercise'));
 
+    //TODO:
+    /// Only upload image if image is not null or empty string
+    if ( uploadImage != null || uploadImage != ""){
+      uploadFile(file: uploadImage!, exerciseId: randomDoc.id, exerciseName: name);
+    }
+
+
     return randomDoc.id;
 
   }
 
-  Future<void> uploadFile({required PickedFile file, required exercise}) async {
+  Future<void> uploadFile({required PickedFile file, required exerciseId, required exerciseName}) async {
     File filePath = File(file.path);
-
-    final String exerciseId = exercise.id;
-    final String exerciseName = exercise.name;
 
     try {
       await _storage.ref('exercise/$exerciseId/$exerciseName').putFile(filePath);
