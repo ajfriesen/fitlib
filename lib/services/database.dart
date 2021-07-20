@@ -74,14 +74,17 @@ class Database {
 
   }
 
-  Future<void> uploadFile({required PickedFile file, required exerciseId, required exerciseName}) async {
+  Future<String> uploadFile({required PickedFile file, required exerciseId}) async {
     File filePath = File(file.path);
 
     try {
-      await _storage.ref('exercise/$exerciseId/$exerciseName').putFile(filePath);
+      await _storage.ref('exercise/$exerciseId/preview').putFile(filePath);
     } on FirebaseException catch (e) {
       print(e);
     }
+
+    String downloadUrl = await _storage.ref('exercise/$exerciseId/preview').getDownloadURL();
+    return downloadUrl;
   }
 
   Future<void> deleteExercise(Exercise exercise) {
