@@ -90,11 +90,7 @@ class PreferencesService {
 
   Future<bool> saveImageMetadata(String storedImage, String key) async {
     final SharedPreferences settings = await SharedPreferences.getInstance();
-
-    if (settings != null) {
-      return settings.setString(key, storedImage);
-    }
-    return Future.value(false);
+    return settings.setString(key, storedImage);
   }
 
   // Recieve key and exercizse name

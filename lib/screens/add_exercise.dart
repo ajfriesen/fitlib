@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/models/exercise.dart';
 import 'package:flutter_app/services/database.dart';
 import 'package:flutter_app/services/media_file_service.dart';
-import 'package:flutter_app/services/route_generator.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddExercise extends StatefulWidget {
@@ -90,14 +89,11 @@ class _AddExerciseState extends State<AddExercise> {
             _formKey.currentState!.save();
 
             exercise.imageName = pickedFile.path;
-            String exerciseDocumentId = await database.addExercise(
+            await database.addExercise(
                 exercise: exercise,
                 uploadImage: pickedFile
                 );
-            
-            database.getImageUrl(imageName: pickedFile.path);
             Navigator.of(context).pop();
-
           }
 
         },

@@ -13,16 +13,15 @@ class ExerciseCard extends StatefulWidget {
 }
 
 class _ExerciseCardState extends State<ExerciseCard> {
-  // String imageurl = await firebaseRepositoy.getDownloadUrl(exercise.imageName!)
-  final Database database = Database(FirebaseFirestore.instance,FirebaseStorage.instance);
+  final Database database =
+      Database(FirebaseFirestore.instance, FirebaseStorage.instance);
 
   static const String placeholder = "images/placeholder.png";
-  String imageurl = "images/placeholder.png";
-  bool fetched = false;
 
   @override
   void initState() {
-    Database firebaseRepositoy = Database(FirebaseFirestore.instance,FirebaseStorage.instance);
+    Database firebaseRepositoy =
+        Database(FirebaseFirestore.instance, FirebaseStorage.instance);
 
     firebaseRepositoy
         .getImageUrl(exerciseId: widget.exercise.id!)
@@ -48,25 +47,27 @@ class _ExerciseCardState extends State<ExerciseCard> {
             : Text(""),
         trailing: IconButton(
             icon: const Icon(Icons.more_vert),
-            onPressed: (){ showDialog(
-                context: context,
-                builder: (BuildContext context) => AlertDialog(
-                  title: const Text("Warnung"),
-                  content: const Text("Soll diener Eintrag geloescht werden?"),
-                  actions: <Widget>[
-                    TextButton(
-                      onPressed: () => Navigator.pop(context, 'Cancel'),
-                      child: const Text('Cancel'),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        database.deleteExercise(widget.exercise);
-                        Navigator.pop(context, 'Delete');
-                      },
-                      child: const Text('Delete'),
-                    ),
-                  ],
-            ));
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) => AlertDialog(
+                        title: const Text("Warnung"),
+                        content:
+                            const Text("Soll diener Eintrag geloescht werden?"),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () => Navigator.pop(context, 'Cancel'),
+                            child: const Text('Cancel'),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              database.deleteExercise(widget.exercise);
+                              Navigator.pop(context, 'Delete');
+                            },
+                            child: const Text('Delete'),
+                          ),
+                        ],
+                      ));
               ;
             }),
         onTap: () {
