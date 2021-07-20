@@ -39,12 +39,12 @@ class Database {
     return exercise;
   }
 
-  Future<String> getImageUrl({required String imageName}) async {
+  Future<String> getImageUrl({required String exerciseId}) async {
     try {
-      String imageUrl = await _storage.ref(imageName).getDownloadURL();
+      String imageUrl = await _storage.ref('exercise/$exerciseId/preview').getDownloadURL();
       return imageUrl;
     } on Exception catch (e) {
-      return Future.value(placeholder);
+      return Future.value("");
     }
   }
 
