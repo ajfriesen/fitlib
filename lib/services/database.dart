@@ -50,32 +50,25 @@ class Database {
 
   /// Add entry
   /// TODO:Add exercise instead of strings
-  Future<String> addExercise(
-      {String? name,
-      String? imageName,
-      String? imageUrl,
-      String? description,
-      PickedFile? uploadImage
-      }) async {
-    CollectionReference exercise = _firestore.collection('exercise');
+  Future<String> addExercise({required Exercise exercise, PickedFile? uploadImage}) async {
+    CollectionReference exerciseCollection = _firestore.collection('exercise');
 
     /// Generate an empty document to create the document Id
-    DocumentReference<Object?> randomDoc = await exercise.doc();
-
-    exercise.doc(randomDoc.id).set({
-      'id': randomDoc.id,
-      'name': name,
-      'imageName': imageName,
-      'imageUrl': imageUrl,
-      'description': description,
-    }).then((value) => print('Added exercise'));
+    DocumentReference<Object?> randomDoc = await exerciseCollection.doc();
+    String uploadFileUrl;
 
     //TODO:
     /// Only upload image if image is not null or empty string
-    if ( uploadImage != null || uploadImage != ""){
-      uploadFile(file: uploadImage!, exerciseId: randomDoc.id, exerciseName: name);
+    if ( uploadImage != null && uploadImage.path != ""){
+      uploadFileUrl = await uploadFile(file: uploadImage, exerciseId: randomDoc.id);
+    } else {
+      uploadFileUrl = "";
     }
 
+    /// Map entered values to exercise entry
+    exercise.id = randomDoc.id;
+    exercise.imageUrl = uploadFileUrl;
+    exerciseCollection.doc(randomDoc.id).set(exercise.toJson()).then((value) => print('Added exercise'));
 
     return randomDoc.id;
 
