@@ -24,12 +24,11 @@ class _ExerciseCardState extends State<ExerciseCard> {
   void initState() {
     Database firebaseRepositoy = Database(FirebaseFirestore.instance,FirebaseStorage.instance);
 
-    firebaseRepositoy.getImageUrl(imageName: widget.exercise.imageName!).then((value) {
+    firebaseRepositoy
+        .getImageUrl(exerciseId: widget.exercise.id!)
+        .then((value) {
       setState(() {
-        imageurl = value;
-        fetched = true;
-        widget.exercise.imageUrl = imageurl;
-
+        widget.exercise.imageUrl = value;
       });
     });
 
@@ -41,10 +40,12 @@ class _ExerciseCardState extends State<ExerciseCard> {
     return Card(
       child: ListTile(
         title: Text(widget.exercise.name!),
-        leading: fetched && imageurl != placeholder
-            ? Image.network(imageurl)
-            : Image.asset(imageurl),
-        subtitle: widget.exercise.description != null ? Text(widget.exercise.description!) :Text(""),
+        leading: widget.exercise.imageUrl != ""
+            ? Image.network(widget.exercise.imageUrl!)
+            : Image.asset(placeholder),
+        subtitle: widget.exercise.description != null
+            ? Text(widget.exercise.description!)
+            : Text(""),
         trailing: IconButton(
             icon: const Icon(Icons.more_vert),
             onPressed: (){ showDialog(
