@@ -15,7 +15,8 @@ class AddExercise extends StatefulWidget {
 
 class _AddExerciseState extends State<AddExercise> {
   final _formKey = GlobalKey<FormState>();
-  final Database database = Database(FirebaseFirestore.instance,FirebaseStorage.instance);
+  final Database database =
+      Database(FirebaseFirestore.instance, FirebaseStorage.instance);
   final Exercise exercise = Exercise.empty();
   final Media media = Media();
   PickedFile pickedFile = PickedFile("");
@@ -41,7 +42,6 @@ class _AddExerciseState extends State<AddExercise> {
                   ),
                   onSaved: (String? value) {
                     exercise.name = value;
-
                   },
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
@@ -68,16 +68,14 @@ class _AddExerciseState extends State<AddExercise> {
                   },
                 ),
                 IconButton(
-                    onPressed: (){
-
+                    onPressed: () {
                       media.chooseImagePicker(context).then((value) {
                         if (value != null || value != "") {
                           pickedFile = value!;
                         }
                       });
-                      },
-                    icon: const Icon(Icons.add_a_photo)
-                    )
+                    },
+                    icon: const Icon(Icons.add_a_photo))
               ],
             ),
           )
@@ -90,12 +88,9 @@ class _AddExerciseState extends State<AddExercise> {
 
             exercise.imageName = pickedFile.path;
             await database.addExercise(
-                exercise: exercise,
-                uploadImage: pickedFile
-                );
+                exercise: exercise, uploadImage: pickedFile);
             Navigator.of(context).pop();
           }
-
         },
         child: const Icon(Icons.save),
       ),

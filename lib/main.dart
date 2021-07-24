@@ -30,7 +30,8 @@ class MyApp extends StatelessWidget {
         providers: [
           Provider<Database>(
             create: (_) {
-              return Database(FirebaseFirestore.instance,FirebaseStorage.instance);
+              return Database(
+                  FirebaseFirestore.instance, FirebaseStorage.instance);
             },
           ),
           Provider<Login>(

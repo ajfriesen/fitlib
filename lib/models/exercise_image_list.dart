@@ -1,4 +1,3 @@
-
 /// ExerciseData for saving metaData in sharedPreferences
 class UserData {
   String? userId;
@@ -8,19 +7,17 @@ class UserData {
 
   // {“userId”:“Alfonso”,“imageData”:“somePath;”}
   // Encode object to Json string
-  Map<String, dynamic> toJson() => {
-    'userId': userId,
-    'imageData': customExercises
-  };
+  Map<String, dynamic> toJson() =>
+      {'userId': userId, 'imageData': customExercises};
 
   // Named constructor
   // Decode from Json string to Object
   UserData.fromJson(Map<String, dynamic> json) {
-      userId = json['userId'] as String?;
+    userId = json['userId'] as String?;
 
-      customExercises = json['imageData'].map<CustomExerciseData>((e){
-        return CustomExerciseData.fromJson(e);
-      }).toList();
+    customExercises = json['imageData'].map<CustomExerciseData>((e) {
+      return CustomExerciseData.fromJson(e);
+    }).toList();
   }
 }
 
@@ -31,10 +28,8 @@ class CustomExerciseData {
 
   CustomExerciseData({this.exerciseName, this.imagePath});
 
-  Map<String, dynamic> toJson() => {
-    'exerciseName': exerciseName,
-    'imagePath': imagePath
-  };
+  Map<String, dynamic> toJson() =>
+      {'exerciseName': exerciseName, 'imagePath': imagePath};
 
   CustomExerciseData.fromJson(Map<String, dynamic> json) {
     exerciseName = json['exerciseName'];

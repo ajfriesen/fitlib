@@ -18,7 +18,6 @@ class _ExerciseCardState extends State<ExerciseCard> {
 
   static const String placeholder = "images/placeholder.png";
 
-
   @override
   Widget build(BuildContext context) {
     return Card(

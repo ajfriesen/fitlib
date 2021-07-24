@@ -28,23 +28,19 @@ class _DetailState extends State<Detail> {
   static const String placeholderImage = 'images/placeholder.png';
   final Media mediaService = Media();
   final PreferencesService preferencesServiceService = PreferencesService();
-  final Database database = Database(FirebaseFirestore.instance,FirebaseStorage.instance);
-
+  final Database database =
+      Database(FirebaseFirestore.instance, FirebaseStorage.instance);
 
   String? imagePath;
   String? userId;
   UserData testData = UserData();
   List<CustomExerciseData> localImageDataList = List.empty();
 
-
-
-
   @override
   void initState() {
     loginProvider = context.read<Login>();
     userId = loginProvider.getUser()?.uid;
     super.initState();
-
 
     // preferencesServiceService.getFile(loginProvider.getUser()?.uid ?? '').then((value) {
     //   setState(() {
@@ -55,8 +51,8 @@ class _DetailState extends State<Detail> {
     preferencesServiceService.read(userId: userId!).then((value) {
       setState(() {
         //TODO: elvis operator value?.imageData
-        CustomExerciseData foundImageData  = CustomExerciseData(imagePath: '');
-        if (value?.customExercises != null ) {
+        CustomExerciseData foundImageData = CustomExerciseData(imagePath: '');
+        if (value?.customExercises != null) {
           List<CustomExerciseData>? localImageData = value!.customExercises;
 
           foundImageData = localImageData!.firstWhere((element) {
@@ -64,22 +60,15 @@ class _DetailState extends State<Detail> {
               return false;
             }
             return true;
-
-          },
-              orElse: () => foundImageData
+          }, orElse: () => foundImageData
               // orElse: () => ImageData(imagePath: '')
-          );
-
+              );
         }
 
         imagePath = foundImageData.imagePath;
-
-
       });
     });
-
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -99,8 +88,12 @@ class _DetailState extends State<Detail> {
                     ? Image.asset(placeholderImage, fit: BoxFit.fitWidth)
                     : Image.network(imageurl, fit: BoxFit.fitWidth),
                 SizedBox(height: 40),
-                Text("Description", style: TextStyle(fontSize: 30),),
-                widget.exercise.description != null || widget.exercise.description != ""
+                Text(
+                  "Description",
+                  style: TextStyle(fontSize: 30),
+                ),
+                widget.exercise.description != null ||
+                        widget.exercise.description != ""
                     ? Text(widget.exercise.description!)
                     : Text("Empty description"),
                 SizedBox(height: 40),
@@ -133,10 +126,9 @@ class _DetailState extends State<Detail> {
 
             if (userId != null) {
               successfulSave = await preferencesServiceService.save(
-                userId: userId!,
-                imagePath: pickedImage.path,
-                exerciseName: widget.exercise.name!
-              );
+                  userId: userId!,
+                  imagePath: pickedImage.path,
+                  exerciseName: widget.exercise.name!);
             }
 
             if (successfulSave) {

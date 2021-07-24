@@ -28,9 +28,11 @@ class Database {
   Future<Exercise> getExercise({required String exerciseId}) async {
     Exercise exercise = Exercise.empty();
 
-    DocumentReference<Map<String, dynamic>> documentReference = await _firestore.collection('exercise').doc(exerciseId);
-    DocumentSnapshot<Map<String, dynamic>> documentSnapshot = await documentReference.get();
-    if (documentSnapshot.exists ) {
+    DocumentReference<Map<String, dynamic>> documentReference =
+        await _firestore.collection('exercise').doc(exerciseId);
+    DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
+        await documentReference.get();
+    if (documentSnapshot.exists) {
       Map<String, dynamic>? documentSnapshotMap = documentSnapshot.data();
       exercise = Exercise.fromJson(documentSnapshotMap!);
     }
@@ -39,7 +41,8 @@ class Database {
 
   Future<String> getImageUrl({required String exerciseId}) async {
     try {
-      String imageUrl = await _storage.ref('exercise/$exerciseId/preview').getDownloadURL();
+      String imageUrl =
+          await _storage.ref('exercise/$exerciseId/preview').getDownloadURL();
       return imageUrl;
     } on Exception catch (e) {
       print(e);
@@ -56,8 +59,9 @@ class Database {
     String uploadFileUrl;
 
     /// Only upload image if image is not null or empty string
-    if ( uploadImage != null && uploadImage.path != ""){
-      uploadFileUrl = await uploadFile(file: uploadImage, exerciseId: randomDoc.id);
+    if (uploadImage != null && uploadImage.path != "") {
+      uploadFileUrl =
+          await uploadFile(file: uploadImage, exerciseId: randomDoc.id);
     } else {
       uploadFileUrl = "";
     }
@@ -65,12 +69,16 @@ class Database {
     /// Map entered values to exercise entry in firebase
     exercise.id = randomDoc.id;
     exercise.imageUrl = uploadFileUrl;
-    exerciseCollection.doc(randomDoc.id).set(exercise.toJson()).then((value) => print('Added exercise'));
+    exerciseCollection
+        .doc(randomDoc.id)
+        .set(exercise.toJson())
+        .then((value) => print('Added exercise'));
 
     return randomDoc.id;
   }
 
-  Future<String> uploadFile({required PickedFile file, required exerciseId}) async {
+  Future<String> uploadFile(
+      {required PickedFile file, required exerciseId}) async {
     File filePath = File(file.path);
 
     try {
@@ -79,7 +87,8 @@ class Database {
       print(e);
     }
 
-    String downloadUrl = await _storage.ref('exercise/$exerciseId/preview').getDownloadURL();
+    String downloadUrl =
+        await _storage.ref('exercise/$exerciseId/preview').getDownloadURL();
     return downloadUrl;
   }
 
@@ -88,8 +97,10 @@ class Database {
   // There is not a method for this in flutter, so we need to find a way to store all references to all images
   // and then delete them.
   Future<void> deleteExerciseImageFolder({required String exerciseId}) {
-    return _storage.ref('exercise/$exerciseId/preview').delete().then((value) => print("Deleted folder"));
-
+    return _storage
+        .ref('exercise/$exerciseId/preview')
+        .delete()
+        .then((value) => print("Deleted folder"));
   }
 
   Future deleteExercise(Exercise exercise) {
