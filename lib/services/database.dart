@@ -83,9 +83,21 @@ class Database {
     return downloadUrl;
   }
 
-  Future<void> deleteExercise(Exercise exercise) {
+  /// deleteExerciseImageFolder does delete the preview only currently
+  // TODO: Find a way to delete all images in a folder.
+  // There is not a method for this in flutter, so we need to find a way to store all references to all images
+  // and then delete them.
+  Future<void> deleteExerciseImageFolder({required String exerciseId}) {
+    return _storage.ref('exercise/$exerciseId/preview').delete().then((value) => print("Deleted folder"));
+
+  }
+
+  Future deleteExercise(Exercise exercise) {
     CollectionReference exercises =
         FirebaseFirestore.instance.collection('exercise');
+
+    deleteExerciseImageFolder(exerciseId: exercise.id!);
+
     return exercises
         .doc(exercise.id)
         .delete()
