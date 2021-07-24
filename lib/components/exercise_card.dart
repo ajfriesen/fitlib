@@ -18,21 +18,6 @@ class _ExerciseCardState extends State<ExerciseCard> {
 
   static const String placeholder = "images/placeholder.png";
 
-  @override
-  void initState() {
-    Database firebaseRepositoy =
-        Database(FirebaseFirestore.instance, FirebaseStorage.instance);
-
-    firebaseRepositoy
-        .getImageUrl(exerciseId: widget.exercise.id!)
-        .then((value) {
-      setState(() {
-        widget.exercise.imageUrl = value;
-      });
-    });
-
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
