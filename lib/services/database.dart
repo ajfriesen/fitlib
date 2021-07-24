@@ -48,7 +48,6 @@ class Database {
   }
 
   /// Add entry
-  /// TODO:Add exercise instead of strings
   Future<String> addExercise({required Exercise exercise, PickedFile? uploadImage}) async {
     CollectionReference exerciseCollection = _firestore.collection('exercise');
 
@@ -56,7 +55,6 @@ class Database {
     DocumentReference<Object?> randomDoc = await exerciseCollection.doc();
     String uploadFileUrl;
 
-    //TODO:
     /// Only upload image if image is not null or empty string
     if ( uploadImage != null && uploadImage.path != ""){
       uploadFileUrl = await uploadFile(file: uploadImage, exerciseId: randomDoc.id);
