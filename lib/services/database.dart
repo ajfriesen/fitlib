@@ -62,7 +62,7 @@ class Database {
       uploadFileUrl = "";
     }
 
-    /// Map entered values to exercise entry
+    /// Map entered values to exercise entry in firebase
     exercise.id = randomDoc.id;
     exercise.imageUrl = uploadFileUrl;
     exerciseCollection.doc(randomDoc.id).set(exercise.toJson()).then((value) => print('Added exercise'));
