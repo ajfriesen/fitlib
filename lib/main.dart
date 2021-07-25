@@ -86,7 +86,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.login),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).pushNamed(RouterGenerator.signUpViewRoute);
+            },
           )
         ],
       ),
