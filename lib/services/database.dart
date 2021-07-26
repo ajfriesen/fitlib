@@ -50,8 +50,9 @@ class Database {
     }
   }
 
-  /// Add entry
-  Future<String> addExercise({required Exercise exercise, PickedFile? uploadImage}) async {
+  /// Add exercise to firebase firestore
+  Future<String> addExercise(
+      {required Exercise exercise, PickedFile? uploadImage}) async {
     CollectionReference exerciseCollection = _firestore.collection('exercise');
 
     /// Generate an empty document to create the document Id

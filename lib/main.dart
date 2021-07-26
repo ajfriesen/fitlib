@@ -18,7 +18,12 @@ void main() async {
   // so this line of code ensures a communication channel to native.
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp());
+  runApp(
+    ChangeNotifierProvider(
+        create: (context) => Login(FirebaseAuth.instance),
+        builder: (context, _) => MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
