@@ -90,7 +90,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         title: const Text('FitLib'),
         actions: <Widget>[
           IconButton(
-            icon: const Icon(Icons.login),
+            icon: const Icon(Icons.account_circle),
             onPressed: () {
               Navigator.of(context).pushNamed(RouterGenerator.signUpViewRoute);
             },
