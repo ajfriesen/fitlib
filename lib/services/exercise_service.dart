@@ -8,8 +8,7 @@ class ExerciseService {
     print(exercises);
     List<QuerySnapshot> exerciseCollection = await exercises.toList();
 
-    List<QueryDocumentSnapshot> exerciseDocuments =
-        exerciseCollection.first.docs;
+    List<QueryDocumentSnapshot> exerciseDocuments = exerciseCollection.first.docs;
 
     for (var i; i < exerciseDocuments; i++) {
       print(exerciseDocuments.elementAt(i));

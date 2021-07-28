@@ -30,8 +30,7 @@ class Database {
 
     DocumentReference<Map<String, dynamic>> documentReference =
         await _firestore.collection('exercise').doc(exerciseId);
-    DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
-        await documentReference.get();
+    DocumentSnapshot<Map<String, dynamic>> documentSnapshot = await documentReference.get();
     if (documentSnapshot.exists) {
       Map<String, dynamic>? documentSnapshotMap = documentSnapshot.data();
       exercise = Exercise.fromJson(documentSnapshotMap!);
@@ -41,8 +40,7 @@ class Database {
 
   Future<String> getImageUrl({required String exerciseId}) async {
     try {
-      String imageUrl =
-          await _storage.ref('exercise/$exerciseId/preview').getDownloadURL();
+      String imageUrl = await _storage.ref('exercise/$exerciseId/preview').getDownloadURL();
       return imageUrl;
     } on Exception catch (e) {
       print(e);
@@ -51,8 +49,7 @@ class Database {
   }
 
   /// Add exercise to firebase firestore
-  Future<String> addExercise(
-      {required Exercise exercise, PickedFile? uploadImage}) async {
+  Future<String> addExercise({required Exercise exercise, PickedFile? uploadImage}) async {
     CollectionReference exerciseCollection = _firestore.collection('exercise');
 
     /// Generate an empty document to create the document Id
@@ -61,8 +58,7 @@ class Database {
 
     /// Only upload image if image is not null or empty string
     if (uploadImage != null && uploadImage.path != "") {
-      uploadFileUrl =
-          await uploadFile(file: uploadImage, exerciseId: randomDoc.id);
+      uploadFileUrl = await uploadFile(file: uploadImage, exerciseId: randomDoc.id);
     } else {
       uploadFileUrl = "";
     }
@@ -78,8 +74,7 @@ class Database {
     return randomDoc.id;
   }
 
-  Future<String> uploadFile(
-      {required PickedFile file, required exerciseId}) async {
+  Future<String> uploadFile({required PickedFile file, required exerciseId}) async {
     File filePath = File(file.path);
 
     try {
@@ -88,8 +83,7 @@ class Database {
       print(e);
     }
 
-    String downloadUrl =
-        await _storage.ref('exercise/$exerciseId/preview').getDownloadURL();
+    String downloadUrl = await _storage.ref('exercise/$exerciseId/preview').getDownloadURL();
     return downloadUrl;
   }
 
@@ -105,14 +99,10 @@ class Database {
   }
 
   Future deleteExercise(Exercise exercise) {
-    CollectionReference exercises =
-        FirebaseFirestore.instance.collection('exercise');
+    CollectionReference exercises = FirebaseFirestore.instance.collection('exercise');
 
     deleteExerciseImageFolder(exerciseId: exercise.id!);
 
-    return exercises
-        .doc(exercise.id)
-        .delete()
-        .then((value) => print("Exercise deleted"));
+    return exercises.doc(exercise.id).delete().then((value) => print("Exercise deleted"));
   }
 }

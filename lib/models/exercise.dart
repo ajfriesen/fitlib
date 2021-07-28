@@ -5,12 +5,7 @@ class Exercise {
   String? imageUrl;
   String? description;
 
-  Exercise(
-      {required this.id,
-      required this.name,
-      this.imageName,
-      this.imageUrl,
-      this.description});
+  Exercise({required this.id, required this.name, this.imageName, this.imageUrl, this.description});
 
   Exercise.empty();
 

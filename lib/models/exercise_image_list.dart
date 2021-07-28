@@ -7,8 +7,7 @@ class UserData {
 
   // {“userId”:“Alfonso”,“imageData”:“somePath;”}
   // Encode object to Json string
-  Map<String, dynamic> toJson() =>
-      {'userId': userId, 'imageData': customExercises};
+  Map<String, dynamic> toJson() => {'userId': userId, 'imageData': customExercises};
 
   // Named constructor
   // Decode from Json string to Object
@@ -28,8 +27,7 @@ class CustomExerciseData {
 
   CustomExerciseData({this.exerciseName, this.imagePath});
 
-  Map<String, dynamic> toJson() =>
-      {'exerciseName': exerciseName, 'imagePath': imagePath};
+  Map<String, dynamic> toJson() => {'exerciseName': exerciseName, 'imagePath': imagePath};
 
   CustomExerciseData.fromJson(Map<String, dynamic> json) {
     exerciseName = json['exerciseName'];

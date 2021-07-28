@@ -28,8 +28,7 @@ class _DetailState extends State<Detail> {
   static const String placeholderImage = 'images/placeholder.png';
   final Media mediaService = Media();
   final PreferencesService preferencesServiceService = PreferencesService();
-  final Database database =
-      Database(FirebaseFirestore.instance, FirebaseStorage.instance);
+  final Database database = Database(FirebaseFirestore.instance, FirebaseStorage.instance);
 
   String? imagePath;
   String? userId;
@@ -92,8 +91,7 @@ class _DetailState extends State<Detail> {
                   "Description",
                   style: TextStyle(fontSize: 30),
                 ),
-                widget.exercise.description != null ||
-                        widget.exercise.description != ""
+                widget.exercise.description != null || widget.exercise.description != ""
                     ? Text(widget.exercise.description!)
                     : Text("Empty description"),
                 SizedBox(height: 40),
@@ -118,8 +116,7 @@ class _DetailState extends State<Detail> {
             return;
           }
 
-          PickedFile? pickedImage =
-              await mediaService.chooseImagePicker(context);
+          PickedFile? pickedImage = await mediaService.chooseImagePicker(context);
 
           if (pickedImage != null) {
             bool successfulSave = false;

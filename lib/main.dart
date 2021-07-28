@@ -20,8 +20,8 @@ void main() async {
   await Firebase.initializeApp();
   runApp(
     ChangeNotifierProvider(
-        create: (context) => Login(FirebaseAuth.instance),
-        builder: (context, _) => MyApp(),
+      create: (context) => Login(FirebaseAuth.instance),
+      builder: (context, _) => MyApp(),
     ),
   );
 }
@@ -35,8 +35,7 @@ class MyApp extends StatelessWidget {
         providers: [
           Provider<Database>(
             create: (_) {
-              return Database(
-                  FirebaseFirestore.instance, FirebaseStorage.instance);
+              return Database(FirebaseFirestore.instance, FirebaseStorage.instance);
             },
           ),
           Provider<Login>(

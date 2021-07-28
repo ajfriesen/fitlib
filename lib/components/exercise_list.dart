@@ -23,8 +23,7 @@ class _MyListState extends State<MyList> {
   Widget build(BuildContext context) {
     return StreamBuilder<List<Exercise>>(
         stream: _exerciseStream,
-        builder:
-            (BuildContext context, AsyncSnapshot<List<Exercise>> snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<List<Exercise>> snapshot) {
           if (snapshot.hasError) return Text('Error: ${snapshot.error}');
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:

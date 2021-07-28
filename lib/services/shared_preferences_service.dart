@@ -9,9 +9,7 @@ class PreferencesService {
   /// encode the _exerciseData object into _exerciseDataAsJson
   /// and save the key(userId), value (_exerciseDataAsJson) to a SharedPreferencesObject
   Future<bool> save(
-      {required String userId,
-      required String imagePath,
-      required String exerciseName}) async {
+      {required String userId, required String imagePath, required String exerciseName}) async {
     //get the list first
     final SharedPreferences settings = await SharedPreferences.getInstance();
     String? currentValueAsString = settings.getString(userId);
@@ -24,15 +22,13 @@ class PreferencesService {
       _deleteIfExists(_userData, exerciseName);
       return _addExercise(_userData, exerciseData);
     } else {
-      UserData userData =
-          UserData(userId: userId, customExercises: List.empty(growable: true));
+      UserData userData = UserData(userId: userId, customExercises: List.empty(growable: true));
       return _addExercise(userData, exerciseData);
     }
   }
 
   void _deleteIfExists(UserData _userData, String exerciseName) {
-    CustomExerciseData imageDataAlreadyExist =
-        _userData.customExercises!.firstWhere((element) {
+    CustomExerciseData imageDataAlreadyExist = _userData.customExercises!.firstWhere((element) {
       //check for already existing exercise
       if (element.exerciseName != exerciseName) {
         return false;
@@ -40,8 +36,8 @@ class PreferencesService {
       return true;
     },
 
-            ///If nothing is found just return an empty object otherwise it will crash
-            orElse: () => CustomExerciseData());
+        ///If nothing is found just return an empty object otherwise it will crash
+        orElse: () => CustomExerciseData());
 
     if (imageDataAlreadyExist.imagePath != null) {
       _userData.customExercises!.removeWhere((element) {
@@ -54,8 +50,7 @@ class PreferencesService {
   }
 
   UserData _buildUserData(String userDataJson) {
-    Map<String, dynamic> _exerciseDataAsMap =
-        json.decode(userDataJson) as Map<String, dynamic>;
+    Map<String, dynamic> _exerciseDataAsMap = json.decode(userDataJson) as Map<String, dynamic>;
     UserData _userData = UserData.fromJson(_exerciseDataAsMap);
 
     if (_userData.customExercises == null) {
@@ -64,8 +59,7 @@ class PreferencesService {
     return _userData;
   }
 
-  Future<bool> _addExercise(
-      UserData userData, CustomExerciseData exerciseData) async {
+  Future<bool> _addExercise(UserData userData, CustomExerciseData exerciseData) async {
     final SharedPreferences settings = await SharedPreferences.getInstance();
 
     userData.customExercises!.add(exerciseData);

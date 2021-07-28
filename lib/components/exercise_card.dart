@@ -13,8 +13,7 @@ class ExerciseCard extends StatefulWidget {
 }
 
 class _ExerciseCardState extends State<ExerciseCard> {
-  final Database database =
-      Database(FirebaseFirestore.instance, FirebaseStorage.instance);
+  final Database database = Database(FirebaseFirestore.instance, FirebaseStorage.instance);
 
   static const String placeholder = "images/placeholder.png";
 
@@ -26,9 +25,8 @@ class _ExerciseCardState extends State<ExerciseCard> {
         leading: widget.exercise.imageUrl != ""
             ? Image.network(widget.exercise.imageUrl!)
             : Image.asset(placeholder),
-        subtitle: widget.exercise.description != null
-            ? Text(widget.exercise.description!)
-            : Text(""),
+        subtitle:
+            widget.exercise.description != null ? Text(widget.exercise.description!) : Text(""),
         trailing: IconButton(
             icon: const Icon(Icons.more_vert),
             onPressed: () {
@@ -36,8 +34,7 @@ class _ExerciseCardState extends State<ExerciseCard> {
                   context: context,
                   builder: (BuildContext context) => AlertDialog(
                         title: const Text("Warnung"),
-                        content:
-                            const Text("Soll diener Eintrag geloescht werden?"),
+                        content: const Text("Soll diener Eintrag geloescht werden?"),
                         actions: <Widget>[
                           TextButton(
                             onPressed: () => Navigator.pop(context, 'Cancel'),
@@ -55,9 +52,8 @@ class _ExerciseCardState extends State<ExerciseCard> {
               ;
             }),
         onTap: () {
-          Navigator.of(context).pushNamed(
-              RouterGenerator.exerciseDetailViewRoute,
-              arguments: widget.exercise);
+          Navigator.of(context)
+              .pushNamed(RouterGenerator.exerciseDetailViewRoute, arguments: widget.exercise);
         },
       ),
     );

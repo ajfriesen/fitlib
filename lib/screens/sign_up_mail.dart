@@ -29,9 +29,7 @@ class _MailSignUpState extends State<MailSignUp> {
             child: Column(children: [
               TextFormField(
                 decoration: const InputDecoration(
-                    icon: Icon(Icons.mail),
-                    hintText: "mail@domain.com",
-                    labelText: "E-Mail"),
+                    icon: Icon(Icons.mail), hintText: "mail@domain.com", labelText: "E-Mail"),
                 onSaved: (String? value) {
                   email = value;
                 },
@@ -61,14 +59,14 @@ class _MailSignUpState extends State<MailSignUp> {
                   return null;
                 },
               ),
-
               ElevatedButton.icon(
                   onPressed: () {
                     Login login = Login(FirebaseAuth.instance);
-                    if (_formkey.currentState!.validate()){
-                    _formkey.currentState!.save();
-                      if (email != null && password != null){
-                        login.registerAccount(email!, password!, (e) => showErrorDialog(context, "Failed", e));
+                    if (_formkey.currentState!.validate()) {
+                      _formkey.currentState!.save();
+                      if (email != null && password != null) {
+                        login.registerAccount(
+                            email!, password!, (e) => showErrorDialog(context, "Failed", e));
                       }
                     }
                   },
