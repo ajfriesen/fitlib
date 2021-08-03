@@ -28,7 +28,6 @@ class _DetailState extends State<Detail> {
   static const String placeholderImage = 'images/placeholder.png';
   final Media mediaService = Media();
   final PreferencesService preferencesServiceService = PreferencesService();
-  final Database database = Database(FirebaseFirestore.instance, FirebaseStorage.instance);
 
   String? imagePath;
   String? userId;

@@ -1,31 +1,31 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_app/models/exercise.dart';
+import 'package:flutter_app/notifiers/exercise_notifier.dart';
 import 'package:image_picker/image_picker.dart';
 
 class Database {
-  Database(this._firestore, this._storage);
+  static FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  static FirebaseStorage _storage = FirebaseStorage.instance;
 
-  final FirebaseFirestore _firestore;
-  final FirebaseStorage _storage;
+  static Future<void> getExercises(ExerciseNotifier exerciseNotifier) async {
+    List<Exercise> exerciseList = [];
 
-  Stream<List<Exercise>> getExercises() {
-    return _firestore.collection('exercise').snapshots().map((snapshot) {
-      return snapshot.docs.map((document) {
-        return Exercise(
-            id: document.data()['id'],
-            name: document.data()['name'],
-            imageName: document.data()['imageName'],
-            imageUrl: document.data()['imageUrl'],
-            description: document.data()['description']);
-      }).toList();
+    await _firestore.collection('exercise').snapshots().map((snapshot) {
+      return snapshot.docs.forEach((document) {
+        print(document);
+        exerciseList.add(Exercise.fromJson(document.data()));
+      });
     });
+
+    exerciseNotifier.setExerciseList(exerciseList);
   }
 
   /// Get exercise by documentId/exerciseId and return exercise
-  Future<Exercise> getExercise({required String exerciseId}) async {
+  static Future<Exercise> getExercise({required String exerciseId}) async {
     Exercise exercise = Exercise.empty();
 
     DocumentReference<Map<String, dynamic>> documentReference =
@@ -38,7 +38,7 @@ class Database {
     return exercise;
   }
 
-  Future<String> getImageUrl({required String exerciseId}) async {
+  static Future<String> getImageUrl({required String exerciseId}) async {
     try {
       String imageUrl = await _storage.ref('exercise/$exerciseId/preview').getDownloadURL();
       return imageUrl;
@@ -49,7 +49,7 @@ class Database {
   }
 
   /// Add exercise to firebase firestore
-  Future<String> addExercise({required Exercise exercise, PickedFile? uploadImage}) async {
+  static Future<String> addExercise({required Exercise exercise, PickedFile? uploadImage}) async {
     CollectionReference exerciseCollection = _firestore.collection('exercise');
 
     /// Generate an empty document to create the document Id
@@ -74,7 +74,7 @@ class Database {
     return randomDoc.id;
   }
 
-  Future<String> uploadFile({required PickedFile file, required exerciseId}) async {
+  static Future<String> uploadFile({required PickedFile file, required exerciseId}) async {
     File filePath = File(file.path);
 
     try {
@@ -91,14 +91,14 @@ class Database {
   // TODO: Find a way to delete all images in a folder.
   // There is not a method for this in flutter, so we need to find a way to store all references to all images
   // and then delete them.
-  Future<void> deleteExerciseImageFolder({required String exerciseId}) {
+  static Future<void> deleteExerciseImageFolder({required String exerciseId}) {
     return _storage
         .ref('exercise/$exerciseId/preview')
         .delete()
         .then((value) => print("Deleted folder"));
   }
 
-  Future deleteExercise(Exercise exercise) {
+  static Future deleteExercise(Exercise exercise) {
     CollectionReference exercises = FirebaseFirestore.instance.collection('exercise');
 
     deleteExerciseImageFolder(exerciseId: exercise.id!);

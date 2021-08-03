@@ -15,7 +15,6 @@ class AddExercise extends StatefulWidget {
 
 class _AddExerciseState extends State<AddExercise> {
   final _formKey = GlobalKey<FormState>();
-  final Database database = Database(FirebaseFirestore.instance, FirebaseStorage.instance);
   final Exercise exercise = Exercise.empty();
   final Media media = Media();
   PickedFile pickedFile = PickedFile("");
@@ -86,7 +85,7 @@ class _AddExerciseState extends State<AddExercise> {
             _formKey.currentState!.save();
 
             exercise.imageName = pickedFile.path;
-            await database.addExercise(exercise: exercise, uploadImage: pickedFile);
+            await Database.addExercise(exercise: exercise, uploadImage: pickedFile);
             Navigator.of(context).pop();
           }
         },

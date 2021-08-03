@@ -13,7 +13,6 @@ class ExerciseCard extends StatefulWidget {
 }
 
 class _ExerciseCardState extends State<ExerciseCard> {
-  final Database database = Database(FirebaseFirestore.instance, FirebaseStorage.instance);
 
   static const String placeholder = "images/placeholder.png";
 
@@ -42,7 +41,7 @@ class _ExerciseCardState extends State<ExerciseCard> {
                           ),
                           TextButton(
                             onPressed: () {
-                              database.deleteExercise(widget.exercise);
+                              Database.deleteExercise(widget.exercise);
                               Navigator.pop(context, 'Delete');
                             },
                             child: const Text('Delete'),

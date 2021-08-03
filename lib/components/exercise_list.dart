@@ -16,7 +16,7 @@ class _MyListState extends State<MyList> {
   @override
   void initState() {
     super.initState();
-    _exerciseStream = context.read<Database>().getExercises();
+    _exerciseStream = Database.getExercises();
   }
 
   @override
