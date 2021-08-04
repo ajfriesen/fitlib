@@ -10,18 +10,26 @@ import 'package:image_picker/image_picker.dart';
 class Database {
   static FirebaseFirestore _firestore = FirebaseFirestore.instance;
   static FirebaseStorage _storage = FirebaseStorage.instance;
+  static CollectionReference exerciseCollection = _firestore.collection('exercise');
 
-  static Future<void> getExercises(ExerciseNotifier exerciseNotifier) async {
-    List<Exercise> exerciseList = [];
+  static void getExercises(ExerciseNotifier exerciseNotifier) {
+    // List<Exercise> exerciseList = [];
+    //
+    // exerciseCollection
+    //     .get()
+    //     .then((QuerySnapshot querySnapshot) {
+    //   querySnapshot.docs.forEach((doc) {
+    //     exerciseList.add(Exercise.fromJson(doc.data() as Map<String, dynamic>));
+    //   });
+    // }).then((value) => exerciseNotifier.setExerciseList(exerciseList));
 
-    await _firestore.collection('exercise').snapshots().map((snapshot) {
-      return snapshot.docs.forEach((document) {
-        print(document);
-        exerciseList.add(Exercise.fromJson(document.data()));
-      });
-    });
-
-    exerciseNotifier.setExerciseList(exerciseList);
+    exerciseCollection
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      return querySnapshot.docs.map((doc) {
+        return Exercise.fromJson(doc.data() as Map<String, dynamic>);
+      }).toList();
+    }).then((value) => exerciseNotifier.setExerciseList(value));
   }
 
   /// Get exercise by documentId/exerciseId and return exercise
