@@ -17,6 +17,7 @@ class ExerciseView extends StatefulWidget {
 class ExerciseViewState extends State<ExerciseView> {
   Exercise exercise;
   ExerciseViewModel? exerciseViewModel;
+  static const String placeholder = "images/placeholder.png";
 
   ExerciseViewState(this.exercise) {
     exerciseViewModel = new ExerciseViewModel(exercise: exercise);
@@ -26,53 +27,39 @@ class ExerciseViewState extends State<ExerciseView> {
   Widget build(BuildContext context) {
     return Card(
       margin: EdgeInsets.all(8),
-      child: new Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Expanded(
-              flex: 0,
-              child: Container(
-                child: Padding(
-                  padding: EdgeInsets.only(left: 8),
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                        flex: 0,
-                        child: Padding(
-                          padding: EdgeInsets.all(8),
-                          child: Text(
-                            exerciseViewModel!.name!,
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
+      child: new ListTile(
+        title: Text(exerciseViewModel!.name!),
+        leading: widget.exercise.imageUrl != ""
+            ? Image.network(widget.exercise.imageUrl!)
+            : Image.asset(placeholder),
+        subtitle: Text(exerciseViewModel!.description!),
+          trailing: IconButton(
+              icon: const Icon(Icons.more_vert),
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                      title: const Text("Warnung"),
+                      content: const Text("Soll dieser Eintrag geloescht werden?"),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () => Navigator.pop(context, 'Cancel'),
+                          child: const Text('Cancel'),
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
-              flex: 0,
-              child: Divider(
-                height: 1,
-              ),
-            ),
-            Expanded(
-              flex: 0,
-              child: Padding(
-                padding: EdgeInsets.all(16),
-                child: Text(exerciseViewModel!.description!),
-              ),
-            ),
-            Expanded(
-              flex: 0,
-              child: Divider(
-                height: 1,
-              ),
-            ),
-          ],
-        ),
+                        TextButton(
+                          onPressed: () {
+                            // Database.deleteExercise(widget.exercise);
+                            Navigator.pop(context, 'Delete');
+                          },
+                          child: const Text('Delete'),
+                        ),
+                      ],
+                    ));
+                ;
+              }),
+        onTap: () {
+          // Navigator.of(context).pushNamed(RouterGenerator.exerciseDetailViewRoute, arguments: widget.exercise);
+        },
       ),
     );
   }
