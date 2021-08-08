@@ -1,8 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/components/exercise/exercise_view_model.dart';
 import 'package:flutter_app/models/exercise.dart';
-import 'package:flutter_app/services/database.dart';
 import 'package:flutter_app/services/media_file_service.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -85,7 +83,8 @@ class _AddExerciseState extends State<AddExercise> {
             _formKey.currentState!.save();
 
             exercise.imageName = pickedFile.path;
-            await Database.addExercise(exercise: exercise, uploadImage: pickedFile);
+
+            await exerciseViewModel().add(exercise: exercise, uploadImage: pickedFile);
             Navigator.of(context).pop();
           }
         },

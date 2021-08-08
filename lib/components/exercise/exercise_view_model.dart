@@ -1,4 +1,6 @@
 import 'package:flutter_app/models/exercise.dart';
+import 'package:flutter_app/services/database.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ExerciseViewModel {
 
@@ -23,6 +25,10 @@ class ExerciseViewModel {
     if (this.exercise.imageUrl != null) {
       return this.exercise.imageUrl;
     }
+  }
+
+  Future<String> add({required Exercise exercise, PickedFile? uploadImage}) async {
+    return await Database.addExercise(exercise: exercise, uploadImage: uploadImage);
   }
 
 }
