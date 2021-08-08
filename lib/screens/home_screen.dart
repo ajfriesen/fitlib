@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/components/exercise/exercise_view.dart';
 import 'package:flutter_app/notifiers/exercise_notifier.dart';
 import 'package:flutter_app/services/database.dart';
+import 'package:flutter_app/services/route_generator.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -51,6 +52,13 @@ class _MyHomePageState extends State<HomeScreen> {
                 }))
             : Center(
           child: CircularProgressIndicator(),
-        ));
+        ),
+        floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).pushNamed(RouterGenerator.exerciseAddRoute);
+        },
+        child: const Icon(Icons.add),
+    ),
+    );
   }
 }
