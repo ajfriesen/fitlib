@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/screens/home_screen.dart';
+import 'package:flutter_app/services/route_generator.dart';
 import 'package:provider/provider.dart';
 
 import 'components/exercise/exercise_view_model.dart';
@@ -35,7 +36,7 @@ class MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'FitLib',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         // This makes the visual density adapt to the platform that you run
@@ -44,9 +45,10 @@ class MyAppState extends State<MyApp> {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: HomeScreen(UniqueKey()),
-      routes: {
+      onGenerateRoute: RouterGenerator.generateRoute,
+      // routes: {
         // "/add_post": (context) => AddPostScreen(),
-      },
+      // },
     );
   }
 }
