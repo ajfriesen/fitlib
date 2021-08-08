@@ -26,10 +26,10 @@ class _MyHomePageState extends State<HomeScreen> {
 
     return Scaffold(
         appBar: AppBar(
-          title: Text("MVVM + Provider Demo"),
+          title: Text("FitLib"),
           actions: <Widget>[
             IconButton(
-              icon: Icon(Icons.add),
+              icon: Icon(Icons.account_circle),
               onPressed: () {
                 // Navigator.pushNamed(context, "/add_post");
               },
