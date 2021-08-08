@@ -19,4 +19,10 @@ class ExerciseViewModel {
     }
   }
 
+  String? get imageUrl {
+    if (this.exercise.imageUrl != null) {
+      return this.exercise.imageUrl;
+    }
+  }
+
 }
