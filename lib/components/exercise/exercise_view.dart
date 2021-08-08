@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/exercise.dart';
+import 'package:flutter_app/services/route_generator.dart';
 
 import 'exercise_view_model.dart';
 
@@ -58,6 +59,7 @@ class ExerciseViewState extends State<ExerciseView> {
                 ;
               }),
         onTap: () {
+          //TODO:add route
           // Navigator.of(context).pushNamed(RouterGenerator.exerciseDetailViewRoute, arguments: widget.exercise);
         },
       ),
