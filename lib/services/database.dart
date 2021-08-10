@@ -57,29 +57,33 @@ class Database {
   }
 
   /// Add exercise to firebase firestore
-  static Future<String> addExercise({required Exercise exercise, PickedFile? uploadImage}) async {
-    CollectionReference exerciseCollection = _firestore.collection('exercise');
+  static Future<Exercise?> addExercise({required Exercise exercise, PickedFile? uploadImage}) async {
 
-    /// Generate an empty document to create the document Id
-    DocumentReference<Object?> randomDoc = await exerciseCollection.doc();
-    String uploadFileUrl;
+    try {
+      /// Generate an empty document to create the document Id
+      DocumentReference<Object?> randomDoc = await exerciseCollection.doc();
+      String uploadFileUrl;
 
-    /// Only upload image if image is not null or empty string
-    if (uploadImage != null && uploadImage.path != "") {
-      uploadFileUrl = await uploadFile(file: uploadImage, exerciseId: randomDoc.id);
-    } else {
-      uploadFileUrl = "";
+      /// Only upload image if image is not null or empty string
+      if (uploadImage != null && uploadImage.path != "") {
+        uploadFileUrl = await uploadFile(file: uploadImage, exerciseId: randomDoc.id);
+      } else {
+        uploadFileUrl = "";
+      }
+
+      /// Map entered values to exercise entry in firebase
+      exercise.id = randomDoc.id;
+      exercise.imageUrl = uploadFileUrl;
+      exerciseCollection
+          .doc(randomDoc.id)
+          .set(exercise.toJson());
+      return exercise;
+
+    } on FirebaseException catch (e) {
+      print(e);
+      return null;
     }
 
-    /// Map entered values to exercise entry in firebase
-    exercise.id = randomDoc.id;
-    exercise.imageUrl = uploadFileUrl;
-    exerciseCollection
-        .doc(randomDoc.id)
-        .set(exercise.toJson())
-        .then((value) => print('Added exercise'));
-
-    return randomDoc.id;
   }
 
   static Future<String> uploadFile({required PickedFile file, required exerciseId}) async {
