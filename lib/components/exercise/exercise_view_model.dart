@@ -26,9 +26,4 @@ class ExerciseViewModel {
       return this.exercise.imageUrl;
     }
   }
-
-  Future<String> add({required Exercise exercise, PickedFile? uploadImage}) async {
-    return await Database.addExercise(exercise: exercise, uploadImage: uploadImage);
-  }
-
 }
