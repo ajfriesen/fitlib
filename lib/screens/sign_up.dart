@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/screens/sign_up_mail.dart';
 import 'package:flutter_app/services/route_generator.dart';
 
 class SignUp extends StatefulWidget {

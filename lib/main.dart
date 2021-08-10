@@ -4,7 +4,6 @@ import 'package:flutter_app/screens/home_screen.dart';
 import 'package:flutter_app/services/route_generator.dart';
 import 'package:provider/provider.dart';
 
-import 'components/exercise/exercise_view_model.dart';
 import 'notifiers/exercise_notifier.dart';
 
 Future<void> main() async {

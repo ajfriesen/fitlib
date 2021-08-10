@@ -1,6 +1,4 @@
 import 'package:flutter_app/models/exercise.dart';
-import 'package:flutter_app/services/database.dart';
-import 'package:image_picker/image_picker.dart';
 
 class ExerciseViewModel {
 
