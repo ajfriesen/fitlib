@@ -12,6 +12,7 @@ class AddExercise extends StatefulWidget {
 }
 
 class _AddExerciseState extends State<AddExercise> {
+  ExerciseViewModel exerciseViewModel;
   final _formKey = GlobalKey<FormState>();
   final Exercise exercise = Exercise.empty();
   final Media media = Media();
@@ -84,7 +85,7 @@ class _AddExerciseState extends State<AddExercise> {
 
             exercise.imageName = pickedFile.path;
 
-            await exerciseViewModel().add(exercise: exercise, uploadImage: pickedFile);
+            await exerciseViewModel.add(exercise: exercise, uploadImage: pickedFile);
             Navigator.of(context).pop();
           }
         },
