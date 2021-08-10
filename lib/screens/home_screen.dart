@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/components/exercise/exercise_view.dart';
+import 'package:flutter_app/models/exercise.dart';
 import 'package:flutter_app/notifiers/exercise_notifier.dart';
 import 'package:flutter_app/services/database.dart';
 import 'package:flutter_app/services/route_generator.dart';
@@ -23,6 +24,7 @@ class _MyHomePageState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     ExerciseNotifier exerciseNotifier = Provider.of<ExerciseNotifier>(context);
+    List<Exercise> _localList = exerciseNotifier.getExerciseList();
 
     return Scaffold(
         appBar: AppBar(
@@ -40,17 +42,17 @@ class _MyHomePageState extends State<HomeScreen> {
             ? Container(
             color: Colors.black12,
             child: ListView.builder(
-                itemCount: exerciseNotifier.getExerciseList().length,
+                itemCount: _localList.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Padding(
                     padding: EdgeInsets.all(0),
-                    key: ObjectKey(exerciseNotifier.getExerciseList()[index]),
+                    key: ObjectKey(_localList[index]),
                     child: ExerciseView(
-                      exercise: exerciseNotifier.getExerciseList()[index],
+                      exercise: _localList[index],
                     ),
                   );
                 }))
-            : Center(
+        : Center(
           child: CircularProgressIndicator(),
         ),
         floatingActionButton: FloatingActionButton(
