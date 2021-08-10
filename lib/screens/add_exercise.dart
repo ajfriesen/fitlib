@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/components/exercise/exercise_view_model.dart';
 import 'package:flutter_app/models/exercise.dart';
+import 'package:flutter_app/notifiers/exercise_notifier.dart';
 import 'package:flutter_app/services/media_file_service.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 class AddExercise extends StatefulWidget {
   @override
@@ -12,11 +13,33 @@ class AddExercise extends StatefulWidget {
 }
 
 class _AddExerciseState extends State<AddExercise> {
-  ExerciseViewModel exerciseViewModel;
+
   final _formKey = GlobalKey<FormState>();
   final Exercise exercise = Exercise.empty();
   final Media media = Media();
   PickedFile pickedFile = PickedFile("");
+
+  // _showSnackBar(String text, BuildContext context) {
+  //   final snackbar = SnackBar(content: Text(text));
+  //   _scaffoldKey.currentState.showSnackBar(snackbar);
+  // }
+
+  _createExerciseOnPressed(BuildContext context) {
+    if (!_formKey.currentState!.validate()) {
+      // _showSnackBar("Failed to create Post", context);
+      return;
+    }
+    _formKey.currentState!.save();
+    exercise.imageName = pickedFile.path;
+
+    ExerciseNotifier exerciseNotifier = Provider.of(context, listen: false);
+    exerciseNotifier.uploadExercise(exercise, pickedFile).then((value) {
+      if (value != null) {
+
+      }
+      Navigator.of(context).pop();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,14 +103,7 @@ class _AddExerciseState extends State<AddExercise> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          if (_formKey.currentState!.validate()) {
-            _formKey.currentState!.save();
-
-            exercise.imageName = pickedFile.path;
-
-            await exerciseViewModel.add(exercise: exercise, uploadImage: pickedFile);
-            Navigator.of(context).pop();
-          }
+          _createExerciseOnPressed(context);
         },
         child: const Icon(Icons.save),
       ),
