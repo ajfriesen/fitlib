@@ -21,10 +21,21 @@ class ExerciseNotifier with ChangeNotifier {
     return _exerciseList;
   }
 
+  removeExerciseFromList(Exercise exercise) {
+    _exerciseList.remove(exercise);
+    notifyListeners();
+  }
+
   Future<String?> uploadExercise(Exercise exercise, PickedFile uploadImage) async {
     Exercise? _exercise = await Database.addExercise(exercise: exercise, uploadImage: uploadImage);
     if (_exercise != null) {
       addExerciseToList(_exercise);
     }
+    removeExerciseFromList(exercise);
+  }
+
+  Future<void> deleteExercise(Exercise exercise) async{
+    await Database.deleteExercise(exercise);
+
   }
 }

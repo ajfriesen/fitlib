@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/exercise.dart';
+import 'package:flutter_app/notifiers/exercise_notifier.dart';
+import 'package:provider/provider.dart';
 import 'exercise_view_model.dart';
 
 class ExerciseView extends StatefulWidget {
@@ -20,6 +22,11 @@ class ExerciseViewState extends State<ExerciseView> {
 
   ExerciseViewState(this.exercise) {
     exerciseViewModel = new ExerciseViewModel(exercise: exercise);
+  }
+
+  _deleteExerciseOnPressed(BuildContext context){
+    ExerciseNotifier exerciseNotifier = Provider.of(context, listen:false);
+    exerciseNotifier.deleteExercise(exercise);
   }
 
   @override
@@ -47,7 +54,7 @@ class ExerciseViewState extends State<ExerciseView> {
                         ),
                         TextButton(
                           onPressed: () {
-                            // Database.deleteExercise(widget.exercise);
+                            _deleteExerciseOnPressed(context);
                             Navigator.pop(context, 'Delete');
                           },
                           child: const Text('Delete'),
