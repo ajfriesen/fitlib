@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/exercise.dart';
-import 'package:flutter_app/screens/add_exercise.dart';
-import 'package:flutter_app/screens/detail.dart';
-import 'package:flutter_app/screens/sign_up.dart';
+import 'package:flutter_app/screens/add_exercise_screen.dart';
+import 'package:flutter_app/screens/exercise_detail_screen.dart';
+import 'package:flutter_app/screens/sign_up_screen.dart';
 import 'package:flutter_app/screens/sign_up_mail.dart';
 
 class RouterGenerator {

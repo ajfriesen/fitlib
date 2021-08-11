@@ -6,7 +6,6 @@ class ExerciseViewModel {
 
   ExerciseViewModel({required this.exercise});
 
-
   String? get name {
     if (this.exercise.name != null) {
       return this.exercise.name;
