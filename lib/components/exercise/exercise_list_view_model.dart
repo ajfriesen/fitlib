@@ -1,10 +1,10 @@
 import 'package:flutter_app/models/exercise.dart';
 
-class ExerciseViewModel {
+class ExerciseListViewModel {
 
   final Exercise exercise;
 
-  ExerciseViewModel({required this.exercise});
+  ExerciseListViewModel({required this.exercise});
 
   String? get name {
     if (this.exercise.name != null) {

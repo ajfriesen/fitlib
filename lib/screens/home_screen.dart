@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/components/exercise/exercise_view.dart';
+import 'package:flutter_app/components/exercise/exercise_list_view.dart';
 import 'package:flutter_app/models/exercise.dart';
 import 'package:flutter_app/notifiers/exercise_notifier.dart';
 import 'package:flutter_app/services/database.dart';
@@ -47,7 +47,7 @@ class _MyHomePageState extends State<HomeScreen> {
                   return Padding(
                     padding: EdgeInsets.all(0),
                     key: ObjectKey(_localList[index]),
-                    child: ExerciseView(
+                    child: ExerciseListView(
                       exercise: _localList[index],
                     ),
                   );

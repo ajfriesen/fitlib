@@ -1,27 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/exercise.dart';
 import 'package:flutter_app/notifiers/exercise_notifier.dart';
+import 'package:flutter_app/services/route_generator.dart';
 import 'package:provider/provider.dart';
-import 'exercise_view_model.dart';
+import 'exercise_list_view_model.dart';
 
-class ExerciseView extends StatefulWidget {
+class ExerciseListView extends StatefulWidget {
   final Exercise exercise;
 
-  ExerciseView({required this.exercise});
+  ExerciseListView({required this.exercise});
 
   @override
   State createState() {
-    return ExerciseViewState(exercise);
+    return ExerciseListViewState(exercise);
   }
 }
 
-class ExerciseViewState extends State<ExerciseView> {
+class ExerciseListViewState extends State<ExerciseListView> {
   Exercise exercise;
-  ExerciseViewModel? exerciseViewModel;
+  ExerciseListViewModel? exerciseViewModel;
   static const String placeholder = "images/placeholder.png";
 
-  ExerciseViewState(this.exercise) {
-    exerciseViewModel = new ExerciseViewModel(exercise: exercise);
+  ExerciseListViewState(this.exercise) {
+    exerciseViewModel = new ExerciseListViewModel(exercise: exercise);
   }
 
   _deleteExerciseOnPressed(BuildContext context){
