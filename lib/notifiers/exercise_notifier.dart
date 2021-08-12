@@ -31,11 +31,10 @@ class ExerciseNotifier with ChangeNotifier {
     if (_exercise != null) {
       addExerciseToList(_exercise);
     }
-    removeExerciseFromList(exercise);
   }
 
   Future<void> deleteExercise(Exercise exercise) async{
     await Database.deleteExercise(exercise);
-
+    removeExerciseFromList(exercise);
   }
 }
