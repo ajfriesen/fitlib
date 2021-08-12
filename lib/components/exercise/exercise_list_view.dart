@@ -66,7 +66,7 @@ class ExerciseListViewState extends State<ExerciseListView> {
               }),
         onTap: () {
           //TODO:add route
-          // Navigator.of(context).pushNamed(RouterGenerator.exerciseDetailViewRoute, arguments: widget.exercise);
+          Navigator.of(context).pushNamed(RouterGenerator.exerciseDetailViewRoute, arguments: widget.exercise);
         },
       ),
     );
