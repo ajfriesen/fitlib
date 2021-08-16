@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-enum LoginState {
+enum AuthenticationState {
   loggedOut,
   emailAddress,
   register,
@@ -10,29 +10,11 @@ enum LoginState {
   loggedIn,
 }
 
-// Anonymous login
-class Login extends ChangeNotifier {
-  Login(this._firebaseAuth) {
-    init();
-  }
+class Authentication extends ChangeNotifier {
+  static FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-  Future<void> init() async {
-    await Firebase.initializeApp();
-
-    FirebaseAuth.instance.userChanges().listen((user) {
-      if (user != null) {
-        _loginState = LoginState.loggedIn;
-      } else {
-        _loginState = LoginState.loggedOut;
-      }
-      notifyListeners();
-    });
-  }
-
-  LoginState _loginState = LoginState.loggedOut;
-  LoginState get loginState => _loginState;
-
-  final FirebaseAuth _firebaseAuth;
+  AuthenticationState _loginState = AuthenticationState.loggedOut;
+  AuthenticationState get loginState => _loginState;
 
   Stream<User?>? userState;
 
@@ -40,7 +22,20 @@ class Login extends ChangeNotifier {
     userState = _firebaseAuth.authStateChanges();
   }
 
-  Future<String?> anonymousLogin() async {
+  Future<void> init() async {
+    await Firebase.initializeApp();
+
+    FirebaseAuth.instance.userChanges().listen((user) {
+      if (user != null) {
+        _loginState = AuthenticationState.loggedIn;
+      } else {
+        _loginState = AuthenticationState.loggedOut;
+      }
+      notifyListeners();
+    });
+  }
+
+  static Future<String?> anonymousLogin() async {
     try {
       await _firebaseAuth.signInAnonymously();
       return "Signed in";
@@ -49,11 +44,12 @@ class Login extends ChangeNotifier {
     }
   }
 
-  User? getUser() {
+  static User? getUser() {
     return FirebaseAuth.instance.currentUser;
   }
 
-  void registerAccount(
+  ///TODO: Ask about the function as a paremeter. What can I do with this?
+  static void registerWithMail(
       String email, String password, void Function(FirebaseAuthException e) errorCallback) async {
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
