@@ -57,4 +57,35 @@ class Authentication extends ChangeNotifier {
       errorCallback(e);
     }
   }
+
+  ///TODO: Ask about the function as a paremeter. What can I do with this?
+  ///TODO: Removed the function parameter since I do not know how to use it.
+  static Future<User?> loginWithMail({required String email, required String password}) async {
+    String? errorMessage;
+
+    try {
+      UserCredential result =  await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+      return result.user;
+    } on FirebaseException catch (e) {
+      switch (e.code){
+        case "invalid-email":
+          errorMessage = "Invalid Email";
+          break;
+        case "user-disabled":
+          errorMessage = "user-disabled";
+          break;
+        case "user-not-found":
+          errorMessage = "user-not-found";
+          break;
+        case "wrong-password":
+          errorMessage = "wrong-password";
+          break;
+      }
+    }
+
+    if (errorMessage != null) {
+      return Future.error(errorMessage);
+    }
+  }
+
 }
