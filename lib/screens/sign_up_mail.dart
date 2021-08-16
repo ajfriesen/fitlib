@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/components/popup.dart';
 import 'package:flutter_app/services/authentication.dart';
@@ -61,11 +60,10 @@ class _MailSignUpState extends State<MailSignUp> {
               ),
               ElevatedButton.icon(
                   onPressed: () {
-                    Login login = Login(FirebaseAuth.instance);
                     if (_formkey.currentState!.validate()) {
                       _formkey.currentState!.save();
                       if (email != null && password != null) {
-                        login.registerAccount(
+                        Authentication.registerWithMail(
                             email!, password!, (e) => showErrorDialog(context, "Failed", e));
                       }
                     }
