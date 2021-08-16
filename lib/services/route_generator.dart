@@ -2,14 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/models/exercise.dart';
 import 'package:flutter_app/screens/add_exercise_screen.dart';
 import 'package:flutter_app/screens/exercise_detail_screen.dart';
+import 'package:flutter_app/screens/home_screen.dart';
+import 'package:flutter_app/screens/login_screen.dart';
 import 'package:flutter_app/screens/sign_up_screen.dart';
 import 'package:flutter_app/screens/sign_up_mail.dart';
 
 class RouterGenerator {
+  static const String exerciseListView = '/';
   static const String exerciseAddRoute = '/Exercise/add';
   static const String exerciseDetailViewRoute = '/ExerciseDetailView';
   static const String signUpViewRoute = '/sign-up';
   static const String MailSignUpRoute = '/sign-up/mail';
+  static const String SignInRoute = '/sign-in';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     // Getting arguments passed in while calling Navigator.pushNamed
@@ -32,6 +36,10 @@ class RouterGenerator {
         return MaterialPageRoute(builder: (_) => SignUp());
       case MailSignUpRoute:
         return MaterialPageRoute(builder: (_) => MailSignUp());
+      case SignInRoute:
+        return MaterialPageRoute(builder: (_) => Login());
+      case exerciseListView:
+        return MaterialPageRoute(builder: (_) => HomeScreen(UniqueKey()));
       default:
         return _errorRoute();
     }

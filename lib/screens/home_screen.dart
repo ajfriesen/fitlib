@@ -33,7 +33,7 @@ class _MyHomePageState extends State<HomeScreen> {
             IconButton(
               icon: Icon(Icons.account_circle),
               onPressed: () {
-                // Navigator.pushNamed(context, "/add_post");
+                Navigator.pushNamed(context, "/sign-up");
               },
             )
           ],

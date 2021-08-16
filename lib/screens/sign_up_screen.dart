@@ -26,10 +26,18 @@ class _SignUpState extends State<SignUp> {
                 icon: Icon(Icons.mail),
                 label: Text('Register with E-Mail')),
             ElevatedButton.icon(
-                onPressed: null, icon: Icon(Icons.android), label: Text('Register with Google')),
+              onPressed: null,
+              icon: Icon(Icons.android),
+              label: Text('Register with Google'),
+            ),
             Spacer(),
             Text('Already have an account?'),
-            ElevatedButton.icon(onPressed: null, icon: Icon(Icons.login), label: Text('Sign In')),
+            ElevatedButton.icon(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(RouterGenerator.SignInRoute);
+                },
+                icon: Icon(Icons.login),
+                label: Text('Login')),
           ]),
         ),
       ),
