@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/components/error_dialog.dart';
 import 'package:flutter_app/services/authentication.dart';
 import 'package:flutter_app/services/route_generator.dart';
 

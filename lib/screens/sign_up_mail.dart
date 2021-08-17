@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/components/popup.dart';
+import 'package:flutter_app/components/error_dialog.dart';
 import 'package:flutter_app/services/authentication.dart';
 
 class MailSignUp extends StatefulWidget {
