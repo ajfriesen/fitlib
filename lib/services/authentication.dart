@@ -45,7 +45,7 @@ class Authentication extends ChangeNotifier {
   }
 
   static User? getUser() {
-    return FirebaseAuth.instance.currentUser;
+    return _firebaseAuth.currentUser;
   }
 
   ///TODO: Ask about the function as a paremeter. What can I do with this?
@@ -55,7 +55,7 @@ class Authentication extends ChangeNotifier {
     void Function(FirebaseAuthException error, String title) errorCallback,
   ) async {
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
+      await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (error) {
       String errorTitle = "Unbekannter Fehler";
       switch (error.code) {
@@ -85,7 +85,7 @@ class Authentication extends ChangeNotifier {
       required void Function(FirebaseAuthException error, String title) errorCallback}) async {
     try {
       UserCredential result =
-          await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+          await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
       return result.user;
     } on FirebaseAuthException catch (error) {
       String errorTitle = "Unbekannter Fehler";
