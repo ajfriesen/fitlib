@@ -107,4 +107,8 @@ class Authentication extends ChangeNotifier {
       errorCallback(error, errorTitle);
     }
   }
+
+  static signOut(){
+    _firebaseAuth.signOut();
+  }
 }
