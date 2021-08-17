@@ -51,7 +51,9 @@ class _LoginState extends State<Login> {
                     ),
                     TextFormField(
                       decoration: const InputDecoration(
-                          icon: Icon(Icons.password_sharp), hintText: "**********", labelText: "Password"),
+                          icon: Icon(Icons.password_sharp),
+                          hintText: "**********",
+                          labelText: "Password"),
                       enableSuggestions: false,
                       autocorrect: false,
                       onSaved: (String? value) {
@@ -69,14 +71,17 @@ class _LoginState extends State<Login> {
                       onPressed: () {
                         if (_formkey.currentState!.validate()) {
                           _formkey.currentState!.save();
-                          Authentication.loginWithMail(email: email!, password: password!,  errorCallback: (error, title) => showErrorDialog(context, title, error));
+                          Authentication.loginWithMail(
+                              email: email!,
+                              password: password!,
+                              errorCallback: (error, title) =>
+                                  showErrorDialog(context, title, error));
                           // Navigator.pop(context, "/");
                         }
                       },
                     ),
                   ],
                 )),
-
             Spacer(),
             Text('Oder nutze social Logins'),
             ElevatedButton.icon(

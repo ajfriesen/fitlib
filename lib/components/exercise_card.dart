@@ -11,7 +11,6 @@ class ExerciseCard extends StatefulWidget {
 }
 
 class _ExerciseCardState extends State<ExerciseCard> {
-
   static const String placeholder = "images/placeholder.png";
 
   @override

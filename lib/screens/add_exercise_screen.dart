@@ -13,7 +13,6 @@ class AddExercise extends StatefulWidget {
 }
 
 class _AddExerciseState extends State<AddExercise> {
-
   final _formKey = GlobalKey<FormState>();
   final Exercise exercise = Exercise.empty();
   final Media media = Media();
@@ -34,9 +33,7 @@ class _AddExerciseState extends State<AddExercise> {
 
     ExerciseNotifier exerciseNotifier = Provider.of(context, listen: false);
     exerciseNotifier.uploadExercise(exercise, pickedFile).then((value) {
-      if (value != null) {
-
-      }
+      if (value != null) {}
       Navigator.of(context).pop();
     });
   }

@@ -20,18 +20,15 @@ Future<void> main() async {
       ),
     ],
     child: MyApp(),
-  )
-      );
+  ));
 }
 
 class MyApp extends StatefulWidget {
   @override
-  State createState() =>  MyAppState();
+  State createState() => MyAppState();
 }
 
-
 class MyAppState extends State<MyApp> {
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -46,7 +43,7 @@ class MyAppState extends State<MyApp> {
       home: HomeScreen(UniqueKey()),
       onGenerateRoute: RouterGenerator.generateRoute,
       // routes: {
-        // "/add_post": (context) => AddPostScreen(),
+      // "/add_post": (context) => AddPostScreen(),
       // },
     );
   }

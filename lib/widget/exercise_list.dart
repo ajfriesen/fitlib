@@ -1,9 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_app/components/exercise/exercise_list_view_model.dart';
 
 class ExerciseList extends StatelessWidget {
-
   final List<ExerciseListViewModel> exercises;
 
   ExerciseList({required this.exercises});
@@ -13,7 +11,6 @@ class ExerciseList extends StatelessWidget {
     return ListView.builder(
       itemCount: this.exercises.length,
       itemBuilder: (context, index) {
-
         final exercise = this.exercises[index];
 
         return ListTile(
@@ -24,8 +21,7 @@ class ExerciseList extends StatelessWidget {
                 //     fit: BoxFit.cover,
                 //     image: NetworkImage(exercise.poster)
                 // ),
-                borderRadius: BorderRadius.circular(6)
-            ),
+                borderRadius: BorderRadius.circular(6)),
             width: 50,
             height: 100,
           ),

@@ -16,8 +16,8 @@ class Detail extends StatefulWidget {
     return DetailState();
   }
 }
-class DetailState extends State<Detail> {
 
+class DetailState extends State<Detail> {
   ExerciseListViewModel? exerciseViewModel;
 
   static const String placeholderImage = 'images/placeholder.png';
@@ -64,8 +64,7 @@ class DetailState extends State<Detail> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-        },
+        onPressed: () async {},
         child: const Icon(Icons.add_photo_alternate),
         tooltip: 'Pick Image',
       ),

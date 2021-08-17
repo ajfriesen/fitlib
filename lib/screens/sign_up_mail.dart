@@ -63,8 +63,8 @@ class _MailSignUpState extends State<MailSignUp> {
                     if (_formkey.currentState!.validate()) {
                       _formkey.currentState!.save();
                       if (email != null && password != null) {
-                        Authentication.registerWithMail(
-                            email!, password!, (error, title) => showErrorDialog(context, title, error));
+                        Authentication.registerWithMail(email!, password!,
+                            (error, title) => showErrorDialog(context, title, error));
                       }
                     }
                   },

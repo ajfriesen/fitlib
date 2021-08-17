@@ -50,12 +50,15 @@ class Authentication extends ChangeNotifier {
 
   ///TODO: Ask about the function as a paremeter. What can I do with this?
   static void registerWithMail(
-      String email, String password, void Function(FirebaseAuthException error, String title) errorCallback) async {
+    String email,
+    String password,
+    void Function(FirebaseAuthException error, String title) errorCallback,
+  ) async {
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (error) {
       String errorTitle = "Unbekannter Fehler";
-      switch (error.code){
+      switch (error.code) {
         case "email-already-in-use":
           errorTitle = "E-Mail schon vorhanden";
           break;
@@ -76,14 +79,18 @@ class Authentication extends ChangeNotifier {
   ///TODO: Ask about the function as a paremeter. What can I do with this?
   ///TODO: Removed the function parameter since I do not know how to use it.
   ///#TODO: Can I use named parameters in a functions which is a paramter already?
-  static Future<User?> loginWithMail({required String email, required String password, required void Function(FirebaseAuthException error, String title) errorCallback}) async {
+  static Future<User?> loginWithMail(
+      {required String email,
+      required String password,
+      required void Function(FirebaseAuthException error, String title) errorCallback}) async {
     try {
-      UserCredential result =  await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+      UserCredential result =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
       return result.user;
     } on FirebaseAuthException catch (error) {
       String errorTitle = "Unbekannter Fehler";
 
-      switch (error.code){
+      switch (error.code) {
         case "invalid-email":
           errorTitle = "Invalid Email";
           break;
@@ -99,8 +106,5 @@ class Authentication extends ChangeNotifier {
       }
       errorCallback(error, errorTitle);
     }
-
-
   }
-
 }

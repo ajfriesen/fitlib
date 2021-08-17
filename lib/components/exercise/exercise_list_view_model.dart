@@ -1,7 +1,6 @@
 import 'package:flutter_app/models/exercise.dart';
 
 class ExerciseListViewModel {
-
   final Exercise exercise;
 
   ExerciseListViewModel({required this.exercise});

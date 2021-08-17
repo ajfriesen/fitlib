@@ -33,7 +33,7 @@ class ExerciseNotifier with ChangeNotifier {
     }
   }
 
-  Future<void> deleteExercise(Exercise exercise) async{
+  Future<void> deleteExercise(Exercise exercise) async {
     await Database.deleteExercise(exercise);
     removeExerciseFromList(exercise);
   }

@@ -25,8 +25,8 @@ class ExerciseListViewState extends State<ExerciseListView> {
     exerciseViewModel = new ExerciseListViewModel(exercise: exercise);
   }
 
-  _deleteExerciseOnPressed(BuildContext context){
-    ExerciseNotifier exerciseNotifier = Provider.of(context, listen:false);
+  _deleteExerciseOnPressed(BuildContext context) {
+    ExerciseNotifier exerciseNotifier = Provider.of(context, listen: false);
     exerciseNotifier.deleteExercise(exercise);
   }
 
@@ -40,33 +40,34 @@ class ExerciseListViewState extends State<ExerciseListView> {
             ? Image.network(widget.exercise.imageUrl!)
             : Image.asset(placeholder),
         subtitle: Text(exerciseViewModel!.description!),
-          trailing: IconButton(
-              icon: const Icon(Icons.more_vert),
-              onPressed: () {
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) => AlertDialog(
-                      title: const Text("Warnung"),
-                      content: const Text("Soll dieser Eintrag geloescht werden?"),
-                      actions: <Widget>[
-                        TextButton(
-                          onPressed: () => Navigator.pop(context, 'Cancel'),
-                          child: const Text('Cancel'),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            _deleteExerciseOnPressed(context);
-                            Navigator.pop(context, 'Delete');
-                          },
-                          child: const Text('Delete'),
-                        ),
-                      ],
-                    ));
-                ;
-              }),
+        trailing: IconButton(
+            icon: const Icon(Icons.more_vert),
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) => AlertDialog(
+                        title: const Text("Warnung"),
+                        content: const Text("Soll dieser Eintrag geloescht werden?"),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () => Navigator.pop(context, 'Cancel'),
+                            child: const Text('Cancel'),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              _deleteExerciseOnPressed(context);
+                              Navigator.pop(context, 'Delete');
+                            },
+                            child: const Text('Delete'),
+                          ),
+                        ],
+                      ));
+              ;
+            }),
         onTap: () {
           //TODO:add route
-          Navigator.of(context).pushNamed(RouterGenerator.exerciseDetailViewRoute, arguments: widget.exercise);
+          Navigator.of(context)
+              .pushNamed(RouterGenerator.exerciseDetailViewRoute, arguments: widget.exercise);
         },
       ),
     );

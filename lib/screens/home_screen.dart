@@ -27,40 +27,40 @@ class _MyHomePageState extends State<HomeScreen> {
     List<Exercise> _localList = exerciseNotifier.getExerciseList();
 
     return Scaffold(
-        appBar: AppBar(
-          title: Text("FitLib"),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.account_circle),
-              onPressed: () {
-                Navigator.pushNamed(context, "/sign-up");
-              },
-            )
-          ],
-        ),
-        body: exerciseNotifier != null
-            ? Container(
-            color: Colors.black12,
-            child: ListView.builder(
-                itemCount: _localList.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Padding(
-                    padding: EdgeInsets.all(0),
-                    key: ObjectKey(_localList[index]),
-                    child: ExerciseListView(
-                      exercise: _localList[index],
-                    ),
-                  );
-                }))
-        : Center(
-          child: CircularProgressIndicator(),
-        ),
-        floatingActionButton: FloatingActionButton(
+      appBar: AppBar(
+        title: Text("FitLib"),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.account_circle),
+            onPressed: () {
+              Navigator.pushNamed(context, "/sign-up");
+            },
+          )
+        ],
+      ),
+      body: exerciseNotifier != null
+          ? Container(
+              color: Colors.black12,
+              child: ListView.builder(
+                  itemCount: _localList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: EdgeInsets.all(0),
+                      key: ObjectKey(_localList[index]),
+                      child: ExerciseListView(
+                        exercise: _localList[index],
+                      ),
+                    );
+                  }))
+          : Center(
+              child: CircularProgressIndicator(),
+            ),
+      floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context).pushNamed(RouterGenerator.exerciseAddRoute);
         },
         child: const Icon(Icons.add),
-    ),
+      ),
     );
   }
 }

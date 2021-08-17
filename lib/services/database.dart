@@ -23,9 +23,7 @@ class Database {
     //   });
     // }).then((value) => exerciseNotifier.setExerciseList(exerciseList));
 
-    exerciseCollection
-        .get()
-        .then((QuerySnapshot querySnapshot) {
+    exerciseCollection.get().then((QuerySnapshot querySnapshot) {
       return querySnapshot.docs.map((doc) {
         return Exercise.fromJson(doc.data() as Map<String, dynamic>);
       }).toList();
@@ -57,8 +55,8 @@ class Database {
   }
 
   /// Add exercise to firebase firestore
-  static Future<Exercise?> addExercise({required Exercise exercise, PickedFile? uploadImage}) async {
-
+  static Future<Exercise?> addExercise(
+      {required Exercise exercise, PickedFile? uploadImage}) async {
     try {
       /// Generate an empty document to create the document Id
       DocumentReference<Object?> randomDoc = await exerciseCollection.doc();
@@ -74,16 +72,12 @@ class Database {
       /// Map entered values to exercise entry in firebase
       exercise.id = randomDoc.id;
       exercise.imageUrl = uploadFileUrl;
-      exerciseCollection
-          .doc(randomDoc.id)
-          .set(exercise.toJson());
+      exerciseCollection.doc(randomDoc.id).set(exercise.toJson());
       return exercise;
-
     } on FirebaseException catch (e) {
       print(e);
       return null;
     }
-
   }
 
   static Future<String> uploadFile({required PickedFile file, required exerciseId}) async {
