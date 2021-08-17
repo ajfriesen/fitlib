@@ -50,11 +50,26 @@ class Authentication extends ChangeNotifier {
 
   ///TODO: Ask about the function as a paremeter. What can I do with this?
   static void registerWithMail(
-      String email, String password, void Function(FirebaseAuthException e) errorCallback) async {
+      String email, String password, void Function(FirebaseAuthException error, String title) errorCallback) async {
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
-    } on FirebaseAuthException catch (e) {
-      errorCallback(e);
+    } on FirebaseAuthException catch (error) {
+      String errorTitle = "Unbekannter Fehler";
+      switch (error.code){
+        case "email-already-in-use":
+          errorTitle = "E-Mail schon vorhanden";
+          break;
+        case "invalid-email":
+          errorTitle = "Keine valide E-Mail";
+          break;
+        case "operation-not-allowed":
+          errorTitle = "E-Mail Authentifizierung nicht erlaubt";
+          break;
+        case "weak-password":
+          errorTitle = "Password zu schwach";
+          break;
+      }
+      errorCallback(error, errorTitle);
     }
   }
 
