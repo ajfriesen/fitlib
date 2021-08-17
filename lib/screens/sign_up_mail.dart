@@ -18,7 +18,7 @@ class _MailSignUpState extends State<MailSignUp> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Login or Sign Up'),
+        title: Text('Registrieren'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(15.0),
