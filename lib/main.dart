@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/notifiers/authentication_notifier.dart';
 import 'package:flutter_app/screens/home_screen.dart';
 import 'package:flutter_app/services/route_generator.dart';
 import 'package:provider/provider.dart';
@@ -18,6 +19,8 @@ Future<void> main() async {
       ChangeNotifierProvider(
         create: (context) => ExerciseNotifier(),
       ),
+      ChangeNotifierProvider(
+        create: (context) => AuthenticationNotifier()),
     ],
     child: MyApp(),
   ));
