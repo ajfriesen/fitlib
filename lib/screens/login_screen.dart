@@ -68,8 +68,8 @@ class _LoginState extends State<Login> {
                       onPressed: () {
                         if (_formkey.currentState!.validate()) {
                           _formkey.currentState!.save();
-                          Authentication.loginWithMail(email: email!, password: password!);
-                          Navigator.pop(context, "/");
+                          Authentication.loginWithMail(email: email!, password: password!,  errorCallback: (error, title) => showErrorDialog(context, title, error));
+                          // Navigator.pop(context, "/");
                         }
                       },
                     ),

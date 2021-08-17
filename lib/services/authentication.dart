@@ -75,32 +75,32 @@ class Authentication extends ChangeNotifier {
 
   ///TODO: Ask about the function as a paremeter. What can I do with this?
   ///TODO: Removed the function parameter since I do not know how to use it.
-  static Future<User?> loginWithMail({required String email, required String password}) async {
-    String? errorMessage;
-
+  ///#TODO: Can I use named parameters in a functions which is a paramter already?
+  static Future<User?> loginWithMail({required String email, required String password, required void Function(FirebaseAuthException error, String title) errorCallback}) async {
     try {
       UserCredential result =  await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
       return result.user;
-    } on FirebaseException catch (e) {
-      switch (e.code){
+    } on FirebaseAuthException catch (error) {
+      String errorTitle = "Unbekannter Fehler";
+
+      switch (error.code){
         case "invalid-email":
-          errorMessage = "Invalid Email";
+          errorTitle = "Invalid Email";
           break;
         case "user-disabled":
-          errorMessage = "user-disabled";
+          errorTitle = "user-disabled";
           break;
         case "user-not-found":
-          errorMessage = "user-not-found";
+          errorTitle = "user-not-found";
           break;
         case "wrong-password":
-          errorMessage = "wrong-password";
+          errorTitle = "Falsches Passwort";
           break;
       }
+      errorCallback(error, errorTitle);
     }
 
-    if (errorMessage != null) {
-      return Future.error(errorMessage);
-    }
+
   }
 
 }
