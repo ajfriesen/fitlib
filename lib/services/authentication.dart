@@ -77,7 +77,7 @@ class Authentication extends ChangeNotifier {
     }
   }
 
-  static signOut(){
+  static signOut() {
     _firebaseAuth.signOut();
   }
 }
