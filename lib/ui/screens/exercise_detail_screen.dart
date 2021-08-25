@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/components/custom_image.dart';
-import 'package:flutter_app/components/exercise/exercise_list_view_model.dart';
+import 'package:flutter_app/ui/widget/custom_image.dart';
+import 'package:flutter_app/view_models/exercise_list_view_model.dart';
 import 'package:flutter_app/models/exercise.dart';
 import 'package:flutter_app/services/shared_preferences_service.dart';
 import 'package:flutter_app/models/exercise_image_list.dart';

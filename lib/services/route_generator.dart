@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/exercise.dart';
-import 'package:flutter_app/screens/add_exercise_screen.dart';
-import 'package:flutter_app/screens/exercise_detail_screen.dart';
-import 'package:flutter_app/screens/home_screen.dart';
-import 'package:flutter_app/screens/login_screen.dart';
-import 'package:flutter_app/screens/sign_up_screen.dart';
-import 'package:flutter_app/screens/sign_up_mail.dart';
+import 'package:flutter_app/ui/screens/add_exercise_screen.dart';
+import 'package:flutter_app/ui/screens/exercise_detail_screen.dart';
+import 'package:flutter_app/ui/screens/home_screen.dart';
+import 'package:flutter_app/ui/screens/login_screen.dart';
+import 'package:flutter_app/ui/screens/sign_up_mail.dart';
+import 'package:flutter_app/ui/screens/sign_up_screen.dart';
 
 class RouterGenerator {
   static const String exerciseListView = '/';

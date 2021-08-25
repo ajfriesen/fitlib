@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/components/exercise/exercise_list_view.dart';
+import 'package:flutter_app/ui/view/exercise_list_view.dart';
 import 'package:flutter_app/models/exercise.dart';
 import 'package:flutter_app/notifiers/authentication_notifier.dart';
 import 'package:flutter_app/notifiers/exercise_notifier.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/components/exercise/exercise_list_view_model.dart';
+import 'package:flutter_app/view_models/exercise_list_view_model.dart';
 
 class ExerciseList extends StatelessWidget {
   final List<ExerciseListViewModel> exercises;
