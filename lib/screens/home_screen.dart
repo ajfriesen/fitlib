@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/components/exercise/exercise_list_view.dart';
 import 'package:flutter_app/models/exercise.dart';
+import 'package:flutter_app/notifiers/authentication_notifier.dart';
 import 'package:flutter_app/notifiers/exercise_notifier.dart';
+import 'package:flutter_app/services/authentication.dart';
 import 'package:flutter_app/services/database.dart';
 import 'package:flutter_app/services/route_generator.dart';
 import 'package:provider/provider.dart';
@@ -18,6 +20,8 @@ class _MyHomePageState extends State<HomeScreen> {
   void initState() {
     ExerciseNotifier exerciseNotifier = Provider.of<ExerciseNotifier>(context, listen: false);
     Database.getExercises(exerciseNotifier);
+    AuthenticationNotifier authenticationNotifier = Provider.of<AuthenticationNotifier>(context, listen: false);
+    authenticationNotifier.listenUserChange();
     super.initState();
   }
 
@@ -30,12 +34,32 @@ class _MyHomePageState extends State<HomeScreen> {
       appBar: AppBar(
         title: Text("FitLib"),
         actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.account_circle),
-            onPressed: () {
-              Navigator.pushNamed(context, "/sign-up");
-            },
-          )
+          // IconButton(
+          //   icon: Icon(Icons.account_circle),
+          //   onPressed: () {
+          //     Navigator.pushNamed(context, "/sign-up");
+          //   },
+          // ),
+          Consumer<AuthenticationNotifier>(
+          builder: (context, appState, _) {
+            if (appState.loginState == ApplicationLoginState.loggedOut) {
+              return IconButton(
+                icon: Icon(Icons.account_circle),
+                onPressed: () {
+                  Navigator.pushNamed(context, "/sign-up");
+                },
+              );
+            } else {
+              return IconButton(
+                icon: Icon(Icons.mail),
+                onPressed: () {
+                  Authentication.signOut();
+                },
+              );
+            }
+
+          },
+          ),
         ],
       ),
       body: exerciseNotifier != null
