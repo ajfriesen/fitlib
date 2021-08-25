@@ -1,39 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-
-enum AuthenticationState {
-  loggedOut,
-  emailAddress,
-  register,
-  password,
-  loggedIn,
-}
 
 class Authentication extends ChangeNotifier {
   static FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-
-  AuthenticationState _loginState = AuthenticationState.loggedOut;
-  AuthenticationState get loginState => _loginState;
-
-  Stream<User?>? userState;
-
-  Stream<User>? get authStateChanges {
-    userState = _firebaseAuth.authStateChanges();
-  }
-
-  Future<void> init() async {
-    await Firebase.initializeApp();
-
-    FirebaseAuth.instance.userChanges().listen((user) {
-      if (user != null) {
-        _loginState = AuthenticationState.loggedIn;
-      } else {
-        _loginState = AuthenticationState.loggedOut;
-      }
-      notifyListeners();
-    });
-  }
 
   static Future<String?> anonymousLogin() async {
     try {
