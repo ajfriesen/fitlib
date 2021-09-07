@@ -42,7 +42,9 @@ class ExerciseListViewState extends State<ExerciseListView> {
         subtitle: Text(exerciseViewModel!.description!),
         trailing: Wrap(
           children: <Widget>[
-            IconButton(onPressed: (){}, icon: Icon(Icons.edit)),
+            IconButton(onPressed: (){
+              Navigator.of(context).pushNamed(RouterGenerator.EditExercise, arguments: widget.exercise);
+            }, icon: Icon(Icons.edit)),
             IconButton(
               icon: const Icon(Icons.delete),
               onPressed: () {

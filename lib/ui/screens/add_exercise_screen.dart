@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/exercise.dart';
 import 'package:flutter_app/notifiers/exercise_notifier.dart';
+import 'package:flutter_app/services/database.dart';
 import 'package:flutter_app/services/media_file_service.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class AddExercise extends StatefulWidget {
+
+  Exercise? exercise;
+
+  AddExercise(this.exercise);
+
+  AddExercise.empty();
+
   @override
   _AddExerciseState createState() {
     return _AddExerciseState();
@@ -14,7 +22,7 @@ class AddExercise extends StatefulWidget {
 
 class _AddExerciseState extends State<AddExercise> {
   final _formKey = GlobalKey<FormState>();
-  final Exercise exercise = Exercise.empty();
+  Exercise exercise = Exercise.empty();
   final Media media = Media();
   PickedFile pickedFile = PickedFile("");
 
@@ -22,6 +30,14 @@ class _AddExerciseState extends State<AddExercise> {
   //   final snackbar = SnackBar(content: Text(text));
   //   _scaffoldKey.currentState.showSnackBar(snackbar);
   // }
+
+  @override
+  void initState() {
+    if (widget.exercise != null){
+      exercise = widget.exercise!;
+    }
+    super.initState();
+  }
 
   _createExerciseOnPressed(BuildContext context) {
     if (!_formKey.currentState!.validate()) {
@@ -42,7 +58,7 @@ class _AddExerciseState extends State<AddExercise> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add your Exercise'),
+        title: Text(widget.exercise?.id != null ? 'Edit your Exercise' : 'Add your Exercise'),
       ),
       body: Column(
         children: [
@@ -51,6 +67,7 @@ class _AddExerciseState extends State<AddExercise> {
             child: Column(
               children: <Widget>[
                 TextFormField(
+                  initialValue: widget.exercise?.name,
                   autofocus: true,
                   decoration: const InputDecoration(
                     icon: Icon(Icons.fitness_center),

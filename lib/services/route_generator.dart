@@ -14,6 +14,7 @@ class RouterGenerator {
   static const String signUpViewRoute = '/sign-up';
   static const String MailSignUpRoute = '/sign-up/mail';
   static const String SignInRoute = '/sign-in';
+  static const String EditExercise = '/Exercise/edit';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     // Getting arguments passed in while calling Navigator.pushNamed
@@ -21,9 +22,14 @@ class RouterGenerator {
 
     switch (settings.name) {
       case exerciseAddRoute:
-        return MaterialPageRoute(builder: (_) => AddExercise());
+        return MaterialPageRoute(builder: (_) => AddExercise.empty());
+      case EditExercise:
+        if (args is Exercise) {
+          return MaterialPageRoute(builder: (_) => AddExercise(args));
+        }
+        return _errorRoute();
       case exerciseDetailViewRoute:
-        // check if args is actually of type Exercise and pass args to Detail()
+        // check if args is actually of type Exercise and passR args to Detail()
         if (args is Exercise) {
           return MaterialPageRoute(
             builder: (_) => Detail(
