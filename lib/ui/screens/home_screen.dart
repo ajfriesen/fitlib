@@ -1,5 +1,5 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/ui/view/exercise_list_view.dart';
 import 'package:flutter_app/models/exercise.dart';
 import 'package:flutter_app/notifiers/authentication_notifier.dart';
 import 'package:flutter_app/notifiers/exercise_notifier.dart';
@@ -62,23 +62,27 @@ class _MyHomePageState extends State<HomeScreen> {
           ),
         ],
       ),
-      body: exerciseNotifier != null
-          ? Container(
-              color: Colors.black12,
-              child: ListView.builder(
-                  itemCount: _localList.length,
+      body: Container(
+          color: Colors.black12,
+          child: StreamBuilder(
+            stream: Database.getExercises().asStream(),
+            builder: (BuildContext context, AsyncSnapshot<List<Exercise>> snapshot) {
+              if (snapshot.hasData) {
+                return ListView.builder(
+                  itemCount: snapshot.data!.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return Padding(
-                      padding: EdgeInsets.all(0),
-                      key: ObjectKey(_localList[index]),
-                      child: ExerciseListView(
-                        exercise: _localList[index],
-                      ),
+                    return ListTile(
+                      title: Text(snapshot.data![index].name!),
                     );
-                  }))
-          : Center(
-              child: CircularProgressIndicator(),
-            ),
+                  },
+                );
+              }
+              if (snapshot.hasError) {
+                return Text("nope");
+              }
+              return Text("llllll");
+            },
+          )),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context).pushNamed(RouterGenerator.exerciseAddRoute);
