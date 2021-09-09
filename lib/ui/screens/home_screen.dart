@@ -18,9 +18,8 @@ class HomeScreen extends StatefulWidget {
 class _MyHomePageState extends State<HomeScreen> {
   @override
   void initState() {
-    ExerciseNotifier exerciseNotifier = Provider.of<ExerciseNotifier>(context, listen: false);
-    Database.getExercises(exerciseNotifier);
-    AuthenticationNotifier authenticationNotifier = Provider.of<AuthenticationNotifier>(context, listen: false);
+    AuthenticationNotifier authenticationNotifier =
+        Provider.of<AuthenticationNotifier>(context, listen: false);
     authenticationNotifier.listenUserChange();
     super.initState();
   }
