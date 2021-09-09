@@ -75,7 +75,11 @@ class _MyHomePageState extends State<HomeScreen> {
               if (snapshot.hasError) {
                 return Text("nope");
               }
-              return Text("llllll");
+              return Dialog(child: Row(
+                children: [
+                  CircularProgressIndicator(),
+                ],
+              ),);
             },
           )),
       floatingActionButton: FloatingActionButton(
