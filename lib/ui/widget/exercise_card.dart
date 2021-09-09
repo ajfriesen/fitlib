@@ -23,30 +23,36 @@ class _ExerciseCardState extends State<ExerciseCard> {
             : Image.asset(placeholder),
         subtitle:
             widget.exercise.description != null ? Text(widget.exercise.description!) : Text(""),
-        trailing: IconButton(
-            icon: const Icon(Icons.more_vert),
-            onPressed: () {
-              showDialog(
-                  context: context,
-                  builder: (BuildContext context) => AlertDialog(
-                        title: const Text("Warnung"),
-                        content: const Text("Soll diener Eintrag geloescht werden?"),
-                        actions: <Widget>[
-                          TextButton(
-                            onPressed: () => Navigator.pop(context, 'Cancel'),
-                            child: const Text('Cancel'),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              Database.deleteExercise(widget.exercise);
-                              Navigator.pop(context, 'Delete');
-                            },
-                            child: const Text('Delete'),
-                          ),
-                        ],
-                      ));
-              ;
-            }),
+        trailing: Wrap(
+          children: <Widget>[
+            IconButton(onPressed: (){
+              Navigator.of(context).pushNamed(RouterGenerator.EditExercise, arguments: widget.exercise);
+            }, icon: Icon(Icons.edit)),
+            IconButton(
+              icon: const Icon(Icons.delete),
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                          title: const Text("Warnung"),
+                          content: const Text("Soll diener Eintrag geloescht werden?"),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () => Navigator.pop(context, 'Cancel'),
+                              child: const Text('Cancel'),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Database.deleteExercise(widget.exercise);
+                                Navigator.pop(context, 'Delete');
+                              },
+                              child: const Text('Delete'),
+                            ),
+                          ],
+                        ));
+                ;
+              }),]
+        ),
         onTap: () {
           Navigator.of(context)
               .pushNamed(RouterGenerator.exerciseDetailViewRoute, arguments: widget.exercise);

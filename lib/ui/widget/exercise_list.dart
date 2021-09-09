@@ -1,32 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/view_models/exercise_list_view_model.dart';
+import 'package:flutter_app/models/exercise.dart';
+import 'package:flutter_app/ui/widget/exercise_card.dart';
 
 class ExerciseList extends StatelessWidget {
-  final List<ExerciseListViewModel> exercises;
+  final List<Exercise> exercises;                      // title: Text(snapshot.data![index].name!),
+  final itemcCount;
 
-  ExerciseList({required this.exercises});
+  ExerciseList({required this.exercises, required this.itemcCount});
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: this.exercises.length,
+      itemCount: itemcCount,
       itemBuilder: (context, index) {
         final exercise = this.exercises[index];
-
-        return ListTile(
-          contentPadding: EdgeInsets.all(10),
-          leading: Container(
-            decoration: BoxDecoration(
-                // image: DecorationImage(
-                //     fit: BoxFit.cover,
-                //     image: NetworkImage(exercise.poster)
-                // ),
-                borderRadius: BorderRadius.circular(6)),
-            width: 50,
-            height: 100,
-          ),
-          title: Text(exercise.name!),
-        );
+        return ExerciseCard(exercise);
       },
     );
   }

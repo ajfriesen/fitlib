@@ -6,6 +6,7 @@ import 'package:flutter_app/notifiers/exercise_notifier.dart';
 import 'package:flutter_app/services/authentication.dart';
 import 'package:flutter_app/services/database.dart';
 import 'package:flutter_app/services/route_generator.dart';
+import 'package:flutter_app/ui/widget/exercise_list.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -65,16 +66,12 @@ class _MyHomePageState extends State<HomeScreen> {
           child: StreamBuilder(
             stream: Database.getExercises().asStream(),
             builder: (BuildContext context, AsyncSnapshot<List<Exercise>> snapshot) {
-              if (snapshot.hasData) {
-                return ListView.builder(
-                  itemCount: snapshot.data!.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return ListTile(
-                      title: Text(snapshot.data![index].name!),
+              if (snapshot.hasData && snapshot.data != null) {
+                    return ExerciseList(
+                      exercises: snapshot.data!,
+                      itemcCount: snapshot.data!.length,
                     );
-                  },
-                );
-              }
+                  }
               if (snapshot.hasError) {
                 return Text("nope");
               }
