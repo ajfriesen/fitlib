@@ -40,24 +40,23 @@ class _MyHomePageState extends State<HomeScreen> {
           //   },
           // ),
           Consumer<AuthenticationNotifier>(
-          builder: (context, appState, _) {
-            if (appState.loginState == ApplicationLoginState.loggedOut) {
-              return IconButton(
-                icon: Icon(Icons.account_circle),
-                onPressed: () {
-                  Navigator.pushNamed(context, "/sign-up");
-                },
-              );
-            } else {
-              return IconButton(
-                icon: Icon(Icons.mail),
-                onPressed: () {
-                  Authentication.signOut();
-                },
-              );
-            }
-
-          },
+            builder: (context, appState, _) {
+              if (appState.loginState == ApplicationLoginState.loggedOut) {
+                return IconButton(
+                  icon: Icon(Icons.account_circle),
+                  onPressed: () {
+                    Navigator.pushNamed(context, "/sign-up");
+                  },
+                );
+              } else {
+                return IconButton(
+                  icon: Icon(Icons.mail),
+                  onPressed: () {
+                    Authentication.signOut();
+                  },
+                );
+              }
+            },
           ),
         ],
       ),
