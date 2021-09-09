@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_app/models/exercise.dart';
-import 'package:flutter_app/notifiers/exercise_notifier.dart';
 import 'package:image_picker/image_picker.dart';
 
 class Database {
@@ -12,22 +11,12 @@ class Database {
   static FirebaseStorage _storage = FirebaseStorage.instance;
   static CollectionReference exerciseCollection = _firestore.collection('exercise');
 
-  static void getExercises(ExerciseNotifier exerciseNotifier) {
-    // List<Exercise> exerciseList = [];
-    //
-    // exerciseCollection
-    //     .get()
-    //     .then((QuerySnapshot querySnapshot) {
-    //   querySnapshot.docs.forEach((doc) {
-    //     exerciseList.add(Exercise.fromJson(doc.data() as Map<String, dynamic>));
-    //   });
-    // }).then((value) => exerciseNotifier.setExerciseList(exerciseList));
-
-    exerciseCollection.get().then((QuerySnapshot querySnapshot) {
+  static Future<List<Exercise>> getExercises() {
+    return exerciseCollection.get().then((QuerySnapshot querySnapshot) {
       return querySnapshot.docs.map((doc) {
         return Exercise.fromJson(doc.data() as Map<String, dynamic>);
       }).toList();
-    }).then((value) => exerciseNotifier.setExerciseList(value));
+    });
   }
 
   /// Get exercise by documentId/exerciseId and return exercise
