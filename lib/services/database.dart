@@ -19,6 +19,17 @@ class Database {
     });
   }
 
+  static Stream<List<Exercise>> getExercisesWithUpdates() {
+    Stream<QuerySnapshot<Object?>> querySnapshot =  exerciseCollection.snapshots();
+
+    Stream<List<Exercise>> stream = querySnapshot.map((document) {
+      return document.docs.map((e) {
+        return Exercise.fromJson(e.data() as Map<String, dynamic>);
+      }).toList();
+    });
+    return stream;
+  }
+
   /// Get exercise by documentId/exerciseId and return exercise
   static Future<Exercise> getExercise({required String exerciseId}) async {
     Exercise exercise = Exercise.empty();

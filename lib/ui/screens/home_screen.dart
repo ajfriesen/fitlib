@@ -64,7 +64,7 @@ class _MyHomePageState extends State<HomeScreen> {
       body: Container(
           color: Colors.black12,
           child: StreamBuilder(
-            stream: Database.getExercises().asStream(),
+            stream: Database.getExerciesesWithUpdates(),
             builder: (BuildContext context, AsyncSnapshot<List<Exercise>> snapshot) {
               if (snapshot.hasData && snapshot.data != null) {
                     return ExerciseList(
