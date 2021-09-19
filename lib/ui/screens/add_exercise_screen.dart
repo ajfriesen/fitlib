@@ -60,61 +60,8 @@ class _AddExerciseState extends State<AddExercise> {
       appBar: AppBar(
         title: Text(widget.exercise?.id == null ? 'Add your Exercise' : 'Edit your Exercise'),
       ),
-      body: Column(
-        children: [
-          Form(
-            key: _formKey,
-            child: Column(
-              children: <Widget>[
-                TextFormField(
-                  initialValue: widget.exercise?.name,
-                  autofocus: true,
-                  decoration: const InputDecoration(
-                    icon: Icon(Icons.fitness_center),
-                    hintText: 'Give a good name',
-                    labelText: 'Name of Exercise',
-                  ),
-                  onSaved: (String? value) {
-                    exercise.name = value;
-                  },
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'please enter some text';
-                    }
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  autofocus: true,
-                  decoration: const InputDecoration(
-                    icon: Icon(Icons.fitness_center),
-                    hintText: 'Exercise Description',
-                    labelText: 'Exercise Description',
-                  ),
-                  onSaved: (String? value) {
-                    exercise.description = value;
-                  },
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'please enter some text';
-                    }
-                    return null;
-                  },
-                ),
-                IconButton(
-                    onPressed: () {
-                      media.chooseImagePicker(context).then((value) {
-                        if (value != null || value != "") {
-                          pickedFile = value!;
-                        }
-                      });
-                    },
-                    icon: const Icon(Icons.add_a_photo))
-              ],
-            ),
-          )
-        ],
-      ),
+      body: _form(),
+      backgroundColor: Colors.grey[200],
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           _createExerciseOnPressed(context);
@@ -123,4 +70,76 @@ class _AddExerciseState extends State<AddExercise> {
       ),
     );
   }
+
+
+
+  _form() {
+    return Column(
+      children: [
+        Form(
+          key: _formKey,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Card(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: <Widget>[
+                    TextFormField(
+                      initialValue: widget.exercise?.name,
+                      autofocus: true,
+                      decoration: const InputDecoration(
+                        icon: Icon(Icons.fitness_center),
+                        hintText: 'Give a good name',
+                        labelText: 'Name of Exercise',
+                      ),
+                      onSaved: (String? value) {
+                        exercise.name = value;
+                      },
+                      validator: (String? value) {
+                        if (value == null || value.isEmpty) {
+                          return 'please enter some text';
+                        }
+                        return null;
+                      },
+                    ),
+                    TextFormField(
+                      initialValue: widget.exercise?.description,
+                      autofocus: true,
+                      decoration: const InputDecoration(
+                        icon: Icon(Icons.fitness_center),
+                        hintText: 'Exercise Description',
+                        labelText: 'Exercise Description',
+                      ),
+                      onSaved: (String? value) {
+                        exercise.description = value;
+                      },
+                      validator: (String? value) {
+                        if (value == null || value.isEmpty) {
+                          return 'please enter some text';
+                        }
+                        return null;
+                      },
+                    ),
+                    IconButton(
+                        onPressed: () {
+                          media.chooseImagePicker(context).then((value) {
+                            if (value != null || value != "") {
+                              pickedFile = value!;
+                            }
+                          });
+                        },
+                        icon: const Icon(Icons.add_a_photo))
+                  ],
+                ),
+              ),
+            ),
+          ),
+        )
+      ],
+    );
+  }
+
+
+
 }
