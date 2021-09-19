@@ -43,14 +43,14 @@ class _MyHomePageState extends State<HomeScreen> {
             builder: (context, appState, _) {
               if (appState.loginState == ApplicationLoginState.loggedOut) {
                 return IconButton(
-                  icon: Icon(Icons.account_circle),
+                  icon: Icon(Icons.login),
                   onPressed: () {
                     Navigator.pushNamed(context, "/sign-up");
                   },
                 );
               } else {
                 return IconButton(
-                  icon: Icon(Icons.mail),
+                  icon: Icon(Icons.account_circle),
                   onPressed: () {
                     Authentication.signOut();
                   },
