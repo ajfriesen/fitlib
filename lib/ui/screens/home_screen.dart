@@ -29,9 +29,6 @@ class _MyHomePageState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    ExerciseNotifier exerciseNotifier = Provider.of<ExerciseNotifier>(context);
-    List<Exercise> _localList = exerciseNotifier.getExerciseList();
-
     return Scaffold(
       appBar: AppBar(
         title: Text("FitLib"),

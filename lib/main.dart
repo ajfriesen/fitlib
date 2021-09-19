@@ -5,8 +5,6 @@ import 'package:flutter_app/services/route_generator.dart';
 import 'package:flutter_app/ui/screens/home_screen.dart';
 import 'package:provider/provider.dart';
 
-import 'notifiers/exercise_notifier.dart';
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -16,9 +14,6 @@ Future<void> main() async {
   // so this line of code ensures a communication channel to native.
   runApp(MultiProvider(
     providers: [
-      ChangeNotifierProvider(
-        create: (context) => ExerciseNotifier(),
-      ),
       ChangeNotifierProvider(
         create: (context) => AuthenticationNotifier()),
     ],

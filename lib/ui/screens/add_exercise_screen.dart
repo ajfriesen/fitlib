@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/exercise.dart';
-import 'package:flutter_app/notifiers/exercise_notifier.dart';
 import 'package:flutter_app/services/database.dart';
 import 'package:flutter_app/services/media_file_service.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:provider/provider.dart';
 
 class AddExercise extends StatefulWidget {
 
@@ -47,8 +45,8 @@ class _AddExerciseState extends State<AddExercise> {
     _formKey.currentState!.save();
     exercise.imageName = pickedFile.path;
 
-    ExerciseNotifier exerciseNotifier = Provider.of(context, listen: false);
-    exerciseNotifier.uploadExercise(exercise, pickedFile).then((value) {
+    // ExerciseNotifier exerciseNotifier = Provider.of(context, listen: false);
+    Database.addExercise(exercise: exercise, uploadImage: pickedFile).then((value) {
       if (value != null) {}
       Navigator.of(context).pop();
     });
