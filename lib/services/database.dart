@@ -107,10 +107,8 @@ class Database {
   }
 
   static Future deleteExercise(Exercise exercise) {
-    CollectionReference exercises = FirebaseFirestore.instance.collection('exercise');
-
     deleteExerciseImageFolder(exerciseId: exercise.id!);
 
-    return exercises.doc(exercise.id).delete().then((value) => print("Exercise deleted"));
+    return exerciseCollection.doc(exercise.id).delete().then((value) => print("Exercise deleted"));
   }
 }
