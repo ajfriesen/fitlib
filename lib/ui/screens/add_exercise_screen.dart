@@ -71,8 +71,6 @@ class _AddExerciseState extends State<AddExercise> {
     );
   }
 
-
-
   _form() {
     return Column(
       children: [
@@ -139,7 +137,4 @@ class _AddExerciseState extends State<AddExercise> {
       ],
     );
   }
-
-
-
 }
