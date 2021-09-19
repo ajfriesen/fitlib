@@ -58,7 +58,7 @@ class _AddExerciseState extends State<AddExercise> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.exercise?.id != null ? 'Edit your Exercise' : 'Add your Exercise'),
+        title: Text(widget.exercise?.id == null ? 'Add your Exercise' : 'Edit your Exercise'),
       ),
       body: Column(
         children: [
