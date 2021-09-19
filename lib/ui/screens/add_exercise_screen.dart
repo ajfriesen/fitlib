@@ -5,7 +5,6 @@ import 'package:flutter_app/services/media_file_service.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddExercise extends StatefulWidget {
-
   Exercise? exercise;
 
   AddExercise(this.exercise);
@@ -31,7 +30,7 @@ class _AddExerciseState extends State<AddExercise> {
 
   @override
   void initState() {
-    if (widget.exercise != null){
+    if (widget.exercise != null) {
       exercise = widget.exercise!;
     }
     super.initState();
