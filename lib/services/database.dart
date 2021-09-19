@@ -82,6 +82,18 @@ class Database {
     }
   }
 
+  ///
+  static Future<void> updateExercise(Exercise exercise) async {
+    /// get old exercise values
+    /// update with new values
+    /// TODO: Missing image stuff
+    Exercise oldData = Exercise.empty();
+    if (exercise.id != null) {
+      oldData = await getExercise(exerciseId: exercise.id!);
+    }
+    exerciseCollection.doc(oldData.id).update(exercise.toJson());
+  }
+
   static Future<String> uploadFile({required PickedFile file, required exerciseId}) async {
     File filePath = File(file.path);
 
