@@ -36,7 +36,7 @@ class _AddExerciseState extends State<AddExercise> {
     super.initState();
   }
 
-  _createExerciseOnPressed(BuildContext context) {
+  _createOrUpdateExerciseOnPressed(BuildContext context) {
     if (!_formKey.currentState!.validate()) {
       // _showSnackBar("Failed to create Post", context);
       return;
@@ -44,11 +44,14 @@ class _AddExerciseState extends State<AddExercise> {
     _formKey.currentState!.save();
     exercise.imageName = pickedFile.path;
 
-    // ExerciseNotifier exerciseNotifier = Provider.of(context, listen: false);
-    Database.addExercise(exercise: exercise, uploadImage: pickedFile).then((value) {
-      if (value != null) {}
-      Navigator.of(context).pop();
-    });
+    if (exercise.id == null) {
+      Database.addExercise(exercise: exercise, uploadImage: pickedFile).then((value) {
+        if (value != null) {}
+        Navigator.of(context).pop();
+      });
+    } else {
+      Database.updateExercise(exercise).then((value) => Navigator.of(context).pop());
+    }
   }
 
   @override
@@ -61,7 +64,7 @@ class _AddExerciseState extends State<AddExercise> {
       backgroundColor: Colors.grey[200],
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          _createExerciseOnPressed(context);
+          _createOrUpdateExerciseOnPressed(context);
         },
         child: const Icon(Icons.save),
       ),
