@@ -11,6 +11,7 @@ class Database {
   static FirebaseStorage _storage = FirebaseStorage.instance;
   static CollectionReference exerciseCollection = _firestore.collection('exercise');
 
+  /// Get all exercises only once
   static Future<List<Exercise>> getExercises() {
     return exerciseCollection.get().then((QuerySnapshot querySnapshot) {
       return querySnapshot.docs.map((doc) {
@@ -19,6 +20,7 @@ class Database {
     });
   }
 
+  /// Get all exercises with realtime changes
   static Stream<List<Exercise>> getExercisesWithUpdates() {
     Stream<QuerySnapshot<Object?>> querySnapshot =  exerciseCollection.snapshots();
 
