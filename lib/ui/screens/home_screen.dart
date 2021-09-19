@@ -25,6 +25,8 @@ class _MyHomePageState extends State<HomeScreen> {
     super.initState();
   }
 
+  Stream<List<Exercise>> _exerciseStream = Database.getExercisesWithUpdates();
+
   @override
   Widget build(BuildContext context) {
     ExerciseNotifier exerciseNotifier = Provider.of<ExerciseNotifier>(context);
@@ -64,7 +66,7 @@ class _MyHomePageState extends State<HomeScreen> {
       body: Container(
           color: Colors.black12,
           child: StreamBuilder(
-            stream: Database.getExerciesesWithUpdates(),
+            stream: _exerciseStream,
             builder: (BuildContext context, AsyncSnapshot<List<Exercise>> snapshot) {
               if (snapshot.hasData && snapshot.data != null) {
                     return ExerciseList(
