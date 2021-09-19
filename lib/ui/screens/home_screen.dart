@@ -68,20 +68,28 @@ class _MyHomePageState extends State<HomeScreen> {
           child: StreamBuilder(
             stream: _exerciseStream,
             builder: (BuildContext context, AsyncSnapshot<List<Exercise>> snapshot) {
-              if (snapshot.hasData && snapshot.data != null) {
+              debugPrint('Debug stream');
+              switch (snapshot.connectionState) {
+                case ConnectionState.none:
+                  print('none');
+                  return Dialog(child: Row(children: [CircularProgressIndicator(),],),);
+                case ConnectionState.waiting:
+                  print('waiting');
+                  return Dialog(child: Row(children: [CircularProgressIndicator(),],),);
+                case ConnectionState.active:
+                  if (snapshot.hasData && snapshot.data != null) {
                     return ExerciseList(
                       exercises: snapshot.data!,
                       itemcCount: snapshot.data!.length,
                     );
                   }
-              if (snapshot.hasError) {
-                return Text("nope");
+                  if (snapshot.hasError) {
+                    return Text("nope");
+                  }
+                  return Container();
+                case ConnectionState.done:
               }
-              return Dialog(child: Row(
-                children: [
-                  CircularProgressIndicator(),
-                ],
-              ),);
+              return Container();
             },
           )),
       floatingActionButton: FloatingActionButton(
