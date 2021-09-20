@@ -42,7 +42,6 @@ class _AddExerciseState extends State<AddExercise> {
       return;
     }
     _formKey.currentState!.save();
-    exercise.imageName = pickedFile.path;
 
     if (exercise.id == null) {
       Database.addExercise(exercise: exercise, uploadImage: pickedFile).then((value) {
