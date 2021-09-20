@@ -39,9 +39,12 @@ class DetailState extends State<Detail> {
           child: Center(
             child: Column(
               children: [
-                widget.exercise.imageUrl == "" || widget.exercise.imageUrl == null
-                    ? Image.asset(placeholderImage, fit: BoxFit.fitWidth)
-                    : Image.network(widget.exercise.imageUrl!, fit: BoxFit.fitWidth),
+                Container(
+                  height: 150,
+                  child: widget.exercise.imageUrl == "" || widget.exercise.imageUrl == null
+                      ? Image.asset(placeholderImage, fit: BoxFit.fitWidth)
+                      : Image.network(widget.exercise.imageUrl!, fit: BoxFit.fitWidth),
+                ),
                 SizedBox(height: 40),
                 Text(
                   "Description",
