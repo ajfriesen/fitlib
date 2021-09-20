@@ -30,38 +30,49 @@ class DetailState extends State<Detail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
         title: Text(widget.exercise.name!),
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Center(
-            child: Column(
-              children: [
-                Container(
-                  height: 150,
-                  child: widget.exercise.imageUrl == "" || widget.exercise.imageUrl == null
-                      ? Image.asset(placeholderImage, fit: BoxFit.fitWidth)
-                      : Image.network(widget.exercise.imageUrl!, fit: BoxFit.fitWidth),
+        child: Card(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: SingleChildScrollView(
+              child: Center(
+                child: Column(
+                  children: [
+                    Container(
+                      height: 150,
+                      child: widget.exercise.imageUrl == "" || widget.exercise.imageUrl == null
+                          ? Image.asset(placeholderImage, fit: BoxFit.fitWidth)
+                          : Image.network(widget.exercise.imageUrl!, fit: BoxFit.fitWidth),
+                    ),
+                    SizedBox(height: 40),
+                    Text(
+                      "Description",
+                      style: TextStyle(fontSize: 30),
+                    ),
+                    widget.exercise.description != null || widget.exercise.description != ""
+                        ? Text(widget.exercise.description!)
+                        : Text("Keine Beschreibung"),
+                    const Divider(
+                      height: 20,
+                      thickness: 5,
+                      indent: 0,
+                      endIndent: 40,
+                    ),
+                    Text(
+                      'My saved Images',
+                      style: TextStyle(fontSize: 30),
+                    ),
+                    imagePath != null && imagePath != ''
+                        ? CustomImage(imagePath: imagePath!)
+                        : Text('No images yet'),
+                  ],
                 ),
-                SizedBox(height: 40),
-                Text(
-                  "Description",
-                  style: TextStyle(fontSize: 30),
-                ),
-                widget.exercise.description != null || widget.exercise.description != ""
-                    ? Text(widget.exercise.description!)
-                    : Text("Keine Beschreibung"),
-                SizedBox(height: 40),
-                Text(
-                  'My saved Images',
-                  style: TextStyle(fontSize: 30),
-                ),
-                imagePath != null && imagePath != ''
-                    ? CustomImage(imagePath: imagePath!)
-                    : Text('No images yet'),
-              ],
+              ),
             ),
           ),
         ),

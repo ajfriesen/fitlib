@@ -33,6 +33,7 @@ class MyAppState extends State<MyApp> {
       title: 'FitLib',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        backgroundColor: Colors.grey[200],
         // This makes the visual density adapt to the platform that you run
         // the app on. For desktop platforms, the controls will be smaller and
         // closer together (more dense) than on mobile platforms.
