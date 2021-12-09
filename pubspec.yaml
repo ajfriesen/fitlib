@@ -43,6 +43,8 @@ dev_dependencies:
     sdk: flutter
   lint: ^1.5.3
   dart_code_metrics: ^4.1.0
+  mockito: ^5.0.16
+
 
 
 # For information on the generic Dart part of this file, see the
