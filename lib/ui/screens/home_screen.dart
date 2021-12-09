@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/exercise.dart';
@@ -23,6 +24,8 @@ class _MyHomePageState extends State<HomeScreen> {
     authenticationNotifier.listenUserChange();
     super.initState();
   }
+
+  final Authentication _auth = Authentication(firebaseAuth: FirebaseAuth.instance);
 
   Stream<List<Exercise>> _exerciseStream = Database.getExercisesWithUpdates();
 
@@ -51,7 +54,7 @@ class _MyHomePageState extends State<HomeScreen> {
                 return IconButton(
                   icon: Icon(Icons.account_circle),
                   onPressed: () {
-                    Authentication.signOut();
+                    _auth.signOut();
                   },
                 );
               }

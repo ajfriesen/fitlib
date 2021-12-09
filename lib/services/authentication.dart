@@ -2,29 +2,32 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Authentication extends ChangeNotifier {
-  static FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-  static Future<String?> anonymousLogin() async {
+  final FirebaseAuth firebaseAuth;
+
+  Authentication({required this.firebaseAuth});
+
+  Future<String?> anonymousLogin() async {
     try {
-      await _firebaseAuth.signInAnonymously();
+      await firebaseAuth.signInAnonymously();
       return "Signed in";
     } on FirebaseAuthException catch (e) {
       return e.message;
     }
   }
 
-  static User? getUser() {
-    return _firebaseAuth.currentUser;
+  User? getUser() {
+    return firebaseAuth.currentUser;
   }
 
   ///TODO: Ask about the function as a paremeter. What can I do with this?
-  static void registerWithMail(
+  void registerWithMail(
     String email,
     String password,
     void Function(FirebaseAuthException error, String title) errorCallback,
   ) async {
     try {
-      await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
+      await firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (error) {
       String errorTitle = "Unbekannter Fehler";
       switch (error.code) {
@@ -48,13 +51,13 @@ class Authentication extends ChangeNotifier {
   ///TODO: Ask about the function as a paremeter. What can I do with this?
   ///TODO: Removed the function parameter since I do not know how to use it.
   ///#TODO: Can I use named parameters in a functions which is a paramter already?
-  static Future<User?> loginWithMail(
+  Future<User?> loginWithMail(
       {required String email,
       required String password,
       required void Function(FirebaseAuthException error, String title) errorCallback}) async {
     try {
       UserCredential result =
-          await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
+          await firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
       return result.user;
     } on FirebaseAuthException catch (error) {
       String errorTitle = "Unbekannter Fehler";
@@ -77,7 +80,7 @@ class Authentication extends ChangeNotifier {
     }
   }
 
-  static signOut() {
-    _firebaseAuth.signOut();
+  signOut() {
+    firebaseAuth.signOut();
   }
 }

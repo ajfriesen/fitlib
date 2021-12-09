@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/ui/widget/error_dialog.dart';
 import 'package:flutter_app/services/authentication.dart';
@@ -13,6 +14,8 @@ class _MailSignUpState extends State<MailSignUp> {
   final _formkey = GlobalKey<FormState>();
   String? email;
   String? password;
+
+  final Authentication _auth = Authentication(firebaseAuth: FirebaseAuth.instance);
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +66,7 @@ class _MailSignUpState extends State<MailSignUp> {
                     if (_formkey.currentState!.validate()) {
                       _formkey.currentState!.save();
                       if (email != null && password != null) {
-                        Authentication.registerWithMail(email!, password!,
+                        _auth.registerWithMail(email!, password!,
                             (error, title) => showErrorDialog(context, title, error));
                       }
                     }

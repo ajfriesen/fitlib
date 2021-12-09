@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/ui/widget/error_dialog.dart';
 import 'package:flutter_app/services/authentication.dart';
@@ -15,6 +16,8 @@ class _LoginState extends State<Login> {
   String? password;
   String? email;
   String? errorMessage;
+
+  final Authentication _auth = Authentication(firebaseAuth: FirebaseAuth.instance);
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +74,7 @@ class _LoginState extends State<Login> {
                       onPressed: () {
                         if (_formkey.currentState!.validate()) {
                           _formkey.currentState!.save();
-                          Authentication.loginWithMail(
+                          _auth.loginWithMail(
                               email: email!,
                               password: password!,
                               errorCallback: (error, title) =>
