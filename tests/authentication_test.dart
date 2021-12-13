@@ -1,33 +1,21 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_app/services/authentication.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
+import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
 
 
-class MockFirebaseAuth extends Mock implements FirebaseAuth {}
+final anonymousUser = MockUser(
+  isAnonymous: true,
+);
+
+final mockAuth = MockFirebaseAuth(mockUser: anonymousUser);
+
+final auth = Authentication(firebaseAuth: mockAuth);
 
 void main() {
 
-
-
-
-  setUp(() {});
-  tearDown(() {});
-
-  test("Test sign in", () async {
-
-    final MockFirebaseAuth _mockFirebaseAuth = MockFirebaseAuth();
-
-    Authentication authMock = Authentication(firebaseAuth: _mockFirebaseAuth);
-
-
-    when(_mockFirebaseAuth.signInAnonymously().thenAnswer());
-
-
-        // thenAnswer((value) {return value;} ));
-
-    expect(await authMock.anonymousLogin(),
-        "Signed in");
+  test("Test anonymous user sign in", () async {
+    // auth.anonymousLogin();
+    expect(await auth.anonymousLogin(), "Signed in");
   });
 
 }

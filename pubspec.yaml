@@ -44,6 +44,7 @@ dev_dependencies:
   lint: ^1.5.3
   dart_code_metrics: ^4.1.0
   mockito: ^5.0.16
+  firebase_auth_mocks: ^0.8.1
 
 
 
