@@ -1,9 +1,11 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_app/models/exercise.dart';
+import 'package:flutter_app/models/user.dart' as myUser;
 import 'package:image_picker/image_picker.dart';
 
 class Database {
@@ -122,5 +124,16 @@ class Database {
     deleteExerciseImageFolder(exerciseId: exercise.id!);
 
     return exerciseCollection.doc(exercise.id).delete().then((value) => print("Exercise deleted"));
+  }
+
+  static Future<void> addUser({required String email, required String id}) {
+    myUser.User user = myUser.User.empty();
+    user.id = id;
+    user.email = email;
+    user.updated = DateTime.now();
+    user.created = DateTime.now();
+
+    CollectionReference users = FirebaseFirestore.instance.collection('users');
+    return users.doc(user.id).set(user.toJson());
   }
 }
