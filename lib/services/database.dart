@@ -8,10 +8,17 @@ import 'package:flutter_app/models/exercise.dart';
 import 'package:flutter_app/models/user.dart' as myUser;
 import 'package:image_picker/image_picker.dart';
 
+class Collections {
+  static const String exercises = "exercises";
+  static const String users = "users";
+}
+
 class Database {
   static FirebaseFirestore _firestore = FirebaseFirestore.instance;
   static FirebaseStorage _storage = FirebaseStorage.instance;
-  static CollectionReference exerciseCollection = _firestore.collection('exercise');
+  static CollectionReference exerciseCollection = _firestore.collection(Collections.exercises);
+
+
 
   /// Get all exercises only once
   static Future<List<Exercise>> getExercises() {
@@ -39,7 +46,7 @@ class Database {
     Exercise exercise = Exercise.empty();
 
     DocumentReference<Map<String, dynamic>> documentReference =
-        await _firestore.collection('exercise').doc(exerciseId);
+        await _firestore.collection(Collections.exercises).doc(exerciseId);
     DocumentSnapshot<Map<String, dynamic>> documentSnapshot = await documentReference.get();
     if (documentSnapshot.exists) {
       Map<String, dynamic>? documentSnapshotMap = documentSnapshot.data();
@@ -50,7 +57,7 @@ class Database {
 
   static Future<String> getImageUrl({required String exerciseId}) async {
     try {
-      String imageUrl = await _storage.ref('exercise/$exerciseId/preview').getDownloadURL();
+      String imageUrl = await _storage.ref('${Collections.exercises}/$exerciseId/preview').getDownloadURL();
       return imageUrl;
     } on Exception catch (e) {
       print(e);
@@ -100,12 +107,12 @@ class Database {
     File filePath = File(file.path);
 
     try {
-      await _storage.ref('exercise/$exerciseId/preview').putFile(filePath);
+      await _storage.ref('${Collections.exercises}/$exerciseId/preview').putFile(filePath);
     } on FirebaseException catch (e) {
       print(e);
     }
 
-    String downloadUrl = await _storage.ref('exercise/$exerciseId/preview').getDownloadURL();
+    String downloadUrl = await _storage.ref('${Collections.exercises}/$exerciseId/preview').getDownloadURL();
     return downloadUrl;
   }
 
@@ -115,7 +122,7 @@ class Database {
   // and then delete them.
   static Future<void> deleteExerciseImageFolder({required String exerciseId}) {
     return _storage
-        .ref('exercise/$exerciseId/preview')
+        .ref('${Collections.exercises}/$exerciseId/preview')
         .delete()
         .then((value) => print("Deleted folder"));
   }
@@ -126,14 +133,14 @@ class Database {
     return exerciseCollection.doc(exercise.id).delete().then((value) => print("Exercise deleted"));
   }
 
-  static Future<void> addUser({required String email, required String id}) {
+    static Future<void> addUser({required String email, required String id}) {
     myUser.User user = myUser.User.empty();
     user.id = id;
     user.email = email;
     user.updated = DateTime.now();
     user.created = DateTime.now();
 
-    CollectionReference users = FirebaseFirestore.instance.collection('users');
+    CollectionReference users = FirebaseFirestore.instance.collection(Collections.users);
     return users.doc(user.id).set(user.toJson());
   }
 }
