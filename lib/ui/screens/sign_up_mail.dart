@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/services/database.dart';
 import 'package:flutter_app/ui/widget/error_dialog.dart';
 import 'package:flutter_app/services/authentication.dart';
 
@@ -68,6 +69,11 @@ class _MailSignUpState extends State<MailSignUp> {
                       if (email != null && password != null) {
                         _auth.registerWithMail(email!, password!,
                             (error, title) => showErrorDialog(context, title, error));
+                        User? currentUser = _auth.getUser();
+                        if ( currentUser != null) {
+                          Database.addUser(email: currentUser.email!, id: currentUser.uid);
+                        }
+
                       }
                     }
                   },
