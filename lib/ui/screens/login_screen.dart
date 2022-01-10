@@ -4,14 +4,14 @@ import 'package:flutter_app/ui/widget/error_dialog.dart';
 import 'package:flutter_app/services/authentication.dart';
 import 'package:flutter_app/services/route_generator.dart';
 
-class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
-  _LoginState createState() => _LoginState();
+  _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _LoginState extends State<Login> {
+class _LoginScreenState extends State<LoginScreen> {
   final _formkey = GlobalKey<FormState>();
   String? password;
   String? email;

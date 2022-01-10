@@ -43,7 +43,7 @@ class RouterGenerator {
       case MailSignUpRoute:
         return MaterialPageRoute(builder: (_) => MailSignUp());
       case SignInRoute:
-        return MaterialPageRoute(builder: (_) => Login());
+        return MaterialPageRoute(builder: (_) => LoginScreen());
       case exerciseListView:
         return MaterialPageRoute(builder: (_) => HomeScreen(UniqueKey()));
       default:
