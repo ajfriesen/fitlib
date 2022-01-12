@@ -65,7 +65,7 @@ class Database {
 
   /// Add exercise to firebase firestore
   static Future<Exercise?> addExercise(
-      {required Exercise exercise, PickedFile? uploadImage}) async {
+      {required Exercise exercise, required userId, PickedFile? uploadImage}) async {
     try {
       /// Generate an empty document to create the document Id
       DocumentReference<Object?> randomDoc = await exerciseCollection.doc();
@@ -80,6 +80,7 @@ class Database {
 
       /// Map entered values to exercise entry in firebase
       exercise.id = randomDoc.id;
+      exercise.userId = userId;
       exercise.imageUrl = uploadFileUrl;
       exerciseCollection.doc(randomDoc.id).set(exercise.toJson());
       return exercise;

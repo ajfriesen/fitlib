@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/exercise.dart';
 import 'package:flutter_app/services/database.dart';
@@ -6,7 +7,6 @@ import 'package:image_picker/image_picker.dart';
 
 class AddExercise extends StatefulWidget {
   Exercise? exercise;
-
   AddExercise(this.exercise);
 
   AddExercise.empty();
@@ -22,6 +22,7 @@ class _AddExerciseState extends State<AddExercise> {
   Exercise exercise = Exercise.empty();
   final Media media = Media();
   PickedFile pickedFile = PickedFile("");
+  User? user;
 
   // _showSnackBar(String text, BuildContext context) {
   //   final snackbar = SnackBar(content: Text(text));
@@ -33,6 +34,8 @@ class _AddExerciseState extends State<AddExercise> {
     if (widget.exercise != null) {
       exercise = widget.exercise!;
     }
+    user = FirebaseAuth.instance.currentUser;
+
     super.initState();
   }
 
@@ -44,7 +47,7 @@ class _AddExerciseState extends State<AddExercise> {
     _formKey.currentState!.save();
 
     if (exercise.id == null) {
-      Database.addExercise(exercise: exercise, uploadImage: pickedFile).then((value) {
+      Database.addExercise(exercise: exercise, userId: user?.uid, uploadImage: pickedFile).then((value) {
         if (value != null) {}
         Navigator.of(context).pop();
       });

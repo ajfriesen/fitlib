@@ -3,12 +3,14 @@ class Exercise {
   String? name;
   String? imageUrl;
   String? description;
+  String? userId;
 
   Exercise({
     required this.id,
     required this.name,
     this.imageUrl,
-    this.description
+    this.description,
+    required this.userId
   });
 
   Exercise.empty();
@@ -18,7 +20,9 @@ class Exercise {
             id: json['id']! as String,
             name: json['name']! as String,
             imageUrl: json['imageUrl']! as String,
-            description: json['description']! as String);
+            description: json['description']! as String,
+            userId: json['userId']! as String
+  );
 
   Map<String, dynamic> toJson() {
     return {
@@ -26,6 +30,7 @@ class Exercise {
       'name': name,
       'imageUrl': imageUrl,
       'description': description,
+      'userId': userId,
     };
   }
 }
