@@ -2,7 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/notifiers/authentication_notifier.dart';
 import 'package:flutter_app/services/route_generator.dart';
-import 'package:flutter_app/ui/screens/home_screen.dart';
+import 'package:flutter_app/ui/screens/landing_screen.dart';
 import 'package:provider/provider.dart';
 
 Future<void> main() async {
@@ -15,7 +15,10 @@ Future<void> main() async {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(
-        create: (context) => AuthenticationNotifier()),
+        create: (context) => AuthenticationNotifier(),
+        builder: (context, _) => MyApp(),
+      ),
+
     ],
     child: MyApp(),
   ));
@@ -39,7 +42,7 @@ class MyAppState extends State<MyApp> {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: HomeScreen(UniqueKey()),
+      home: LandingScreen(),
       onGenerateRoute: RouterGenerator.generateRoute,
       // routes: {
       // "/add_post": (context) => AddPostScreen(),

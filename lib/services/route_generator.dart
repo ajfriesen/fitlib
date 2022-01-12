@@ -3,12 +3,14 @@ import 'package:flutter_app/models/exercise.dart';
 import 'package:flutter_app/ui/screens/add_exercise_screen.dart';
 import 'package:flutter_app/ui/screens/exercise_detail_screen.dart';
 import 'package:flutter_app/ui/screens/home_screen.dart';
+import 'package:flutter_app/ui/screens/landing_screen.dart';
 import 'package:flutter_app/ui/screens/login_screen.dart';
 import 'package:flutter_app/ui/screens/sign_up_mail.dart';
 import 'package:flutter_app/ui/screens/sign_up_screen.dart';
 
 class RouterGenerator {
-  static const String exerciseListView = '/';
+  static const String landingScreen = '/';
+  static const String exerciseListView = '/exerciseListView';
   static const String exerciseAddRoute = '/Exercise/add';
   static const String exerciseDetailViewRoute = '/ExerciseDetailView';
   static const String signUpViewRoute = '/sign-up';
@@ -21,6 +23,8 @@ class RouterGenerator {
     final args = settings.arguments;
 
     switch (settings.name) {
+      case landingScreen:
+        return MaterialPageRoute(builder: (_) => LandingScreen());
       case exerciseAddRoute:
         return MaterialPageRoute(builder: (_) => AddExercise.empty());
       case EditExercise:

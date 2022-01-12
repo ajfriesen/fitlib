@@ -16,13 +16,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<HomeScreen> {
-  @override
-  void initState() {
-    AuthenticationNotifier authenticationNotifier =
-        Provider.of<AuthenticationNotifier>(context, listen: false);
-    authenticationNotifier.listenUserChange();
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   // AuthenticationNotifier authenticationNotifier =
+  //   //     Provider.of<AuthenticationNotifier>(context, listen: false);
+  //   // authenticationNotifier.getLoginState();
+  //   super.initState();
+  // }
 
   final Authentication _auth = Authentication(firebaseAuth: FirebaseAuth.instance);
 
@@ -54,6 +54,7 @@ class _MyHomePageState extends State<HomeScreen> {
                   icon: Icon(Icons.account_circle),
                   onPressed: () {
                     _auth.signOut();
+                    Navigator.pushReplacementNamed(context , '/');
                   },
                 );
               }

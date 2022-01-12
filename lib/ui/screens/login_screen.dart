@@ -79,7 +79,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               password: password!,
                               errorCallback: (error, title) =>
                                   showErrorDialog(context, title, error));
-                          // Navigator.pop(context, "/");
+                          // Navigator.pushNamed(context, '/');
+                          Navigator.pushReplacementNamed(context , '/');
                         }
                       },
                     ),
