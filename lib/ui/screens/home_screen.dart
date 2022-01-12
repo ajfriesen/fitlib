@@ -83,7 +83,7 @@ class _MyHomePageState extends State<HomeScreen> {
                     );
                   }
                   if (snapshot.hasError) {
-                    return Text("nope");
+                    return Text("nope" + snapshot.error.toString());
                   }
                   return Container();
                 case ConnectionState.done:
