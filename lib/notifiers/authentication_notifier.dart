@@ -1,6 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 
+// Example this is based off:
+//  https://firebase.google.com/codelabs/firebase-get-to-know-flutter#4
+//
+
 enum ApplicationLoginState {
   loggedOut,
   emailAddress,
@@ -16,19 +20,22 @@ class AuthenticationNotifier extends ChangeNotifier {
 
   ApplicationLoginState get loginState => _loginState;
 
-
-
-  Future<void> listenUserChange() async {
-    _firebaseAuth.userChanges().listen((user) {
-      if (user != null) {
-        _loginState = ApplicationLoginState.loggedIn;
-      } else {
-        _loginState = ApplicationLoginState.loggedOut;
-      }
-      notifyListeners();
-    });
+  AuthenticationNotifier(){
+    init();
   }
 
+  Future<void> init()async {
+    _firebaseAuth.userChanges().listen((user) {
+        if (user == null){
+          _loginState = ApplicationLoginState.loggedOut;
+        }
+        if (user != null){
+          _loginState = ApplicationLoginState.loggedIn;
+        }
+      }
+    );
+    notifyListeners();
+  }
 }
 
 
