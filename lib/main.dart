@@ -5,9 +5,16 @@ import 'package:fitlib/services/route_generator.dart';
 import 'package:fitlib/ui/screens/landing_screen.dart';
 import 'package:provider/provider.dart';
 
+import 'package:fitlib/emulator.dart';
+
 Future<void> main() async {
+  const bool USE_EMULATOR = false;
+
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  if (USE_EMULATOR) {
+    await connectToFirebaseEmulator();
+  }
   // 2 - Moved Firebase initialization to here
   // WidgetsFlutterBinding.ensureInitialized() is used to interact with the
   // Flutter engine. Firebase initialization needs to call native (Android) code
