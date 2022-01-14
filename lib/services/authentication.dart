@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import 'database.dart';
+
 class Authentication extends ChangeNotifier {
 
   final FirebaseAuth firebaseAuth;
@@ -27,7 +29,10 @@ class Authentication extends ChangeNotifier {
     void Function(FirebaseAuthException error, String title) errorCallback,
   ) async {
     try {
-      await firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
+      UserCredential registeredUser = await firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
+      if (registeredUser != null || registeredUser.user != null) {
+        await Database.addUser(email: email, userId: registeredUser.user!.uid);
+      }
     } on FirebaseAuthException catch (error) {
       String errorTitle = "Unbekannter Fehler";
       switch (error.code) {
