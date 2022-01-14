@@ -30,7 +30,7 @@ class Authentication extends ChangeNotifier {
   ) async {
     try {
       UserCredential registeredUser = await firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
-      if (registeredUser != null || registeredUser.user != null) {
+      if (registeredUser.user != null) {
         await Database.addUser(email: email, userId: registeredUser.user!.uid);
       }
     } on FirebaseAuthException catch (error) {
