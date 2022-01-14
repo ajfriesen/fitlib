@@ -1,4 +1,4 @@
-import 'package:flutter_app/models/exercise.dart';
+import 'package:fitlib/models/exercise.dart';
 
 class ExerciseListViewModel {
   final Exercise exercise;

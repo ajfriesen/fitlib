@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/ui/widget/custom_image.dart';
-import 'package:flutter_app/view_models/exercise_list_view_model.dart';
-import 'package:flutter_app/models/exercise.dart';
-import 'package:flutter_app/services/shared_preferences_service.dart';
-import 'package:flutter_app/models/exercise_image_list.dart';
+import 'package:fitlib/ui/widget/custom_image.dart';
+import 'package:fitlib/view_models/exercise_list_view_model.dart';
+import 'package:fitlib/models/exercise.dart';
+import 'package:fitlib/services/shared_preferences_service.dart';
+import 'package:fitlib/models/exercise_image_list.dart';
 
 class Detail extends StatefulWidget {
   final Exercise exercise;

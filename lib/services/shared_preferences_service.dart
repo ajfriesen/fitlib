@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:flutter_app/models/exercise_image_list.dart';
+import 'package:fitlib/models/exercise_image_list.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PreferencesService {

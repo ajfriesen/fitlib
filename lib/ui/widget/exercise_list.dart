@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/models/exercise.dart';
-import 'package:flutter_app/ui/widget/exercise_card.dart';
+import 'package:fitlib/models/exercise.dart';
+import 'package:fitlib/ui/widget/exercise_card.dart';
 
 class ExerciseList extends StatelessWidget {
   final List<Exercise> exercises;                      // title: Text(snapshot.data![index].name!),

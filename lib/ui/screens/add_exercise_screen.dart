@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/models/exercise.dart';
-import 'package:flutter_app/services/database.dart';
-import 'package:flutter_app/services/media_file_service.dart';
+import 'package:fitlib/models/exercise.dart';
+import 'package:fitlib/services/database.dart';
+import 'package:fitlib/services/media_file_service.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddExercise extends StatefulWidget {

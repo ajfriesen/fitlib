@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/services/database.dart';
-import 'package:flutter_app/ui/widget/error_dialog.dart';
-import 'package:flutter_app/services/authentication.dart';
+import 'package:fitlib/services/database.dart';
+import 'package:fitlib/ui/widget/error_dialog.dart';
+import 'package:fitlib/services/authentication.dart';
 
 class MailSignUp extends StatefulWidget {
   const MailSignUp({Key? key}) : super(key: key);

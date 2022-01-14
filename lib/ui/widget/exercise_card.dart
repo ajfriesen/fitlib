@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/models/exercise.dart';
-import 'package:flutter_app/services/database.dart';
-import 'package:flutter_app/services/route_generator.dart';
+import 'package:fitlib/models/exercise.dart';
+import 'package:fitlib/services/database.dart';
+import 'package:fitlib/services/route_generator.dart';
 
 class ExerciseCard extends StatefulWidget {
   @override

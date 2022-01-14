@@ -2,8 +2,8 @@ import 'dart:math';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/notifiers/authentication_notifier.dart';
-import 'package:flutter_app/ui/screens/login_screen.dart';
+import 'package:fitlib/notifiers/authentication_notifier.dart';
+import 'package:fitlib/ui/screens/login_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'home_screen.dart';

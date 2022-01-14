@@ -1,11 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/models/exercise.dart';
-import 'package:flutter_app/notifiers/authentication_notifier.dart';
-import 'package:flutter_app/services/authentication.dart';
-import 'package:flutter_app/services/database.dart';
-import 'package:flutter_app/services/route_generator.dart';
-import 'package:flutter_app/ui/widget/exercise_list.dart';
+import 'package:fitlib/models/exercise.dart';
+import 'package:fitlib/notifiers/authentication_notifier.dart';
+import 'package:fitlib/services/authentication.dart';
+import 'package:fitlib/services/database.dart';
+import 'package:fitlib/services/route_generator.dart';
+import 'package:fitlib/ui/widget/exercise_list.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {

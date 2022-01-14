@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/models/exercise.dart';
-import 'package:flutter_app/ui/screens/add_exercise_screen.dart';
-import 'package:flutter_app/ui/screens/exercise_detail_screen.dart';
-import 'package:flutter_app/ui/screens/home_screen.dart';
-import 'package:flutter_app/ui/screens/landing_screen.dart';
-import 'package:flutter_app/ui/screens/login_screen.dart';
-import 'package:flutter_app/ui/screens/sign_up_mail.dart';
-import 'package:flutter_app/ui/screens/sign_up_screen.dart';
+import 'package:fitlib/models/exercise.dart';
+import 'package:fitlib/ui/screens/add_exercise_screen.dart';
+import 'package:fitlib/ui/screens/exercise_detail_screen.dart';
+import 'package:fitlib/ui/screens/home_screen.dart';
+import 'package:fitlib/ui/screens/landing_screen.dart';
+import 'package:fitlib/ui/screens/login_screen.dart';
+import 'package:fitlib/ui/screens/sign_up_mail.dart';
+import 'package:fitlib/ui/screens/sign_up_screen.dart';
 
 class RouterGenerator {
   static const String landingScreen = '/';
