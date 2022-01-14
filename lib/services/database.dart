@@ -132,9 +132,9 @@ class Database {
     return exerciseCollection.doc(exercise.id).delete().then((value) => print("Exercise deleted"));
   }
 
-    static Future<void> addUser({required String email, required String id}) {
+    static Future<void> addUser({required String email, required String userId}) {
     myUser.User user = myUser.User.empty();
-    user.id = id;
+    user.id = userId;
     user.email = email;
     user.updated = DateTime.now();
     user.created = DateTime.now();

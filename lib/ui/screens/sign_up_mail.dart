@@ -71,7 +71,7 @@ class _MailSignUpState extends State<MailSignUp> {
                             (error, title) => showErrorDialog(context, title, error));
                         User? currentUser = _auth.getUser();
                         if ( currentUser != null) {
-                          Database.addUser(email: currentUser.email!, id: currentUser.uid);
+                          Database.addUser(email: currentUser.email!, userId: currentUser.uid);
                         }
 
                       }
