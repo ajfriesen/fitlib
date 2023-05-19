@@ -1,0 +1,25 @@
+{{template "header.html"}}
+
+<h1>Tracked</h1>
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Date</th>
+        <th scope="col">Quantity</th>
+      </tr>
+    </thead>
+    <tbody>
+    {{ range $exercise := .exercises }}
+
+      <tr>
+        <th scope="row">{{ .ID }}</th>
+        <td>{{ .Exercise.Name }}</td>
+        <td>{{ .CreatedAt }}</td>
+        <td>{{ .Quantity }}</td>
+      </tr>
+      {{ end }}
+    </tbody>
+</table>
+{{template "footer.html"}}
