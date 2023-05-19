@@ -2,16 +2,17 @@
 
 
 <div class="container">
-  {{ if .exercise.Name }}
-    <h1>{{ .exercise.Name }}</h1> 
-  {{ else }}
-    <h1>Exercise empty</h1>
-  {{ end }}
-  <p>Description</p>
-  <p>{{ .exercise.Description }}</p>
 
+  <form action="/exercise/{{ .exercise.ID }}/edit" method="GET">
+    <button type="edit" class="btn btn-warning">Edit</button>
+  </form>
+
+  {{ range $key, $value := .exercise }}
+  <p>{{ $key }}: {{ $value }}</p>
+  {{ end }}
+  <hr>
   <form action="/delete" method="POST">
-    <button type="Delete" class="btn btn-danger">Danger</button>
+    <button type="Delete" class="btn btn-danger">Delete Exercise</button>
   </form>
 
 

@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"strconv"
 
 	"github.com/ajfriesen/fitlib/controllers"
 	"github.com/ajfriesen/fitlib/models"
@@ -51,8 +52,59 @@ func main() {
 			return
 		}
 
-		c.HTML(http.StatusOK, "exerciseDetail.html", gin.H{"exercise": exercise})
+		exerciseMap := make(map[string]interface{})
+		exerciseMap["ID"] = exercise.ID
+		exerciseMap["Name"] = exercise.Name
+		exerciseMap["Description"] = exercise.Description
+		exerciseMap["Equipment"] = exercise.Equipment
 
+		c.HTML(http.StatusOK, "exerciseDetail.html", gin.H{"exercise": exerciseMap})
+
+	})
+
+	r.GET("/exercise/:id/edit", func(c *gin.Context) {
+		var exercise models.Exercise
+		if err := models.DB.Where("id = ?", c.Param("id")).First(&exercise).Error; err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+			return
+		}
+
+		// validate input
+		var input models.Exercise
+		if err := c.ShouldBind(&input); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+
+		models.DB.Model(&exercise).Updates(input)
+
+		c.HTML(http.StatusOK, "exerciseEdit.html", gin.H{"exercise": exercise})
+	})
+
+	// Update exercise by id
+	r.POST("/exercise/:id/update", func(c *gin.Context) {
+		var exercise models.Exercise
+		if err := models.DB.Where("id = ?", c.Param("id")).First(&exercise).Error; err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+			return
+		}
+
+		// validate input
+		var input models.Exercise
+		if err := c.ShouldBind(&input); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+
+		models.DB.Model(&exercise).Updates(input)
+
+		c.HTML(http.StatusOK, "exerciseAdd", gin.H{"data": exercise})
+
+		// format exericse.ID to a string
+
+		exerciseID := strconv.FormatUint(uint64(exercise.ID), 10)
+
+		c.Redirect(http.StatusSeeOther, "/exercise/"+exerciseID)
 	})
 
 	r.GET("/exercises", func(c *gin.Context) {

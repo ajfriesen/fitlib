@@ -1,0 +1,17 @@
+{{template "header.html"}}
+
+
+
+<form action="/exercise/{{ .exercise.ID }}/update" method="POST">
+    <div>
+      <label for="Name">Name:</label>
+      <input type="text" name="Name" id="Name" value="{{ .exercise.Name }}" required>
+    </div>
+    <div>
+      <label for="Description">Description</label>
+      <input type="text" name="Description" id="Description" value="{{ .exercise.Description }}">
+    </div>
+    <button type="submit" value="Submit" class="btn btn-primary">Save</button>
+  </form>
+
+{{template "footer.html"}}
