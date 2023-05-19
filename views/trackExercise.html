@@ -1,0 +1,40 @@
+{{template "header.html"}}
+<h1 class="title">
+	Track Exercise
+</h1>
+<div class="container">
+  <form action="/track" method="POST">
+    <div class="mb-3">
+      <label for="ExerciseID" class="form-label">Exercise</label>
+      <select class="form-select" name="ExerciseID" id="exerciseID" required>
+        {{ range $exerciseListItem := .exerciseList }}
+        <option value="{{ .ID }}">{{.Name}}</option>
+        {{ end }}
+      </select>
+    </div>
+    <div class="mb-3">
+      <label for="Quantity" class="form-label">Quantity:</label>
+      <input type="number" name="Quantity" id="Quantity" min="0" value="15" required>
+    </div>
+    <div class="mb-3">
+      <label for="Weight" class="form-label">Weight:</label>
+      <input type="number" name="Weight" id="Weight" min="0">
+    </div>
+    <div class="mb-3">
+      <label for="Duration" class="form-label">Duration:</label>
+      <input type="number" name="Duration" id="Duration">
+    </div class="mb-3">
+    <div class="mb-3" >
+      <label for="Comment" class="form-label">Comment:</label>
+      <input class="form-text" type="text" name="Comment" id="Comment">
+    </div>
+
+
+    <div class="mb-3">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+    
+  </form>  
+</div>
+
+{{template "footer.html"}}
