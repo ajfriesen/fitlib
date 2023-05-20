@@ -10,8 +10,11 @@
   {{ range $key, $value := .exercise }}
   <p>{{ $key }}: {{ $value }}</p>
   {{ end }}
+  
   <hr>
-  <form action="/delete" method="POST">
+
+
+  <form action="/exercise/{{ .exercise.ID }}/delete" method="POST">
     <button type="Delete" class="btn btn-danger">Delete Exercise</button>
   </form>
 
