@@ -5,9 +5,13 @@
     <thead>
       <tr>
         <th scope="col">#</th>
-        <th scope="col">Name</th>
         <th scope="col">Date</th>
+        <th scope="col">Name</th>
         <th scope="col">Quantity</th>
+        <th scope="col">Weight</th>
+        <th scope="col">Duration</th>
+        <th scope="col">Comment</th>
+        <th scope="col">Action</th>
       </tr>
     </thead>
     <tbody>
@@ -15,9 +19,19 @@
 
       <tr>
         <th scope="row">{{ .ID }}</th>
+        <td>{{ .CreatedAt.Format "2006-01-02 15:04:05" }}</td>
         <td>{{ .Exercise.Name }}</td>
-        <td>{{ .CreatedAt }}</td>
         <td>{{ .Quantity }}</td>
+        <td>{{ .Weight }}</td>
+        <td>{{ .Duration }}</td>
+        <td>{{ .Comment }}</td>
+        <td>
+          <div>
+            <form action="/tracked/{{ .ID }}/delete" method="POST">
+              <button type="Delete" class="btn btn-danger">Delete</button>
+            </form>
+          </div>
+        </td>
       </tr>
       {{ end }}
     </tbody>
