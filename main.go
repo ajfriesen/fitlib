@@ -176,6 +176,17 @@ func main() {
 		c.Redirect(http.StatusSeeOther, "/tracked")
 	})
 
+	r.POST("/tracked/:id/delete", func(c *gin.Context) {
+		var exercise models.DoneExercise
+		if err := models.DB.Where("id = ?", c.Param("id")).First(&exercise).Error; err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+			return
+		}
+		models.DB.Delete(&exercise)
+
+		c.Redirect(http.StatusSeeOther, "/tracked")
+	})
+
 	// func parseUint(str string) uint {
 	// 	val, _ := strconv.ParseUint(str, 10, 0)
 	// 	return uint(val)
