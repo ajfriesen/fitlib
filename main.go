@@ -33,7 +33,7 @@ func main() {
 		c.HTML(200, "addExercise.html", gin.H{})
 	})
 
-	r.DELETE("/exercise/:id", func(c *gin.Context) {
+	r.POST("/exercise/:id/delete", func(c *gin.Context) {
 		var exercise models.Exercise
 		if err := models.DB.Where("id = ?", c.Param("id")).First(&exercise).Error; err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
@@ -41,7 +41,7 @@ func main() {
 		}
 		models.DB.Delete(&exercise)
 
-		c.JSON(http.StatusOK, gin.H{"data": true})
+		c.Redirect(http.StatusSeeOther, "/exercises")
 	})
 
 	// Get exercise by id
