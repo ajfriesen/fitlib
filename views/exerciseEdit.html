@@ -11,6 +11,15 @@
       <label for="Description">Description</label>
       <input type="text" name="Description" id="Description" value="{{ .exercise.Description }}">
     </div>
+    <div class="mb-3">
+      <label for="Equipment" class="form-label">Equipment</label>
+      <select class="form-select" name="Equipment" id="Equipment" required>
+        <option value="{{ .ID }}"></option>
+        {{ range $equipmentListItem := .equipmentList }}
+        <option value="{{ .ID }}">{{.Name}}</option>
+        {{ end }}
+      </select>
+    </div>
     <button type="submit" value="Submit" class="btn btn-primary">Save</button>
   </form>
 

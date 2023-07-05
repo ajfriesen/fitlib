@@ -13,6 +13,15 @@
       </select>
     </div>
     <div class="mb-3">
+      <label for="EquipmentID" class="form-label">Equipment</label>
+      <select class="form-select" name="EquipmentID" id="EquipmentID">
+        <option value=""></option> 
+        {{ range $equipmentListItem := .equipmentList }}
+        <option value="{{ .ID }}">{{.Name}}</option>
+        {{ end }}
+      </select>
+    </div>
+    <div class="mb-3">
       <label for="Quantity" class="form-label">Quantity:</label>
       <input type="number" name="Quantity" id="Quantity" min="0" value="15" required>
     </div>

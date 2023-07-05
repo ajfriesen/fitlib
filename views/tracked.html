@@ -12,6 +12,7 @@
         <th scope="col">Duration</th>
         <th scope="col">Comment</th>
         <th scope="col">Action</th>
+        <th scope="col">Equipment</th>
       </tr>
     </thead>
     <tbody>
@@ -32,6 +33,7 @@
             </form>
           </div>
         </td>
+        <td>{{ .Equipment.Name }}</td>
       </tr>
       {{ end }}
     </tbody>

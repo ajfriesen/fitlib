@@ -21,6 +21,12 @@ func main() {
 		})
 	})
 
+	func pingHandler(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"message": "pong",
+		})
+	}
+
 	r.GET("/ping", func(c *gin.Context) {
 		c.JSON(200, gin.H{
 			"message": "pong",
@@ -46,6 +52,8 @@ func main() {
 
 	// Get exercise by id
 	r.GET("/exercise/:id", func(c *gin.Context) {
+		equipmentList := controllers.GetAllEquipment()
+
 		var exercise models.Exercise
 		if err := models.DB.Where("id = ?", c.Param("id")).First(&exercise).Error; err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
@@ -56,13 +64,18 @@ func main() {
 		exerciseMap["ID"] = exercise.ID
 		exerciseMap["Name"] = exercise.Name
 		exerciseMap["Description"] = exercise.Description
-		exerciseMap["Equipment"] = exercise.Equipment
+		// exerciseMap["Equipment"] = exercise.Equipment
 
-		c.HTML(http.StatusOK, "exerciseDetail.html", gin.H{"exercise": exerciseMap})
+		c.HTML(http.StatusOK, "exerciseDetail.html", gin.H{
+			"exercise":      exerciseMap,
+			"equipmentList": equipmentList,
+		})
 
 	})
 
 	r.GET("/exercise/:id/edit", func(c *gin.Context) {
+		equipmentList := controllers.GetAllEquipment()
+
 		var exercise models.Exercise
 		if err := models.DB.Where("id = ?", c.Param("id")).First(&exercise).Error; err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
@@ -78,7 +91,10 @@ func main() {
 
 		models.DB.Model(&exercise).Updates(input)
 
-		c.HTML(http.StatusOK, "exerciseEdit.html", gin.H{"exercise": exercise})
+		c.HTML(http.StatusOK, "exerciseEdit.html", gin.H{
+			"exercise":      exercise,
+			"equipmentList": equipmentList,
+		})
 	})
 
 	// Update exercise by id
@@ -118,14 +134,14 @@ func main() {
 	r.POST("/add", func(c *gin.Context) {
 
 		//validate input
-		var input models.Exercise
-		if err := c.ShouldBind(&input); err != nil {
+		var exercise models.Exercise
+		if err := c.ShouldBind(&exercise); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
 
 		// create exercise
-		if result := models.DB.Create(&input); result.Error != nil {
+		if result := models.DB.Create(&exercise); result.Error != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": result.Error.Error()})
 			return
 		}
@@ -152,7 +168,11 @@ func main() {
 
 	r.GET("/track", func(c *gin.Context) {
 		exerciseList := controllers.GetAllExercises()
-		c.HTML(200, "trackExercise.html", gin.H{"exerciseList": exerciseList})
+		equipmentList := controllers.GetAllEquipment()
+		c.HTML(200, "trackExercise.html", gin.H{
+			"exerciseList":  exerciseList,
+			"equipmentList": equipmentList,
+		})
 	})
 
 	r.POST("/track", func(c *gin.Context) {
@@ -185,6 +205,46 @@ func main() {
 		models.DB.Delete(&exercise)
 
 		c.Redirect(http.StatusSeeOther, "/tracked")
+	})
+
+	r.GET("/equipment", func(c *gin.Context) {
+		equipment := controllers.GetAllEquipment()
+		c.HTML(http.StatusOK, "equipment.html", gin.H{
+			"equipment": equipment,
+		})
+
+	})
+
+	r.GET("/equipment/add", func(c *gin.Context) {
+		c.HTML(200, "equipmentAdd.html", gin.H{})
+	})
+
+	r.POST("/equipment/add", func(c *gin.Context) {
+
+		var equipment models.Equipment
+		if err := c.ShouldBind(&equipment); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+
+		if result := models.DB.Create(&equipment); result.Error != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": result.Error.Error()})
+			return
+		}
+
+		c.Redirect(http.StatusSeeOther, "/equipment")
+
+	})
+
+	r.POST("/equipment/:id/delete", func(c *gin.Context) {
+		var equipment models.Equipment
+		if err := models.DB.Where("id = ?", c.Param("id")).First(&equipment).Error; err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+			return
+		}
+		models.DB.Delete(&equipment)
+
+		c.Redirect(http.StatusSeeOther, "/equipment")
 	})
 
 	// func parseUint(str string) uint {

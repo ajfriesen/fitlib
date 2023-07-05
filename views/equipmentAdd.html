@@ -1,11 +1,11 @@
 {{template "header.html"}}
 <h1 class="title">
-	Add Exercise
+	Add equipment
 </h1>
 
-<form action="/add" method="POST">
+<form action="/equipment/add" method="POST">
 
-  {{ range $key, $value := .exercise }}
+  {{ range $key, $value := .equipment }}
   <p>{{ $key }}: {{ $value }}</p>
   {{ end }}
 
@@ -15,8 +15,12 @@
     <input type="text" name="Name" id="Name" required>
   </div>
   <div>
-    <label for="Description">Description</label>
-    <input type="text" name="Description" id="Description">
+    <label for="Weight">Weight</label>
+    <input type="number" name="Weight" id="Weight">
+  </div>
+  <div>
+    <label for="Color">Color</label>
+    <input type="text" name="Color" id="Color">
   </div>
   <button type="submit" value="Submit" class="btn btn-primary">Save</button>
 </form>

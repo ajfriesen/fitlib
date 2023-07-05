@@ -1,0 +1,30 @@
+{{template "header.html"}}
+
+<div class="container">
+  <a class="btn btn-primary" href="/equipment/add" role="button">Add Equipment</a>
+</div>
+
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+    {{ range $equipment := .equipment }}
+
+      <tr>
+        <th scope="row">{{ .ID }}</th>
+        <td><a href="/equipment/{{ .ID }}">{{ .Name }}</a></td>
+        <td>
+            <form action="/equipment/{{ .ID }}/delete" method="POST">
+              <button type="Delete" class="btn btn-danger">Delete</button>
+            </form>
+        </td>
+      </tr>
+      {{ end }}
+    </tbody>
+</table>
+{{template "footer.html"}}

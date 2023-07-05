@@ -20,7 +20,7 @@ func ConnectDatabase() {
 		panic("Failed to connect to database!")
 	}
 
-	err = database.AutoMigrate(&Exercise{}, &DoneExercise{})
+	err = database.AutoMigrate(&Exercise{}, &DoneExercise{}, &Equipment{})
 	if err != nil {
 		return
 	}
