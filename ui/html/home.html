@@ -1,5 +1,45 @@
 {{define "content"}}
 
-<a href="/studio/create" class="btn btn-primary">Create Studio</a>
+<a href="/exercise/create" class="btn btn-primary">Create Exercise</a>
+
+
+<table class="table table-striped">
+    <thead class=".table-light">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Exercise</th>
+        <th scope="col">Input</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <form action="/action_page.php">
+        <th scope="row">1</th>
+        <td>PushUp</td>
+        <td>
+          <label class="form-label" for="reps">Reps:</label>
+          <input class="form-control" type="number" id="reps" name="rps" value="5"><br><br>
+        </td>
+        <td>
+          <input type="submit" value="Track">
+        </td>
+          
+        </form>
+      </tr>
+
+      <tr>
+        <th scope="row">2</th>
+        <td>Jacob</td>
+        <td>Thornton</td>
+        <td>@fat</td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td colspan="2">Larry the Bird</td>
+        <td>@twitter</td>
+      </tr>
+    </tbody>
+  </table>
 
 {{end}}

@@ -67,7 +67,7 @@ func newTemplateCache() (map[string]*template.Template, error) {
 
 		files := []string{
 			templateDir + "base.html",
-			// templateDir + "partials/navbar.html",
+			templateDir + "partials/navbar.html",
 			page,
 		}
 
