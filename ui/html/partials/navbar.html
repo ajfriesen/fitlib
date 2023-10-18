@@ -1,0 +1,43 @@
+{{define "nav"}}
+<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">FitLib</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/exercises">Exercises</a>
+          </li> 
+          <li class="nav-item">
+            <a class="nav-link">History</a>
+          </li>
+        </ul>
+
+        {{if .IsAuthenticated}}
+        <div class="d-flex">
+          <div class="container">
+            <form action="/logout" method="post">
+              <input type='hidden' name='csrf_token' value='{{.CSRFToken}}'>
+              <button type="submit" class="btn btn-danger">Logout</button>
+            </form>
+          </div>
+        </div>
+          {{else}}
+        <div class="d-flex">
+          <div class="container">
+            <a href="/login" class="btn btn-primary" type="submit">Login</a>
+          </div>
+          <div class="container">
+            <a href="/register" class="btn btn-primary" type="submit">Register</a>
+          </div>
+        </div>
+        {{end}}}
+      </div>
+    </div>
+  </nav>
+{{end}}
