@@ -1,0 +1,31 @@
+version: '3.1'
+
+services:
+
+  db:
+    image: postgres:16.0-bookworm
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: fitlib
+    ports:
+      - 5555:5432
+    volumes:
+      - ./database:/var/lib/postgresql/data
+
+  adminer:
+    image: adminer
+    ports:
+      - 8000:8080
+
+  pgadmin:
+    image: dpage/pgadmin4
+    ports:
+      - 8001:80
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=andre.friesen@gmail.com
+      - PGADMIN_DEFAULT_PASSWORD=password
+      - PGADMIN_DISABLE_POSTFIX=true
+    volumes:
+      - ./pgadmin:/var/lib/pgadmin
+
