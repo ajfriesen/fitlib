@@ -1,7 +1,9 @@
 package main
 
 import (
+	"context"
 	"flag"
+	"fmt"
 	"html/template"
 	"log"
 	"net/http"
@@ -26,7 +28,7 @@ func main() {
 	// DSN is the PostgreSQL Data Source Name, Database Source Name.
 	// Often the same as connection string.
 	println("")
-	// dsn := flag.String("dsn", "postgres://postgres:password@127.0.0.1:5555/plazet", "PostgreSQL data source name")
+	dsn := flag.String("dsn", "postgres://postgres:password@127.0.0.1:5555/fitlib", "PostgreSQL data source name")
 	// csrfKey := flag.String("csrf-key", defaultCsrfKey, "CSRF key. Must be 32 bytes long.")
 	// csrfSecureBool := flag.Bool("csrf-secure", false, "CSRF secure bool. Defaults to false for development")
 	flag.Parse()
@@ -44,6 +46,22 @@ func main() {
 		errorLog:      errorLog,
 		templateCache: templateCache,
 	}
+
+	db, err := openDbConnectionPool(*dsn)
+	if err != nil {
+		fmt.Printf("Unable to connect to database: %v\n", err)
+		os.Exit(1)
+	}
+
+	// Ping the database to check if the connection is working
+	connection, err := db.Acquire(context.Background())
+	if err != nil {
+		fmt.Printf("Unable to acquire connection: %v\n", err)
+		os.Exit(1)
+	}
+	migrateDatabase(*dsn)
+	defer connection.Release()
+	defer db.Close()
 
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
