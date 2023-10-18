@@ -2,3 +2,4 @@ database
 pgadmin
 .env
 dist
+.DS_Store
