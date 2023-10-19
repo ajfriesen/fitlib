@@ -16,9 +16,10 @@ import (
 const templateDir = "./ui/html/"
 
 type application struct {
-	errorLog      *log.Logger
-	infoLog       *log.Logger
-	templateCache map[string]*template.Template
+	errorLog        *log.Logger
+	infoLog         *log.Logger
+	templateCache   map[string]*template.Template
+	exerciseService *ExerciseService
 }
 
 func main() {
@@ -41,16 +42,17 @@ func main() {
 		errorLog.Fatal(err)
 	}
 
-	app := &application{
-		infoLog:       infoLog,
-		errorLog:      errorLog,
-		templateCache: templateCache,
-	}
-
 	db, err := openDbConnectionPool(*dsn)
 	if err != nil {
 		fmt.Printf("Unable to connect to database: %v\n", err)
 		os.Exit(1)
+	}
+
+	app := &application{
+		infoLog:         infoLog,
+		errorLog:        errorLog,
+		templateCache:   templateCache,
+		exerciseService: &ExerciseService{DB: db},
 	}
 
 	// Ping the database to check if the connection is working
