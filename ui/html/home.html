@@ -13,10 +13,13 @@
       </tr>
     </thead>
     <tbody>
+      {{ if .Exercises }}
+
+      {{ range .Exercises }}
       <tr>
-        <form action="/action_page.php">
-        <th scope="row">1</th>
-        <td>PushUp</td>
+        <form action="/">
+        <th scope="row">{{.ID}}</th>
+        <td>{{ .Name }}</td>
         <td>
           <label class="form-label" for="reps">Reps:</label>
           <input class="form-control" type="number" id="reps" name="rps" value="5"><br><br>
@@ -24,21 +27,14 @@
         <td>
           <input type="submit" value="Track">
         </td>
-          
         </form>
       </tr>
+      {{end}}
 
-      <tr>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-      </tr>
-      <tr>
-        <th scope="row">3</th>
-        <td colspan="2">Larry the Bird</td>
-        <td>@twitter</td>
-      </tr>
+      {{ else }}
+      <p>No Exercises yet</p>
+      {{ end }}
+
     </tbody>
   </table>
 

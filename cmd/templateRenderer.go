@@ -15,7 +15,7 @@ type FormData interface{}
 
 // templateData is a strcut to hold the data that we want to pass to our html templates like a list of users
 type templateData struct {
-	// Studios         []*models.Studio
+	Exercises []Exercise
 	// Studio          *models.Studio
 	// User            *models.User
 	Form            FormData
