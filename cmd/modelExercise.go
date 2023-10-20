@@ -17,7 +17,6 @@ type Exercise struct {
 	ID          int       `db:"id"`
 	Name        string    `db:"name"`
 	Description string    `db:"description"`
-	MuscleGroup string    `db:"muscle_group"`
 	CreatedAt   time.Time `db:"created_at"`
 	UpdatedAt   time.Time `db:"updated_at"`
 }
