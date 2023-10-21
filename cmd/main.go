@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/ajfriesen/fitlib/cmd/build"
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/chi/v5"
 )
@@ -24,6 +25,8 @@ type application struct {
 }
 
 func main() {
+
+	fmt.Println("build.Time:\t", build.BuildTime)
 
 	addr := flag.String("addr", "127.0.0.1:8080", "HTTP network address")
 	staticDir := flag.String("static-dir", "./ui/static", "Path to static assets")
