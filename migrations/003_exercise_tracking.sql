@@ -7,7 +7,6 @@ CREATE TABLE exercise_tracking (
     date DATE DEFAULT CURRENT_DATE,
     timestamp TIMESTAMPTZ DEFAULT NOW(),
     reps INT,
-    duration_seconds interval, -- You can use INT for seconds or minutes, or you can use a separate column for duration in minutes
     notes TEXT,
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW()-- +goose StatementEnd
