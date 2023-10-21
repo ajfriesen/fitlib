@@ -16,10 +16,11 @@ import (
 const templateDir = "./ui/html/"
 
 type application struct {
-	errorLog        *log.Logger
-	infoLog         *log.Logger
-	templateCache   map[string]*template.Template
-	exerciseService *ExerciseService
+	errorLog                *log.Logger
+	infoLog                 *log.Logger
+	templateCache           map[string]*template.Template
+	exerciseService         *ExerciseService
+	ExerciseTrackingService *ExerciseTrackingService
 }
 
 func main() {
@@ -49,10 +50,11 @@ func main() {
 	}
 
 	app := &application{
-		infoLog:         infoLog,
-		errorLog:        errorLog,
-		templateCache:   templateCache,
-		exerciseService: &ExerciseService{DB: db},
+		infoLog:                 infoLog,
+		errorLog:                errorLog,
+		templateCache:           templateCache,
+		exerciseService:         &ExerciseService{DB: db},
+		ExerciseTrackingService: &ExerciseTrackingService{DB: db},
 	}
 
 	// Ping the database to check if the connection is working
@@ -70,6 +72,7 @@ func main() {
 	// r.Use(middleware.Recoverer)
 
 	r.Get("/", app.homeHandler)
+	r.Post("/track/{id}", app.trackExerciseHandlerPost)
 
 	staticFilesDir := http.Dir(*staticDir)
 	fileServer(r, "/static", staticFilesDir)

@@ -17,12 +17,13 @@
 
       {{ range .Exercises }}
       <tr>
-        <form action="/">
+        <form action="/track/{{.ID}}" method="post">
         <th scope="row">{{.ID}}</th>
         <td>{{ .Name }}</td>
         <td>
+          <input type='hidden' name='id' value='{{.ID}}'>
           <label class="form-label" for="reps">Reps:</label>
-          <input class="form-control" type="number" id="reps" name="rps" value="5"><br><br>
+          <input class="form-control" type="number" id="reps" name="reps" value="5"><br><br>
         </td>
         <td>
           <input type="submit" value="Track">
