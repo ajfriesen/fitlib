@@ -16,9 +16,7 @@ func (app *application) homeHandler(w http.ResponseWriter, r *http.Request) {
 		app.serveError(w, err)
 		return
 	}
-	data = &templateData{
-		Exercises: exercises,
-	}
+	data.Exercises = exercises
 	app.renderTemplate(w, http.StatusOK, "home.html", data)
 }
 

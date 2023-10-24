@@ -12,7 +12,7 @@ import (
 	"github.com/pressly/goose/v3"
 )
 
-func openDbConnectionPool(dsn string) (*pgxpool.Pool, error) {
+func openDBConnectionPool(dsn string) (*pgxpool.Pool, error) {
 	connectionPool, err := pgxpool.New(context.Background(), dsn)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
