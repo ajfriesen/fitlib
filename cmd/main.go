@@ -46,7 +46,7 @@ func main() {
 		errorLog.Fatal(err)
 	}
 
-	db, err := openDbConnectionPool(*dsn)
+	db, err := openDBConnectionPool(*dsn)
 	if err != nil {
 		fmt.Printf("Unable to connect to database: %v\n", err)
 		os.Exit(1)
