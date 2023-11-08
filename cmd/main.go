@@ -10,6 +10,7 @@ import (
 	"os"
 
 	"github.com/ajfriesen/fitlib/cmd/build"
+	"github.com/ajfriesen/fitlib/ui"
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/chi/v5"
 )
@@ -29,7 +30,6 @@ func main() {
 	fmt.Println("build.Time:\t", build.BuildTime)
 
 	addr := flag.String("addr", "127.0.0.1:8080", "HTTP network address")
-	staticDir := flag.String("static-dir", "./ui/static", "Path to static assets")
 	// DSN is the PostgreSQL Data Source Name, Database Source Name.
 	// Often the same as connection string.
 	println("")
@@ -77,8 +77,9 @@ func main() {
 	r.Get("/", app.homeHandler)
 	r.Post("/track/{id}", app.trackExerciseHandlerPost)
 
-	staticFilesDir := http.Dir(*staticDir)
-	fileServer(r, "/static", staticFilesDir)
+	fileServer := http.FileServer(http.FS(ui.Files))
+
+	r.Handle("/static/*", http.StripPrefix("/static", fileServer))
 
 	httpServer := &http.Server{
 		Addr:     *addr,
