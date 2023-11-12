@@ -4,23 +4,19 @@ import (
 	"context"
 	"flag"
 	"fmt"
-	"html/template"
 	"log"
 	"net/http"
 	"os"
 
 	"github.com/ajfriesen/fitlib/cmd/build"
-	"github.com/ajfriesen/fitlib/ui"
+	"github.com/ajfriesen/fitlib/templates"
+	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
-	"github.com/go-chi/chi/v5"
 )
-
-const templateDir = "./ui/html/"
 
 type application struct {
 	errorLog                *log.Logger
 	infoLog                 *log.Logger
-	templateCache           map[string]*template.Template
 	exerciseService         *ExerciseService
 	ExerciseTrackingService *ExerciseTrackingService
 }
@@ -41,11 +37,6 @@ func main() {
 	infoLog := log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
 	errorLog := log.New(os.Stderr, "ERROR\t", log.Ldate|log.Ltime|log.Lshortfile)
 
-	templateCache, err := newTemplateCache()
-	if err != nil {
-		errorLog.Fatal(err)
-	}
-
 	db, err := openDBConnectionPool(*dsn)
 	if err != nil {
 		fmt.Printf("Unable to connect to database: %v\n", err)
@@ -55,7 +46,6 @@ func main() {
 	app := &application{
 		infoLog:                 infoLog,
 		errorLog:                errorLog,
-		templateCache:           templateCache,
 		exerciseService:         &ExerciseService{DB: db},
 		ExerciseTrackingService: &ExerciseTrackingService{DB: db},
 	}
@@ -77,7 +67,7 @@ func main() {
 	r.Get("/", app.homeHandler)
 	r.Post("/track/{id}", app.trackExerciseHandlerPost)
 
-	fileServer := http.FileServer(http.FS(ui.Files))
+	fileServer := http.FileServer(http.FS(templates.Templates))
 
 	r.Handle("/static/*", http.StripPrefix("/static", fileServer))
 

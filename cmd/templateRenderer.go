@@ -2,10 +2,10 @@ package main
 
 import (
 	"bytes"
-	"fmt"
 	"html/template"
 	"net/http"
-	"path/filepath"
+
+	"github.com/ajfriesen/fitlib/templates"
 )
 
 // FormData is an interface that we can use to pass data to our html templates
@@ -27,9 +27,14 @@ type templateData struct {
 // handle the home page and render the home template
 func (app *application) renderTemplate(w http.ResponseWriter, status int, page string, data interface{}) {
 
-	templates, ok := app.templateCache[page]
-	if !ok {
-		err := fmt.Errorf("the template %s does not exist", page)
+	// Parse the template files from the embed.FS
+	templates, err := template.ParseFS(
+		templates.Templates,
+		"html/base.html",
+		"html/partials/navbar.html",
+		"html/"+page,
+	)
+	if err != nil {
 		app.serveError(w, err)
 		return
 	}
@@ -40,7 +45,7 @@ func (app *application) renderTemplate(w http.ResponseWriter, status int, page s
 	println("renderTemplate: page: ", page)
 
 	// Write the template to the buffer, instead of straight to the http.ResponseWriter.
-	err := templates.ExecuteTemplate(buffer, "base", data)
+	err = templates.ExecuteTemplate(buffer, "base", data)
 	if err != nil {
 		app.serveError(w, err)
 		return
@@ -50,36 +55,5 @@ func (app *application) renderTemplate(w http.ResponseWriter, status int, page s
 
 	// Write the buffer to the http.ResponseWriter
 	buffer.WriteTo(w)
-
-}
-
-func newTemplateCache() (map[string]*template.Template, error) {
-	cache := map[string]*template.Template{}
-
-	pages, err := filepath.Glob(templateDir + "*.html")
-	if err != nil {
-		return nil, err
-	}
-
-	for _, page := range pages {
-		// Extract filename
-		name := filepath.Base(page)
-
-		files := []string{
-			templateDir + "base.html",
-			templateDir + "partials/navbar.html",
-			page,
-		}
-
-		//Parse files into templates
-		ts, err := template.ParseFiles(files...)
-		if err != nil {
-			return nil, err
-		}
-
-		cache[name] = ts
-	}
-
-	return cache, nil
 
 }
