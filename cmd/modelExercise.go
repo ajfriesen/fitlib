@@ -39,3 +39,22 @@ func (f *ExerciseService) GetAllExercises() ([]Exercise, error) {
 	}
 	return exercises, nil
 }
+
+func (f *ExerciseService) AddExercise(exercise Exercise) (exerciseID int, err error) {
+	sql := `INSERT INTO exercises
+			(name, description, created_at, updated_at)
+			VALUES (@name, @description, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+			RETURNING id`
+
+	args := pgx.NamedArgs{
+		"name":        exercise.Name,
+		"description": exercise.Description,
+	}
+
+	err = f.DB.QueryRow(context.Background(), sql, args).Scan(exerciseID)
+	if err != nil {
+		return 0, err
+	}
+
+	return exerciseID, nil
+}

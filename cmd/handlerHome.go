@@ -94,3 +94,34 @@ func (app *application) trackExerciseHandlerPost(w http.ResponseWriter, r *http.
 	app.renderTemplate(w, http.StatusOK, "home.html", data)
 
 }
+
+type exerciseCreateData struct {
+	Name        string
+	Description string
+}
+
+func (app *application) ExerciseCreate(w http.ResponseWriter, r *http.Request) {
+	data := app.newTemplateData(r)
+	data.Form = exerciseCreateData{}
+	app.renderTemplate(w, http.StatusOK, "exercise-create.html", data)
+
+}
+
+func (app *application) ExerciseCreatePost(w http.ResponseWriter, r *http.Request) {
+
+	data := app.newTemplateData(r)
+
+	err := r.ParseForm()
+	if err != nil {
+		app.clientError(w, http.StatusBadRequest)
+		return
+	}
+
+	var exercise Exercise
+
+	exercise.Name = r.Form.Get("name")
+	exercise.Description = r.Form.Get("description")
+
+	app.renderTemplate(w, http.StatusOK, "home.html", data)
+
+}
