@@ -119,9 +119,15 @@ func (app *application) ExerciseCreatePost(w http.ResponseWriter, r *http.Reques
 
 	var exercise Exercise
 
-	exercise.Name = r.Form.Get("name")
-	exercise.Description = r.Form.Get("description")
+	exercise.Name = r.Form.Get("Name")
+	exercise.Description = r.Form.Get("Description")
 
-	app.renderTemplate(w, http.StatusOK, "home.html", data)
+	exercise.ID, err = app.exerciseService.AddExercise(exercise)
+	if err != nil {
+		app.serveError(w, r, err)
+		return
+	}
+
+	app.renderTemplate(w, r, http.StatusOK, "home.html", data)
 
 }

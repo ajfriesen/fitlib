@@ -51,7 +51,7 @@ func (f *ExerciseService) AddExercise(exercise Exercise) (exerciseID int, err er
 		"description": exercise.Description,
 	}
 
-	err = f.DB.QueryRow(context.Background(), sql, args).Scan(exerciseID)
+	err = f.DB.QueryRow(context.Background(), sql, args).Scan(&exerciseID)
 	if err != nil {
 		return 0, err
 	}
