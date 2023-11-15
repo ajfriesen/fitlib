@@ -4,7 +4,7 @@ import (
 	"context"
 	"flag"
 	"fmt"
-	"log"
+	"log/slog"
 	"net/http"
 	"os"
 
@@ -15,8 +15,7 @@ import (
 )
 
 type application struct {
-	errorLog                *log.Logger
-	infoLog                 *log.Logger
+	logger                  *slog.Logger
 	exerciseService         *ExerciseService
 	ExerciseTrackingService *ExerciseTrackingService
 }
@@ -34,8 +33,7 @@ func main() {
 	// csrfSecureBool := flag.Bool("csrf-secure", false, "CSRF secure bool. Defaults to false for development")
 	flag.Parse()
 
-	infoLog := log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
-	errorLog := log.New(os.Stderr, "ERROR\t", log.Ldate|log.Ltime|log.Lshortfile)
+	logger := slog.New(slog.NewTextHandler(os.Stdout, nil))
 
 	db, err := openDBConnectionPool(*dsn)
 	if err != nil {
@@ -44,11 +42,12 @@ func main() {
 	}
 
 	app := &application{
-		infoLog:                 infoLog,
-		errorLog:                errorLog,
+		logger:                  &slog.Logger{},
 		exerciseService:         &ExerciseService{DB: db},
 		ExerciseTrackingService: &ExerciseTrackingService{DB: db},
 	}
+
+	logger.Info("connect to database")
 
 	// Ping the database to check if the connection is working
 	connection, err := db.Acquire(context.Background())
@@ -75,15 +74,16 @@ func main() {
 	r.Handle("/static/*", http.StripPrefix("/static", fileServer))
 
 	httpServer := &http.Server{
-		Addr:     *addr,
-		ErrorLog: errorLog,
-		Handler:  r,
+		Addr:    *addr,
+		Handler: r,
 	}
 
-	infoLog.Printf("Starting server on %s", *addr)
+	logger.Info("starting server", "addr", *addr)
 	err = httpServer.ListenAndServe()
 	if err != nil {
-		errorLog.Fatal(err)
+		logger.Error("error starting server", err.Error())
+		os.Exit(1)
+
 	}
 
 }

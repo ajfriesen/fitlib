@@ -13,11 +13,11 @@ func (app *application) homeHandler(w http.ResponseWriter, r *http.Request) {
 
 	exercises, err := app.exerciseService.GetAllExercises()
 	if err != nil {
-		app.serveError(w, err)
+		app.serveError(w, r, err)
 		return
 	}
 	data.Exercises = exercises
-	app.renderTemplate(w, http.StatusOK, "home.html", data)
+	app.renderTemplate(w, r, http.StatusOK, "home.html", data)
 }
 
 func (app *application) trackExerciseHandlerPost(w http.ResponseWriter, r *http.Request) {
@@ -58,7 +58,7 @@ func (app *application) trackExerciseHandlerPost(w http.ResponseWriter, r *http.
 
 	trackedExercise, err := app.ExerciseTrackingService.TrackExercises(exerciseID, reps, notes)
 	if err != nil {
-		app.serveError(w, err)
+		app.serveError(w, r, err)
 		return
 	}
 
@@ -91,7 +91,7 @@ func (app *application) trackExerciseHandlerPost(w http.ResponseWriter, r *http.
 	println("notes: ", notes)
 	println("exerciseID: ", exerciseID)
 
-	app.renderTemplate(w, http.StatusOK, "home.html", data)
+	app.renderTemplate(w, r, http.StatusOK, "home.html", data)
 
 }
 
@@ -103,7 +103,7 @@ type exerciseCreateData struct {
 func (app *application) ExerciseCreate(w http.ResponseWriter, r *http.Request) {
 	data := app.newTemplateData(r)
 	data.Form = exerciseCreateData{}
-	app.renderTemplate(w, http.StatusOK, "exercise-create.html", data)
+	app.renderTemplate(w, r, http.StatusOK, "exercise-create.html", data)
 
 }
 

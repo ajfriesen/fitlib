@@ -25,7 +25,7 @@ type templateData struct {
 }
 
 // handle the home page and render the home template
-func (app *application) renderTemplate(w http.ResponseWriter, status int, page string, data interface{}) {
+func (app *application) renderTemplate(w http.ResponseWriter, r *http.Request, status int, page string, data interface{}) {
 
 	// Parse the template files from the embed.FS
 	templates, err := template.ParseFS(
@@ -35,7 +35,7 @@ func (app *application) renderTemplate(w http.ResponseWriter, status int, page s
 		"html/"+page,
 	)
 	if err != nil {
-		app.serveError(w, err)
+		app.serveError(w, r, err)
 		return
 	}
 
@@ -47,7 +47,7 @@ func (app *application) renderTemplate(w http.ResponseWriter, status int, page s
 	// Write the template to the buffer, instead of straight to the http.ResponseWriter.
 	err = templates.ExecuteTemplate(buffer, "base", data)
 	if err != nil {
-		app.serveError(w, err)
+		app.serveError(w, r, err)
 		return
 	}
 
