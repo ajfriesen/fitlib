@@ -1,0 +1,36 @@
+{{template "header.html"}}
+
+{{define "content"}}
+
+<h1>History</h1>
+
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Exercise</th>
+        <th scope="col">Timestamp</th>
+        <th scope="col">Reps</th>
+        <th scope="col">Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+
+    {{ range $exercise := .TrackedExercises }}
+      <tr>
+        <th scope="row">{{.ID}}</th>
+        <td>{{.ExerciseName}}</td>
+        <td>{{.Timestamp.Format "02-01-2006 15:04:05"}}</td>
+        <td>{{.Reps}}</td>
+        <td>{{.Notes}}</td>
+        <td></td>
+      </tr>
+    {{end}}
+    </tbody>
+  </table>
+
+
+
+{{end}}
+
+{{template "footer.html"}}

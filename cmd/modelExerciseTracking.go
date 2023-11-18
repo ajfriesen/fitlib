@@ -13,14 +13,15 @@ type ExerciseTrackingService struct {
 }
 
 type ExerciseTracking struct {
-	ID         int       `db:"id"`
-	ExerciseID int       `db:"exercise_id"`
-	Date       time.Time `db:"date"`
-	timestamp  time.Time `db:"timestamp"`
-	reps       int       `db:"reps"`
-	notes      string    `db:"notes"`
-	CreatedAt  time.Time `db:"created_at"`
-	UpdatedAt  time.Time `db:"updated_at"`
+	ID           int `db:"id"`
+	ExerciseID   int `db:"exercise_id"`
+	ExerciseName string
+	Date         time.Time `db:"date"`
+	Timestamp    time.Time `db:"timestamp"`
+	Reps         int       `db:"reps"`
+	Notes        string    `db:"notes"`
+	CreatedAt    time.Time `db:"created_at"`
+	UpdatedAt    time.Time `db:"updated_at"`
 }
 
 func (e *ExerciseTrackingService) TrackExercises(exerciseID int, reps int, notes string) (trackedExercise ExerciseTracking, err error) {
@@ -60,4 +61,49 @@ func (e *ExerciseTrackingService) TrackExercises(exerciseID int, reps int, notes
 	// 	return nil, err
 	// }
 	// return id, nil
+}
+
+func (e *ExerciseTrackingService) GetTrackedExercises() ([]ExerciseTracking, error) {
+	// sql := `SELECT * FROM exercise_tracking`
+	sql := `SELECT et.*, e.name AS exercise_name
+			FROM exercise_tracking et
+			JOIN exercises e ON et.exercise_id = e.id`
+	// (exercise_id, reps, notes)
+	// VALUES (@exerciseID, @reps, @notes)`
+
+	// args := pgx.NamedArgs{
+	// 	"exerciseID": exerciseID,
+	// 	"reps":       reps,
+	// 	"notes":      notes,
+	// }
+
+	rows, err := e.DB.Query(context.Background(), sql)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	trackedExerciseList := []ExerciseTracking{}
+
+	for rows.Next() {
+		trackedExercise := ExerciseTracking{}
+		err = rows.Scan(
+			&trackedExercise.ID,
+			&trackedExercise.ExerciseID,
+			&trackedExercise.Date,
+			&trackedExercise.Timestamp,
+			&trackedExercise.Reps,
+			&trackedExercise.Notes,
+			&trackedExercise.CreatedAt,
+			&trackedExercise.UpdatedAt,
+			&trackedExercise.ExerciseName,
+		)
+		if err != nil {
+			return nil, err
+		}
+		trackedExerciseList = append(trackedExerciseList, trackedExercise)
+	}
+
+	return trackedExerciseList, nil
+
 }

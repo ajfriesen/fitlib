@@ -69,6 +69,8 @@ func main() {
 	r.Get("/exercise/create", app.ExerciseCreate)
 	r.Post("/exercise/create", app.ExerciseCreatePost)
 
+	r.Get("/history", app.ExerciseHistory)
+
 	fileServer := http.FileServer(http.FS(templates.Templates))
 
 	r.Handle("/static/*", http.StripPrefix("/static", fileServer))

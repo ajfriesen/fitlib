@@ -131,3 +131,18 @@ func (app *application) ExerciseCreatePost(w http.ResponseWriter, r *http.Reques
 	app.renderTemplate(w, r, http.StatusOK, "home.html", data)
 
 }
+
+func (app *application) ExerciseHistory(w http.ResponseWriter, r *http.Request) {
+	data := app.newTemplateData(r)
+
+	trackedExercises, err := app.ExerciseTrackingService.GetTrackedExercises()
+	if err != nil {
+		app.serveError(w, r, err)
+	}
+
+	data.TrackedExercises = trackedExercises
+
+	println(trackedExercises)
+
+	app.renderTemplate(w, r, http.StatusOK, "history.html", data)
+}
