@@ -42,7 +42,7 @@ func main() {
 	}
 
 	app := &application{
-		logger:                  &slog.Logger{},
+		logger:                  logger,
 		exerciseService:         &ExerciseService{DB: db},
 		ExerciseTrackingService: &ExerciseTrackingService{DB: db},
 	}
