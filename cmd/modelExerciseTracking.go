@@ -40,9 +40,9 @@ func (e *ExerciseTrackingService) TrackExercises(exerciseID int, reps int, notes
 		&trackedExercise.ID,
 		&trackedExercise.ExerciseID,
 		&trackedExercise.Date,
-		&trackedExercise.timestamp,
-		&trackedExercise.reps,
-		&trackedExercise.notes,
+		&trackedExercise.Timestamp,
+		&trackedExercise.Reps,
+		&trackedExercise.Notes,
 		&trackedExercise.CreatedAt,
 		&trackedExercise.UpdatedAt,
 	)
