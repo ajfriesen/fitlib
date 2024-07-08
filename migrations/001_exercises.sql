@@ -2,12 +2,13 @@
 -- +goose StatementBegin
 -- Create the exercises table to store exercise information.
 CREATE TABLE exercises (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
     description TEXT,
-    created_at TIMESTAMPTZ DEFAULT NOW(),
-    updated_at TIMESTAMPTZ DEFAULT NOW()
-);
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at TEXT DEFAULT CURRENT_TIMESTAMP NOT NULL
+)
+strict;
 -- +goose StatementEnd
 
 

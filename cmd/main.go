@@ -1,7 +1,6 @@
 package main
 
 import (
-	"context"
 	"flag"
 	"fmt"
 	"log/slog"
@@ -9,55 +8,60 @@ import (
 	"os"
 
 	"github.com/ajfriesen/fitlib/cmd/build"
+	database "github.com/ajfriesen/fitlib/cmd/queries"
 	"github.com/ajfriesen/fitlib/templates"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
+	"github.com/joho/godotenv"
 )
 
 type application struct {
 	logger                  *slog.Logger
 	exerciseService         *ExerciseService
 	ExerciseTrackingService *ExerciseTrackingService
+	queries                 *database.Queries
 }
 
 func main() {
 
 	fmt.Println("build.Time:\t", build.BuildTime)
 
+	logger := slog.New(slog.NewTextHandler(os.Stdout, nil))
+
 	addr := flag.String("addr", "127.0.0.1:8080", "HTTP network address")
 	// DSN is the PostgreSQL Data Source Name, Database Source Name.
 	// Often the same as connection string.
 	println("")
-	dsn := flag.String("dsn", "postgres://postgres:password@127.0.0.1:5555/fitlib", "PostgreSQL data source name")
 	// csrfKey := flag.String("csrf-key", defaultCsrfKey, "CSRF key. Must be 32 bytes long.")
 	// csrfSecureBool := flag.Bool("csrf-secure", false, "CSRF secure bool. Defaults to false for development")
+	envFilePath := flag.String("envFilePath", ".env", "Filepath the .env")
+	err := godotenv.Load(*envFilePath)
+	if err != nil {
+		logger.Error("Serror loading .env file", err)
+	}
+	dsn := os.Getenv("DSN")
 	flag.Parse()
 
-	logger := slog.New(slog.NewTextHandler(os.Stdout, nil))
-
-	db, err := openDBConnectionPool(*dsn)
-	if err != nil {
-		fmt.Printf("Unable to connect to database: %v\n", err)
-		os.Exit(1)
-	}
-
 	app := &application{
-		logger:                  logger,
-		exerciseService:         &ExerciseService{DB: db},
-		ExerciseTrackingService: &ExerciseTrackingService{DB: db},
+		logger: logger,
 	}
 
 	logger.Info("connect to database")
 
 	// Ping the database to check if the connection is working
-	connection, err := db.Acquire(context.Background())
+	conn, err := app.openDBConnectionPool(dsn)
 	if err != nil {
-		fmt.Printf("Unable to acquire connection: %v\n", err)
+		app.logger.Error("Unable to connect to database: %v\n", err)
 		os.Exit(1)
 	}
-	migrateDatabase(*dsn)
-	defer connection.Release()
-	defer db.Close()
+	defer conn.Close()
+
+	queries := database.New(conn)
+
+	app.queries = queries
+	app.exerciseService = &ExerciseService{Queries: queries}
+
+	app.migrateDatabase(dsn)
 
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)

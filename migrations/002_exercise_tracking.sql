@@ -4,12 +4,12 @@
 CREATE TABLE exercise_tracking (
     id SERIAL PRIMARY KEY,
     exercise_id INT REFERENCES exercises(id) NOT NULL,
-    date DATE DEFAULT CURRENT_DATE,
-    timestamp TIMESTAMPTZ DEFAULT NOW(),
+    date TEXT DEFAULT CURRENT_TIMESTAMP,
+    timestamp TEXT DEFAULT CURRENT_TIMESTAMP,
     reps INT,
     notes TEXT,
-    created_at TIMESTAMPTZ DEFAULT NOW(),
-    updated_at TIMESTAMPTZ DEFAULT NOW()-- +goose StatementEnd
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+    updated_at TEXT DEFAULT CURRENT_TIMESTAMP
 );
 -- +goose StatementEnd
 

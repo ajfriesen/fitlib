@@ -1,6 +1,7 @@
 package main
 
 import (
+	"database/sql"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -117,12 +118,24 @@ func (app *application) ExerciseCreatePost(w http.ResponseWriter, r *http.Reques
 		return
 	}
 
-	var exercise Exercise
+	name := r.Form.Get("Name")
+	description := r.Form.Get("Description")
 
-	exercise.Name = r.Form.Get("Name")
-	exercise.Description = r.Form.Get("Description")
+	// Initialize sql.NullString for description
+	var sqlDescription sql.NullString
+	if description != "" {
+		sqlDescription = sql.NullString{
+			String: description,
+			Valid:  true,
+		}
+	} else {
+		sqlDescription = sql.NullString{
+			String: "",
+			Valid:  false,
+		}
+	}
 
-	exercise.ID, err = app.exerciseService.AddExercise(exercise)
+	_, err = app.exerciseService.AddExercise(name, sqlDescription)
 	if err != nil {
 		app.serveError(w, r, err)
 		return

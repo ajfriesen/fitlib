@@ -5,6 +5,7 @@ import (
 	"html/template"
 	"net/http"
 
+	database "github.com/ajfriesen/fitlib/cmd/queries"
 	"github.com/ajfriesen/fitlib/templates"
 )
 
@@ -15,7 +16,7 @@ type FormData interface{}
 
 // templateData is a strcut to hold the data that we want to pass to our html templates like a list of users
 type templateData struct {
-	Exercises        []Exercise
+	Exercises        []database.Exercise
 	TrackedExercises []ExerciseTracking
 	// Studio          *models.Studio
 	// User            *models.User

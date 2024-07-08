@@ -1,28 +1,33 @@
 package main
 
 import (
-	"context"
+	"database/sql"
 	"fmt"
 	"log"
 	"os"
 
 	"github.com/ajfriesen/fitlib/migrations"
-	"github.com/jackc/pgx/v5/pgxpool"
-	_ "github.com/jackc/pgx/v5/stdlib"
+	_ "github.com/mattn/go-sqlite3"
 	"github.com/pressly/goose/v3"
 )
 
-func openDBConnectionPool(dsn string) (*pgxpool.Pool, error) {
-	connectionPool, err := pgxpool.New(context.Background(), dsn)
+func (app *application) openDBConnectionPool(dsn string) (*sql.DB, error) {
+	db, err := sql.Open("sqlite3", dsn)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
 		return nil, err
 	}
 
-	return connectionPool, nil
+	err = db.Ping()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Unable to ping the database: %v\n", err)
+		return nil, err
+	}
+
+	return db, nil
 }
 
-func migrateDatabase(dsn string) {
+func (app *application) migrateDatabase(dsn string) {
 
 	goose.SetBaseFS(migrations.FS)
 
@@ -32,7 +37,7 @@ func migrateDatabase(dsn string) {
 	}()
 
 	println("Opening DB")
-	sql, err := goose.OpenDBWithDriver("pgx", dsn)
+	sql, err := sql.Open("sqlite3", dsn)
 	if err != nil {
 		log.Fatalf(err.Error())
 	}
@@ -41,6 +46,7 @@ func migrateDatabase(dsn string) {
 	// This is "." due to the migrations.FS from embed.
 	err = goose.Up(sql, ".")
 	if err != nil {
+		println("goose up failed", err)
 		log.Fatalf(err.Error())
 	}
 

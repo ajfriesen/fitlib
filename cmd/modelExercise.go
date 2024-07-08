@@ -2,15 +2,14 @@ package main
 
 import (
 	"context"
-	"fmt"
+	"database/sql"
 	"time"
 
-	"github.com/jackc/pgx/v5"
-	"github.com/jackc/pgx/v5/pgxpool"
+	database "github.com/ajfriesen/fitlib/cmd/queries"
 )
 
 type ExerciseService struct {
-	DB *pgxpool.Pool
+	Queries *database.Queries
 }
 
 type Exercise struct {
@@ -21,37 +20,26 @@ type Exercise struct {
 	UpdatedAt   time.Time `db:"updated_at"`
 }
 
-func (f *ExerciseService) GetAllExercises() ([]Exercise, error) {
-	sql := `SELECT * FROM exercises`
+func (f *ExerciseService) GetAllExercises() ([]database.Exercise, error) {
 
-	rows, err := f.DB.Query(context.Background(), sql)
+	var exercises []database.Exercise
+
+	exercises, err := f.Queries.GetAllExercises(context.Background())
 	if err != nil {
 		return nil, err
 	}
-	defer rows.Close()
 
-	var exercises []Exercise
-
-	exercises, err = pgx.CollectRows(rows, pgx.RowToStructByName[Exercise])
-	if err != nil {
-		fmt.Printf("CollectRows error: %v", err)
-		return nil, err
-	}
 	return exercises, nil
 }
 
-func (f *ExerciseService) AddExercise(exercise Exercise) (exerciseID int, err error) {
-	sql := `INSERT INTO exercises
-			(name, description, created_at, updated_at)
-			VALUES (@name, @description, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
-			RETURNING id`
+func (f *ExerciseService) AddExercise(name string, description sql.NullString) (exerciseID int64, err error) {
 
-	args := pgx.NamedArgs{
-		"name":        exercise.Name,
-		"description": exercise.Description,
+	insertParams := database.InsertExerciseParams{
+		Name:        name,
+		Description: description,
 	}
 
-	err = f.DB.QueryRow(context.Background(), sql, args).Scan(&exerciseID)
+	exerciseID, err = f.Queries.InsertExercise(context.Background(), insertParams)
 	if err != nil {
 		return 0, err
 	}
