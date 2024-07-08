@@ -45,7 +45,7 @@ func (q *Queries) GetAllExercises(ctx context.Context) ([]Exercise, error) {
 
 const getTrackedExercises = `-- name: GetTrackedExercises :one
 SELECT et.id, et.exercise_id, et.date, et.timestamp, et.reps, et.notes, et.created_at, et.updated_at, e.name AS exercise_name
-FROM exercise_tracking et
+FROM workout_logs et
 JOIN exercises e ON et.exercise_id = e.id
 `
 
@@ -105,7 +105,7 @@ func (q *Queries) InsertExercise(ctx context.Context, arg InsertExerciseParams) 
 }
 
 const insertTrackedExercise = `-- name: InsertTrackedExercise :one
-INSERT INTO exercise_tracking
+INSERT INTO workout_logs
 (exercise_id, reps, notes)
 VALUES (?, ?, ?)
 RETURNING id, exercise_id, date, timestamp, reps, notes, created_at, updated_at

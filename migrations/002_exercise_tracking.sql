@@ -1,7 +1,7 @@
 -- +goose Up
 -- +goose StatementBegin
 -- Create a table to track exercises.
-CREATE TABLE exercise_tracking (
+CREATE TABLE workout_logs (
     id SERIAL PRIMARY KEY,
     exercise_id INT REFERENCES exercises(id) NOT NULL,
     date TEXT DEFAULT CURRENT_TIMESTAMP,
@@ -15,5 +15,5 @@ CREATE TABLE exercise_tracking (
 
 -- +goose Down
 -- +goose StatementBegin
-DROP TABLE exercise_tracking;
+DROP TABLE workout_logs;
 -- +goose StatementEnd
