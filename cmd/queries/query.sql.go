@@ -44,20 +44,17 @@ func (q *Queries) GetAllExercises(ctx context.Context) ([]Exercise, error) {
 }
 
 const getTrackedExercises = `-- name: GetTrackedExercises :one
-SELECT et.id, et.exercise_id, et.date, et.timestamp, et.reps, et.notes, et.created_at, et.updated_at, e.name AS exercise_name
+SELECT et.id, et.exercise_id, et.timestamp, et.reps, et.time_seconds, e.name AS exercise_name
 FROM workout_logs et
 JOIN exercises e ON et.exercise_id = e.id
 `
 
 type GetTrackedExercisesRow struct {
-	ID           interface{}
+	ID           int64
 	ExerciseID   int64
-	Date         sql.NullString
-	Timestamp    sql.NullString
+	Timestamp    string
 	Reps         sql.NullInt64
-	Notes        sql.NullString
-	CreatedAt    sql.NullString
-	UpdatedAt    sql.NullString
+	TimeSeconds  sql.NullInt64
 	ExerciseName string
 }
 
@@ -67,12 +64,9 @@ func (q *Queries) GetTrackedExercises(ctx context.Context) (GetTrackedExercisesR
 	err := row.Scan(
 		&i.ID,
 		&i.ExerciseID,
-		&i.Date,
 		&i.Timestamp,
 		&i.Reps,
-		&i.Notes,
-		&i.CreatedAt,
-		&i.UpdatedAt,
+		&i.TimeSeconds,
 		&i.ExerciseName,
 	)
 	return i, err
@@ -106,29 +100,32 @@ func (q *Queries) InsertExercise(ctx context.Context, arg InsertExerciseParams) 
 
 const insertTrackedExercise = `-- name: InsertTrackedExercise :one
 INSERT INTO workout_logs
-(exercise_id, reps, notes)
-VALUES (?, ?, ?)
-RETURNING id, exercise_id, date, timestamp, reps, notes, created_at, updated_at
+(exercise_id, timestamp, reps, time_seconds)
+VALUES (?, ?, ?, ?)
+RETURNING id, exercise_id, timestamp, reps, time_seconds
 `
 
 type InsertTrackedExerciseParams struct {
-	ExerciseID int64
-	Reps       sql.NullInt64
-	Notes      sql.NullString
+	ExerciseID  int64
+	Timestamp   string
+	Reps        sql.NullInt64
+	TimeSeconds sql.NullInt64
 }
 
-func (q *Queries) InsertTrackedExercise(ctx context.Context, arg InsertTrackedExerciseParams) (ExerciseTracking, error) {
-	row := q.db.QueryRowContext(ctx, insertTrackedExercise, arg.ExerciseID, arg.Reps, arg.Notes)
-	var i ExerciseTracking
+func (q *Queries) InsertTrackedExercise(ctx context.Context, arg InsertTrackedExerciseParams) (WorkoutLog, error) {
+	row := q.db.QueryRowContext(ctx, insertTrackedExercise,
+		arg.ExerciseID,
+		arg.Timestamp,
+		arg.Reps,
+		arg.TimeSeconds,
+	)
+	var i WorkoutLog
 	err := row.Scan(
 		&i.ID,
 		&i.ExerciseID,
-		&i.Date,
 		&i.Timestamp,
 		&i.Reps,
-		&i.Notes,
-		&i.CreatedAt,
-		&i.UpdatedAt,
+		&i.TimeSeconds,
 	)
 	return i, err
 }

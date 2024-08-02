@@ -2,15 +2,13 @@
 -- +goose StatementBegin
 -- Create a table to track exercises.
 CREATE TABLE workout_logs (
-    id SERIAL PRIMARY KEY,
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     exercise_id INT REFERENCES exercises(id) NOT NULL,
-    date TEXT DEFAULT CURRENT_TIMESTAMP,
-    timestamp TEXT DEFAULT CURRENT_TIMESTAMP,
+    timestamp TEXT DEFAULT CURRENT_TIMESTAMP NOT NULL,
     reps INT,
-    notes TEXT,
-    created_at TEXT DEFAULT CURRENT_TIMESTAMP,
-    updated_at TEXT DEFAULT CURRENT_TIMESTAMP
-);
+    time_seconds INT
+)
+strict;
 -- +goose StatementEnd
 
 -- +goose Down

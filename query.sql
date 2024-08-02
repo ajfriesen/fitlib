@@ -9,8 +9,8 @@ RETURNING id;
 
 -- name: InsertTrackedExercise :one
 INSERT INTO workout_logs
-(exercise_id, reps, notes)
-VALUES (?, ?, ?)
+(exercise_id, timestamp, reps, time_seconds)
+VALUES (?, ?, ?, ?)
 RETURNING *;
 
 -- name: GetTrackedExercises :one

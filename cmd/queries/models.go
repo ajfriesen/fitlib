@@ -16,13 +16,10 @@ type Exercise struct {
 	UpdatedAt   string
 }
 
-type ExerciseTracking struct {
-	ID         interface{}
-	ExerciseID int64
-	Date       sql.NullString
-	Timestamp  sql.NullString
-	Reps       sql.NullInt64
-	Notes      sql.NullString
-	CreatedAt  sql.NullString
-	UpdatedAt  sql.NullString
+type WorkoutLog struct {
+	ID          int64
+	ExerciseID  int64
+	Timestamp   string
+	Reps        sql.NullInt64
+	TimeSeconds sql.NullInt64
 }

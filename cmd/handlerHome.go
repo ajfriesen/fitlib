@@ -110,7 +110,7 @@ func (app *application) ExerciseCreate(w http.ResponseWriter, r *http.Request) {
 
 func (app *application) ExerciseCreatePost(w http.ResponseWriter, r *http.Request) {
 
-	data := app.newTemplateData(r)
+	// data := app.newTemplateData(r)
 
 	err := r.ParseForm()
 	if err != nil {
@@ -140,8 +140,9 @@ func (app *application) ExerciseCreatePost(w http.ResponseWriter, r *http.Reques
 		app.serveError(w, r, err)
 		return
 	}
+	http.Redirect(w, r, "/", http.StatusSeeOther)
 
-	app.renderTemplate(w, r, http.StatusOK, "home.html", data)
+	//app.renderTemplate(w, r, http.StatusOK, "home.html", data)
 
 }
 
