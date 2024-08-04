@@ -9,7 +9,7 @@ RUN go mod verify
 
 COPY . .
 
-RUN go build -v -o /fitlib ./cmd
+RUN CGO_ENABLED=0 go build -v -o /fitlib ./cmd
 
 FROM scratch
 COPY --from=build /fitlib /fitlib
