@@ -1,12 +1,16 @@
-FROM golang:1.22 AS BuildStage
+FROM golang:1.22 AS build
 
 WORKDIR /app
 
-COPY . .
+COPY go.mod go.sum /app/
 
 RUN go mod download
-RUN go build -o /fitlib ./cmd
+RUN go mod verify
+
+COPY . .
+
+RUN go build -v -o /fitlib ./cmd
 
 FROM scratch
-COPY --from=0 /fitlib /bin/fitlib
-CMD ["/bin/fitlib"]
+COPY --from=build /fitlib /fitlib
+CMD ["/fitlib"]
