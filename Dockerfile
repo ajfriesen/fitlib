@@ -13,10 +13,8 @@ COPY go.mod go.sum /app/
 RUN go mod download
 RUN go mod verify
 COPY . .
-RUN go install github.com/mattn/go-sqlite3
 RUN go build -v -o /fitlib ./cmd
 
-FROM alpine
-RUN apk add --no-cache gcc sqlite
+FROM alpine:3.20.2
 COPY --from=build /fitlib /fitlib
 CMD ["/fitlib"]
