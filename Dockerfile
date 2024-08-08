@@ -1,5 +1,7 @@
 FROM golang:1.22-alpine AS build
 
+ENV GOCACHE=/go/cache
+
 RUN apk add \
     # Important: required for go-sqlite3
     gcc \

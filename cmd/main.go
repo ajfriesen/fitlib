@@ -40,6 +40,7 @@ func main() {
 		logger.Error("Serror loading .env file", err)
 	}
 	dsn := os.Getenv("DSN")
+	println("DSN from main:", dsn)
 	flag.Parse()
 
 	app := &application{
