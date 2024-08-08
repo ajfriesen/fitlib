@@ -22,5 +22,4 @@ RUN go build -v -o /fitlib ./cmd
 FROM alpine:3.20.2
 COPY --from=build /go/bin/goose /usr/local/bin/goose
 COPY --from=build /fitlib /fitlib
-COPY ./migrations /migrations
 CMD ["/fitlib"]
