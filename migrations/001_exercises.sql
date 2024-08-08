@@ -2,7 +2,7 @@
 -- +goose StatementBegin
 -- Create the exercises table to store exercise information.
 CREATE TABLE exercises (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     name TEXT NOT NULL,
     description TEXT,
     created_at TEXT DEFAULT CURRENT_TIMESTAMP NOT NULL,

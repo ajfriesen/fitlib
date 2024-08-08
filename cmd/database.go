@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"fmt"
+	"io/fs"
 	"log"
 	"os"
 
@@ -44,10 +45,45 @@ func (app *application) migrateDatabase(dsn string) {
 
 	println("Starting database migrations")
 	// This is "." due to the migrations.FS from embed.
+
+
+	printEmbeddedMigrations()
+
+	println("testing")
+	println(goose.GetDBVersion(sql))
 	err = goose.Up(sql, ".")
 	if err != nil {
 		println("goose up failed", err)
 		log.Fatalf(err.Error())
 	}
 
+}
+
+func printEmbeddedMigrations() {
+	fmt.Println("Embedded migration files:")
+	err := fs.WalkDir(migrations.FS, ".", func(path string, d fs.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+
+		// Print the file path
+		fmt.Println("File:", path)
+
+		if !d.IsDir() {
+			// Read the file content
+			content, err := migrations.FS.ReadFile(path)
+			if err != nil {
+				return err
+			}
+
+			// Print the file content
+			fmt.Printf("Content of %s:\n%s\n", path, content)
+		}
+
+		return nil
+	})
+
+	if err != nil {
+		log.Fatalf("Error reading embedded files: %v", err)
+	}
 }
