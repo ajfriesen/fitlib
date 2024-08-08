@@ -3,8 +3,8 @@ name: Deploy to VPS
 on:
   workflow_dispatch:
   push:
-    branches:
-      - main
+    tags:
+      - live
 
 jobs:
   deploy:
