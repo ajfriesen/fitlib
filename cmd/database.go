@@ -52,7 +52,7 @@ func (app *application) migrateDatabase(dsn string) {
 
 	println("testing")
 	println(goose.GetDBVersion(sql))
-	err = goose.Up(sql, "migrations")
+	err = goose.Up(sql, ".")
 	if err != nil {
 		println("goose up failed", err)
 		log.Fatalf(err.Error())
