@@ -38,6 +38,7 @@ func (app *application) migrateDatabase(dsn string) {
 	}()
 
 	println("Opening DB")
+	println("DSN:", dsn)
 	sql, err := sql.Open("sqlite3", dsn)
 	if err != nil {
 		log.Fatalf(err.Error())

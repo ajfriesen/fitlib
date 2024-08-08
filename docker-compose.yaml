@@ -1,0 +1,14 @@
+services:
+  fitlib:
+    container_name: fitlib
+    build: .
+    env_file: .env
+    environment:
+      GOCACHE: /go/cache
+    volumes:
+      - ./data:/data
+      - ./.env:/.env
+      - gocache-volume:/go/cache
+
+volumes:
+  gocache-volume:
