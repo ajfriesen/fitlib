@@ -20,5 +20,5 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
             cd /home/andrej/docker/fitlib
-            docker compouse pull
+            docker compose pull
             docker compose up -d
