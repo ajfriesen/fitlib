@@ -28,17 +28,16 @@ jobs:
         id: extract_tag
         run: |
           TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "latest")
-          echo "::set-output name=GIT_TAG::$TAG"
+          echo "GIT_TAG=$TAG" >> $GITHUB_ENV
 
       - name: Check for live tag
         id: check_live
         run: |
-          if [[ "${{ steps.extract_tag.outputs.GIT_TAG }}" == "live" ]]; then
-            echo "::set-output name=LIVE_TAG::true"
+          if [[ "${{ env.GIT_TAG }}" == "live" ]]; then
+            echo "LIVE_TAG=true" >> $GITHUB_ENV
           else
-            echo "::set-output name=LIVE_TAG::false"
+            echo "LIVE_TAG=false" >> $GITHUB_ENV
           fi
-
 
       - name: Build and push
         uses: docker/build-push-action@v6
@@ -46,7 +45,5 @@ jobs:
           push: true
           tags: |
             ghcr.io/${{ github.actor }}/fitlib:latest
-            ghcr.io/${{ github.actor }}/fitlib:${{ steps.extract_tag.outputs.GIT_TAG }}
-            ${{ steps.check_live.outputs.LIVE_TAG == 'true' && 'ghcr.io/${{ github.actor }}/fitlib:live' || '' }}
-
-
+            ghcr.io/${{ github.actor }}/fitlib:${{ env.GIT_TAG }}
+            ${{ env.LIVE_TAG == 'true' && 'ghcr.io/${{ github.actor }}/fitlib:live' || '' }}
