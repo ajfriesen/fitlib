@@ -28,10 +28,6 @@ func main() {
 
 	logger := slog.New(slog.NewTextHandler(os.Stdout, nil))
 
-	addr := flag.String("addr", "127.0.0.1:8080", "HTTP network address")
-	// DSN is the PostgreSQL Data Source Name, Database Source Name.
-	// Often the same as connection string.
-	println("")
 	// csrfKey := flag.String("csrf-key", defaultCsrfKey, "CSRF key. Must be 32 bytes long.")
 	// csrfSecureBool := flag.Bool("csrf-secure", false, "CSRF secure bool. Defaults to false for development")
 	envFilePath := flag.String("envFilePath", ".env", "Filepath the .env")
@@ -39,6 +35,7 @@ func main() {
 	if err != nil {
 		logger.Error("Serror loading .env file", err)
 	}
+	addr := os.Getenv("ListeningAddress")
 	dsn := os.Getenv("DSN")
 	println("DSN from main:", dsn)
 	flag.Parse()
@@ -81,11 +78,11 @@ func main() {
 	r.Handle("/static/*", http.StripPrefix("/static", fileServer))
 
 	httpServer := &http.Server{
-		Addr:    *addr,
+		Addr:    addr,
 		Handler: r,
 	}
 
-	logger.Info("starting server", "addr", *addr)
+	logger.Info("starting server", "addr", addr)
 	err = httpServer.ListenAndServe()
 	if err != nil {
 		logger.Error("error starting server", err.Error())
