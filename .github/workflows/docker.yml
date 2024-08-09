@@ -45,8 +45,8 @@ jobs:
         with:
           push: true
           tags: |
-            ghcr.io/ajfriesen/fitlib:latest
-            ghcr.io/ajfriesen/fitlib:${{ steps.extract_tag.outputs.GIT_TAG }}
-            ${{ steps.check_live.outputs.LIVE_TAG == 'true' && 'ghcr.io/ajfriesen/fitlib:live' || '' }}
+            ghcr.io/${{ github.actor }}/fitlib:latest
+            ghcr.io/${{ github.actor }}/fitlib:${{ steps.extract_tag.outputs.GIT_TAG }}
+            ${{ steps.check_live.outputs.LIVE_TAG == 'true' && 'ghcr.io/${{ github.actor }}/fitlib:live' || '' }}
 
 
