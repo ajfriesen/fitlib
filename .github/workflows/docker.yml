@@ -46,11 +46,18 @@ jobs:
             echo "LIVE_TAG=false" >> $GITHUB_ENV
           fi
 
+      - name: Set Docker tags
+        id: set_tags
+        run: |
+          TAGS="ghcr.io/${{ github.actor }}/fitlib:latest,ghcr.io/${{ github.actor }}/fitlib:${{ env.GIT_TAG }}"
+          if [ "${{ env.LIVE_TAG }}" = "true" ]; then
+            TAGS="$TAGS,ghcr.io/ajfriesen/fitlib:live"
+          fi
+          echo "TAGS=$TAGS" >> $GITHUB_ENV
+          echo "Docker tags to be used: $TAGS"
+  
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
           push: true
-          tags: |
-            ghcr.io/${{ github.actor }}/fitlib:latest
-            ghcr.io/${{ github.actor }}/fitlib:${{ env.GIT_TAG }}
-            ${{ env.LIVE_TAG == 'true' && 'ghcr.io/${{ github.actor }}/fitlib:live' || '' }}
+          tags: ${{ env.TAGS }}
