@@ -29,6 +29,7 @@ jobs:
         run: |
           TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "latest")
           echo "GIT_TAG=$TAG" >> $GITHUB_ENV
+          echo "Extracted GIT_TAG=$TAG"
 
       - name: Check for live tag
         id: check_live
